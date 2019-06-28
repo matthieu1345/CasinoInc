@@ -1,0 +1,5 @@
+---,happinessMultiplierSlotMachine,happinessMultiplierBlackJack,happinessMultiplierPoker,utilityValueSlotmachine,utilityValueBlackjack,utilityValuePoker,happinessMultiplierValues,baseUtilityValues
+Default,1,1,1,10,10,10,"((INT_Slotmachine, 1.000000),(INT_Poker, 1.000000),(INT_Blackjack, 1.000000))","((INT_Slotmachine, 10.000000),(INT_Poker, 10.000000),(INT_Blackjack, 10.000000))"
+Slotmachine_Fanatic,2,0.5,0.5,20,10,10,"((INT_Slotmachine, 2.000000),(INT_Poker, 0.500000),(INT_Blackjack, 0.500000))","((INT_Slotmachine, 20.000000),(INT_Poker, 10.000000),(INT_Blackjack, 10.000000))"
+BlackJacker,0.5,2,0.5,10,20,10,"((INT_Slotmachine, 0.500000),(INT_Poker, 2.000000),(INT_Blackjack, 0.500000))","((INT_Slotmachine, 10.000000),(INT_Poker, 10.000000),(INT_Blackjack, 20.000000))"
+PokerFace,0.5,0.5,2,10,10,20,"((INT_Slotmachine, 0.500000),(INT_Poker, 0.500000),(INT_Blackjack, 2.000000))","((INT_Slotmachine, 10.000000),(INT_Poker, 20.000000),(INT_Blackjack, 10.000000))"

@@ -1,0 +1,28 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Letter_Blocks_01_Set_1_A_64x64.png" x="66" y="330" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_B_64x64.png" x="198" y="198" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_C_64x64.png" x="198" y="132" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_D_64x64.png" x="198" y="66" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_E_64x64.png" x="198" y="0" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_F_64x64.png" x="132" y="396" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_G_64x64.png" x="132" y="330" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_H_64x64.png" x="132" y="264" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_I_64x64.png" x="132" y="198" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_J_64x64.png" x="132" y="132" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_K_64x64.png" x="132" y="66" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_L_64x64.png" x="132" y="0" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_M_64x64.png" x="66" y="396" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_N_64x64.png" x="198" y="264" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_O_64x64.png" x="66" y="264" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_P_64x64.png" x="66" y="198" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_Q_64x64.png" x="66" y="132" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_R_64x64.png" x="66" y="66" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_S_64x64.png" x="66" y="0" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_T_64x64.png" x="0" y="396" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_U_64x64.png" x="0" y="330" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_V_64x64.png" x="0" y="264" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_W_64x64.png" x="0" y="198" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_X_64x64.png" x="0" y="132" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_Y_64x64.png" x="0" y="66" width="64" height="64"/>
+	<SubTexture name="Letter_Blocks_01_Set_1_Z_64x64.png" x="0" y="0" width="64" height="64"/>
+</TextureAtlas>
