@@ -7,7 +7,7 @@ pipeline {
 		disableConcurrentBuilds()
 	}
 	environment {
-		Webhook_Url = "credentials('4cc13aea-ea4b-477c-9bc8-f54252d6fcc0')"
+		Webhook_Url = "credentials('0aa5ccb2-4cbb-4ae7-bc49-a1ec3f390138')"
 	}
 	
     stages{
@@ -18,26 +18,23 @@ pipeline {
 		}
 		stage('Build: Prep'){
 			steps{
-				echo 'hi'
-				//bat label: 'Prepare', script: '"%Unreal 4.21.2_HOME%\\%Unreal_BuildTool%" -projectfiles -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -game -rocket -progress'
+				bat label: 'Prepare', script: '"%Unreal 4.21.2_HOME%\\%Unreal_BuildTool%" -projectfiles -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -game -rocket -progress'
 			}
 		}
 		stage('Build: Build'){
 			steps{
-				echo 'hi'
-				//bat label: 'Build', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
+				bat label: 'Build', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
 			}
 		}
 		stage('Build: Cook'){
 			steps{
-				echo 'hi'
-				//bat label: 'cook', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -NoCompile -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
+				bat label: 'cook', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -NoCompile -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
 			}
 		}
     }
 	post {
 		always {
-			//archiveArtifacts 'Builds/**/*.*'
+			archiveArtifacts 'Builds/**/*.*'
 			
 			sendDiscord()
 		}
