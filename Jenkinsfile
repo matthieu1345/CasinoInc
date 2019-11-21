@@ -43,7 +43,6 @@ pipeline {
 	}
 }
 
-@NonCPS
 def sendDiscord(){
 	def changeString = ""
 	
