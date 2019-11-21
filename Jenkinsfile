@@ -44,7 +44,7 @@ pipeline {
 def sendDiscord(){
 	def changeString = ""
 	
-	def changeSets = "currentBuild.changeSets"
+	def changeSets = currentBuild.changeSets
 	for (int i = 0; i < changeSets.size(); i++){
 		def entries = changeSets[i].items
 		for (int j = 0; j < entries.length; j++){
