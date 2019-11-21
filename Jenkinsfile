@@ -4,6 +4,7 @@ pipeline {
 	}
 	options {
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
+		disableConcurrentBuilds()
 	}
 	parameters {
 		credentials credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: '4cc13aea-ea4b-477c-9bc8-f54252d6fcc0', description: '', name: 'WebhookUrl', required: false
