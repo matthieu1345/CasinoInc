@@ -44,7 +44,7 @@ pipeline {
 }
 
 @NonCPS
-def sendDiscord(string currentWebhookUrl){
+def sendDiscord(currentWebhookUrl){
 	def changeString = ""
 	
 	def changeSets = currentBuild.changeSets
