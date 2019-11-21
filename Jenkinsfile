@@ -36,13 +36,15 @@ pipeline {
 		always {
 			archiveArtifacts 'Builds/**/*.*'
 			
-			sendDiscord()
+			withCredentials([string(credentialsId: params.WebhookUrl, variable: 'URL')]) {
+				sendDiscord(URL)
+			}
 		}
 	}
 }
 
 @NonCPS
-def sendDiscord(){
+def sendDiscord(string currentWebhookUrl){
 	def changeString = ""
 	
 	def changeSets = currentBuild.changeSets
@@ -60,10 +62,6 @@ def sendDiscord(){
         changeString = "\n\n - No new changes"
     }
     
-	withCredentials([string(credentialsId: params.WebhookUrl, variable: 'URL')]) {
-		def currentWebhookUrl = URL
-	}
-	
 	discordSend description: "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**${changeString}\n\n**Artifacts:**\n- ${env.BUILD_URL}artifact/",
 	footer: '',
 	image: '',
