@@ -40,7 +40,7 @@ pipeline {
 			//archiveArtifacts 'Builds/**/*.*'
 			
 			withCredentials([string(credentialsId: params.WebhookUrl, variable: 'URL')]) {
-				sendDiscord('$URL')
+				sendDiscord('${URL}')
 			}
 		}
 	}
