@@ -59,6 +59,10 @@ def sendDiscord(){
         changeString = "\n\n - No new changes"
     }
     
+	withCredentials([string(credentialsId: params.WebhookUrl, variable: 'URL')]) {
+		def currentWebhookUrl = URL
+	}
+	
 	discordSend description: "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**${changeString}\n\n**Artifacts:**\n- ${env.BUILD_URL}artifact/",
 	footer: '',
 	image: '',
@@ -66,5 +70,5 @@ def sendDiscord(){
 	result: currentBuild.currentResult,
 	thumbnail: '',
 	title: env.BRANCH_NAME,
-	webhookURL: params.WebhookUrl
+	webhookURL: currentWebhookUrl
 }
