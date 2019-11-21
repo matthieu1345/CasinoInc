@@ -6,9 +6,6 @@ pipeline {
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
 		disableConcurrentBuilds()
 	}
-	parameters {
-		credentials credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: '4cc13aea-ea4b-477c-9bc8-f54252d6fcc0', description: '', name: 'WebhookUrl', required: false
-	}
 	
     stages{
         stage('scm'){
@@ -18,36 +15,31 @@ pipeline {
 		}
 		stage('Build: Prep'){
 			steps{
-				echo 'hi'
-				//bat label: 'Prepare', script: '"%Unreal 4.21.2_HOME%\\%Unreal_BuildTool%" -projectfiles -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -game -rocket -progress'
+				bat label: 'Prepare', script: '"%Unreal 4.21.2_HOME%\\%Unreal_BuildTool%" -projectfiles -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -game -rocket -progress'
 			}
 		}
 		stage('Build: Build'){
 			steps{
-				echo 'hi'
-				//bat label: 'Build', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
+				bat label: 'Build', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
 			}
 		}
 		stage('Build: Cook'){
 			steps{
-				echo 'hi'
-				//bat label: 'cook', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -NoCompile -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
+				bat label: 'cook', script: '"%Unreal 4.21.2_HOME%\\%Unreal_RunUAT%" BuildCookRun -project="%WORKSPACE%\\Casino_Inc\\Casino_Inc.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -NoCompile -stage -pak -archive -archivedirectory="%WORKSPACE%\\Builds"'
 			}
 		}
     }
 	post {
 		always {
-			//archiveArtifacts 'Builds/**/*.*'
+			archiveArtifacts 'Builds/**/*.*'
 			
-			withCredentials([string(credentialsId: params.WebhookUrl, variable: 'URL')]) {
-				sendDiscord('${URL}')
-			}
+			sendDiscord()
 		}
 	}
 }
 
 @NonCPS
-def sendDiscord(currentWebhookUrl){
+def sendDiscord(){
 	def changeString = ""
 	
 	def changeSets = currentBuild.changeSets
@@ -72,5 +64,5 @@ def sendDiscord(currentWebhookUrl){
 	result: currentBuild.currentResult,
 	thumbnail: '',
 	title: env.BRANCH_NAME,
-	webhookURL: currentWebhookUrl
+	webhookURL: 'https://discordapp.com/api/webhooks/646921379630809098/-DnP3JKq1S9AC68OM0msA-QEfvf2-1qiJFNi_mEUTzEndu5JifUWwPFggvsTegYGw6L4'
 }
