@@ -33,7 +33,7 @@ pipeline {
     }
 	post {
 		always {
-			archiveArtifacts 'Builds/**/*.*'
+			//archiveArtifacts 'Builds/**/*.*'
 			discordSend description: currentBuild.description, footer: '', image: '', link: env.BUILD_URL, result: currentBuild.currentResult, thumbnail: '', title: env.BRANCH_NAME, webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
 		}
 	}
