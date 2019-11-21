@@ -34,7 +34,31 @@ pipeline {
 	post {
 		always {
 			//archiveArtifacts 'Builds/**/*.*'
-			discordSend description: "**Build:** ${env.BRANCH_NAME}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**\n\n${currentBuild.changeSets}", footer: '', image: '', link: env.BUILD_URL, result: currentBuild.currentResult, thumbnail: '', title: env.BRANCH_NAME, webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
+			
+			
+			
+			def changeString = getChangeString()
+			discordSend description: "**Build:** ${env.BRANCH_NAME}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**${changeString}\n\n**Artifacts:**\n- ${env.BUILD_URL}/artifact/", footer: '', image: '', link: env.BUILD_URL, result: currentBuild.currentResult, thumbnail: '', title: env.BRANCH_NAME, webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
 		}
 	}
+}
+
+@NonCPS
+def getChangeString(){
+	def changeString = ""
+	
+	def changeSets = "currentBuild.changeSets"
+	for (int i = 0; i < changeSets.size(); i++){
+		def entries = changeSets[i].items
+		for (int j = 0; j < entries.length; j++){
+			def entry = entries[j]
+			truncated_msg = entry.msg.take(100)
+			changeString += "\n- '${entry.commitId} *${truncated_msg} -  ${entry.author}*"
+		}
+	}
+	
+	if (!changeString) {
+        changeString = "\n\n - No new changes"
+    }
+    return changeString
 }
