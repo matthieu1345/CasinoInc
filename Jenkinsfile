@@ -63,5 +63,5 @@ def sendDiscord(){
 	result: currentBuild.currentResult,
 	thumbnail: '',
 	title: env.BRANCH_NAME,
-	webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
+	webhookURL: 'https://discordapp.com/api/webhooks/646911716067770408/RIi2jb-6G1ceSiJnH0K_yeu8sMCcVZqNnVeWwaKoyBb_q4KWkJFy8hRCXTiEodEZQ91v'
 }
