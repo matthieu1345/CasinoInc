@@ -5,6 +5,9 @@ pipeline {
 	options {
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
 	}
+	parameters {
+		credentials credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl', defaultValue: '4cc13aea-ea4b-477c-9bc8-f54252d6fcc0', description: '', name: 'WebhookUrl', required: false
+	}
 	
     stages{
         stage('scm'){
@@ -63,5 +66,5 @@ def sendDiscord(){
 	result: currentBuild.currentResult,
 	thumbnail: '',
 	title: env.BRANCH_NAME,
-	webhookURL: 'https://discordapp.com/api/webhooks/646911716067770408/RIi2jb-6G1ceSiJnH0K_yeu8sMCcVZqNnVeWwaKoyBb_q4KWkJFy8hRCXTiEodEZQ91v'
+	webhookURL: params.WebhookUrl
 }
