@@ -2,10 +2,6 @@ pipeline {
     agent {
 		label 'Unreal4212'
 	}
-
-	tools {
-		Custom 'Unreal 4.21.2'
-	}
 	
     stages{
         stage('scm'){
