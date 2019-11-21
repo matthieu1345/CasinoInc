@@ -35,16 +35,13 @@ pipeline {
 		always {
 			//archiveArtifacts 'Builds/**/*.*'
 			
-			
-			
-			def changeString = getChangeString()
-			discordSend description: "**Build:** ${env.BRANCH_NAME}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**${changeString}\n\n**Artifacts:**\n- ${env.BUILD_URL}/artifact/", footer: '', image: '', link: env.BUILD_URL, result: currentBuild.currentResult, thumbnail: '', title: env.BRANCH_NAME, webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
+			sendDiscord()
 		}
 	}
 }
 
 @NonCPS
-def getChangeString(){
+def sendDiscord(){
 	def changeString = ""
 	
 	def changeSets = "currentBuild.changeSets"
@@ -60,5 +57,13 @@ def getChangeString(){
 	if (!changeString) {
         changeString = "\n\n - No new changes"
     }
-    return changeString
+    
+	discordSend description: "**Build:** ${env.BRANCH_NAME}\n**Status:** ${currentBuild.currentResult}\n\n**Changes:**${changeString}\n\n**Artifacts:**\n- ${env.BUILD_URL}/artifact/",
+	footer: '',
+	image: '',
+	link: env.BUILD_URL,
+	result: currentBuild.currentResult,
+	thumbnail: '',
+	title: env.BRANCH_NAME,
+	webhookURL: 'https://discordapp.com/api/webhooks/644642208624148480/YWBrqQ48ZAfsXvV6AuzJPFqwOQMJILKy1ihxzrl_XBbvzeyrj6LiTrTngDeV_mv_rx3K'
 }
