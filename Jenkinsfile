@@ -49,8 +49,9 @@ def sendDiscord(){
 		def entries = changeSets[i].items
 		for (int j = 0; j < entries.length; j++){
 			def entry = entries[j]
+			truncated_ID = entry.comitId.take(7)
 			truncated_msg = entry.msg.take(100)
-			changeString += "\n- '${entry.commitId} *${truncated_msg} -  ${entry.author}*"
+			changeString += "\n- `${truncated_ID}` *${truncated_msg} -  ${entry.author}*"
 		}
 	}
 	
