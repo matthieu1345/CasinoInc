@@ -6,6 +6,9 @@ pipeline {
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
 		disableConcurrentBuilds()
 	}
+	environment {
+		Webhook_Url = "credentials('4cc13aea-ea4b-477c-9bc8-f54252d6fcc0')"
+	}
 	
     stages{
         stage('scm'){
@@ -64,5 +67,5 @@ def sendDiscord(){
 	result: currentBuild.currentResult,
 	thumbnail: '',
 	title: env.BRANCH_NAME,
-	webhookURL: 'https://discordapp.com/api/webhooks/646921379630809098/-DnP3JKq1S9AC68OM0msA-QEfvf2-1qiJFNi_mEUTzEndu5JifUWwPFggvsTegYGw6L4'
+	webhookURL: env.Webhook_Url
 }
