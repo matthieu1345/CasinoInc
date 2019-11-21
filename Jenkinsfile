@@ -2,7 +2,9 @@ pipeline {
     agent {
 		label 'Unreal4212'
 	}
-
+	options {
+		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
+	}
 	
     stages{
         stage('scm'){
