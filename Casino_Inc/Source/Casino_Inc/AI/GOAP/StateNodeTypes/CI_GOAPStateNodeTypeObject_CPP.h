@@ -4,6 +4,8 @@
 #include "Casino_Inc.h"
 #include "CI_GOAPStateNodeTypeObject_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EGOAPTestObjectCondition : uint8
 {

@@ -9,6 +9,8 @@
 #include "TileMap/CI_TileMapCoordinateMath.h"
 #include "TimerManager.h"
 
+//TODO:DOCUMENT comment/document this file
+
 ACI_BaseAIController_CPP::ACI_BaseAIController_CPP()
 {
 	bAttachToPawn = true;

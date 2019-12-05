@@ -6,6 +6,8 @@
 #include "Queue.h"
 #include "CI_GOAPPlan_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 DECLARE_STATS_GROUP(TEXT("GOAP Planner"), STATGROUP_GOAPPlanner, STATCAT_Advanced);
 
 //USTRUCT(BlueprintType)

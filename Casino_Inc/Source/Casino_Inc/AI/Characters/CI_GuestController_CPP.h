@@ -7,6 +7,8 @@
 #include "AI/Guests/CI_GuestStats.h"
 #include "CI_GuestController_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EGuestState : uint8
 {

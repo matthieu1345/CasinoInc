@@ -5,6 +5,8 @@
 #include "Engine/DataTable.h"
 #include "CI_GuestStats.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EStatLevel : uint8
 {

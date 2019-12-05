@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CI_StatsManager_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FMoneyChanged, int, newBalance, int, newDaily, int, change);
 
 UCLASS()

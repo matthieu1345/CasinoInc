@@ -6,6 +6,8 @@
 #include "AI/Tasks/CI_BaseTask_CPP.h"
 #include "BuildTask.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 class ACI_GameStateBase_CPP;
 /**
  * 

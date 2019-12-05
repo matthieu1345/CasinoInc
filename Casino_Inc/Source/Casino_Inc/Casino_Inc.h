@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 
-// ReSharper disable CppInconsistentNaming					log category's I want to be UpperCamelCased
+// ReSharper disable CppInconsistentNaming					
+//log category's I want to be UpperCamelCased
 DECLARE_LOG_CATEGORY_EXTERN(LogCasino_Inc, Log, All);
 DECLARE_LOG_CATEGORY_EXTERN(TileMap, Log, All);
 DECLARE_LOG_CATEGORY_EXTERN(GUI, Log, All);

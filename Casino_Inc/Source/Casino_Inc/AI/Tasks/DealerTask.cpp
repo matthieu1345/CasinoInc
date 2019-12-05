@@ -6,6 +6,8 @@
 #include "TileMap/CI_InteractableTileData_CPP.h"
 #include "TileMap/CI_BaseTile_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 void UDealerTask::FinishTask_Implementation(bool success, int x, int y, ACI_GameStateBase_CPP* gamestate)
 {
 	if (!success || !gamestate)

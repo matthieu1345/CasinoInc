@@ -4,6 +4,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "CI_GOAPStateContainer_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 USTRUCT(BlueprintType)
 struct FGOAPStateList
 {

@@ -4,6 +4,8 @@
 #include "AI/Tasks/CI_BaseTask_CPP.h"
 #include "DealerTask.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UCLASS()
 class CASINO_INC_API UDealerTask : public UCI_BaseTask_CPP
 {

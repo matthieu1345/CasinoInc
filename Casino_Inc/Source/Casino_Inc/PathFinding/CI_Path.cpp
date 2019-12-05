@@ -5,6 +5,8 @@
 #include "RunnableThread.h"
 #include "Queue.h"
 
+//TODO:DOCUMENT comment/document this file
+
 DECLARE_CYCLE_STAT(TEXT("Calculate Path"), STAT_CalculatePath, STATGROUP_PathFinding);
 DECLARE_CYCLE_STAT(TEXT("Calculate Node"), STAT_CalculateNode, STATGROUP_PathFinding);
 DECLARE_CYCLE_STAT(TEXT("Create Node"), STAT_CreateNode, STATGROUP_PathFinding);

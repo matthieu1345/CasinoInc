@@ -6,6 +6,8 @@
 #include "AI/GOAP/StateNodeTypes/CI_GOAPStateNodeTypeAll_CPP.h"
 #include "AI/GOAP/CI_GOAPWorkerComponent_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 bool UCI_GOAPActionBase_CPP::CheckPreConditions(FGOAPStateList startState, int &difference)
 {
 	return UGOAPStateUtil::TestConditions(preConditions, startState, difference);

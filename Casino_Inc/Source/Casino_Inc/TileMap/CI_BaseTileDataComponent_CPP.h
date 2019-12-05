@@ -9,6 +9,7 @@
 #include "AI/CI_RegisterAbleInterface_CPP.h"
 #include "CI_BaseTileDataComponent_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
 
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CASINO_INC_API UCI_BaseTileDataComponent_CPP : public USceneComponent, public ICI_RegisterAbleInterface_CPP

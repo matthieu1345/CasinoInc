@@ -7,6 +7,8 @@
 #include "TileMap/CI_BaseTile_CPP.h"
 #include "TileMap/CI_BaseTileDataComponent_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 void UDestroyTask::InitTask_Implementation(int x, int y, ACI_GameStateBase_CPP* gamestate)
 {
 	Super::InitTask_Implementation(x, y, gamestate);

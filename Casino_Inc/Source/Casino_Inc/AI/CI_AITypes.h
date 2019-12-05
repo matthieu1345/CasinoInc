@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "CI_AITypes.generated.h"
 
+//TODO:DOCUMENT comment/document this file
 //NOTE: if adding more make sure to change CI_AIManager_CPP.cpp :: SpawnAIInternal
 UENUM(BlueprintType)
 enum class ECharacterType : uint8

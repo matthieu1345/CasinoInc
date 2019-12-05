@@ -7,6 +7,8 @@
 #include "TileMap/CI_BaseTile_CPP.h"
 #include "AI/CI_RegisterAbleInterface_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 ACI_BuilderController_CPP::ACI_BuilderController_CPP() : ACI_BaseStaffController_CPP()
 {
 	type = ECharacterType::CT_Builder;

@@ -7,6 +7,8 @@
 #include "CI_GOAPStateContainer_CPP.h"
 #include "CI_GOAPWorkerComponent_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EGOAPWorkerState : uint8
 {

@@ -7,6 +7,8 @@
 #include "Curves/CurveFloat.h"
 #include "CI_TimeManager_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class ESpeedSetting : uint8
 {

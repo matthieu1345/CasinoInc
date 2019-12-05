@@ -4,6 +4,8 @@
 #include "Casino_Inc.h"
 #include "CI_GOAPStateNodeTypeString_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UCLASS(EditInlineNew, BlueprintType)
 class UGOAPStateNodeType_String : public UGOAPStateNodeType
 {

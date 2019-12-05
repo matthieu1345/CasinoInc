@@ -21,6 +21,8 @@
 #include "TimerManager.h"
 #include "Curves/CurveFloat.h"
 
+//TODO:DOCUMENT comment/document this file
+
 // Sets default values
 ACI_AIManager_CPP::ACI_AIManager_CPP()
 {

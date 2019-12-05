@@ -12,6 +12,8 @@
 #include "CI_BaseTileDataComponent_CPP.h"
 #include "AI/CI_AIManager_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 //********************************************************************
 // constructors
 

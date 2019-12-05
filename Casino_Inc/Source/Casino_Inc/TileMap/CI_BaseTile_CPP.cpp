@@ -9,6 +9,8 @@
 #include "DebugMacros.h"
 #include "AI/CI_AIManager_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 // Sets default values
 ACI_BaseTile_CPP::ACI_BaseTile_CPP()
 {

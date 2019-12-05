@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "CI_GameModeBase_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
 
 /**
  * 
@@ -24,6 +25,7 @@ class CASINO_INC_API ACI_GameModeBase_CPP : public AGameModeBase
 
 	void Logout(AController* Exiting) override;
 
+	//TODO:XML write xml preview for SpeedUp, SlowDown, ResetSpeed, and AddMoney
 	UFUNCTION(Exec)
 		void SpeedUp();
 	UFUNCTION(Exec)

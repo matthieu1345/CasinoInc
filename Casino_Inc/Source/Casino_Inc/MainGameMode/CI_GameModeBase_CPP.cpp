@@ -15,6 +15,8 @@
 #include "Managers/CI_StatsManager_CPP.h"
 #include "GameFramework/WorldSettings.h"
 
+//TODO:DOCUMENT comment/document this file
+
 ACI_GameModeBase_CPP::ACI_GameModeBase_CPP()
 {
 	DefaultPawnClass = ACI_Pawn_CPP::StaticClass();

@@ -3,6 +3,7 @@
 #include "CI_GuestStats.h"
 #include "Managers/CI_StatsManager_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
 
 void FGuestStats::AddHappiness(float change)
 {

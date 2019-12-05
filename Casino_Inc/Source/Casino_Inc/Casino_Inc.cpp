@@ -5,7 +5,8 @@
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Casino_Inc, "Casino_Inc" );  // NOLINT
 
-// ReSharper disable CppInconsistentNaming					log category's I want to be UpperCamelCased
+// ReSharper disable CppInconsistentNaming					
+//log category's I want to be UpperCamelCased
 DEFINE_LOG_CATEGORY(LogCasino_Inc)
 DEFINE_LOG_CATEGORY(TileMap)
 DEFINE_LOG_CATEGORY(GUI)

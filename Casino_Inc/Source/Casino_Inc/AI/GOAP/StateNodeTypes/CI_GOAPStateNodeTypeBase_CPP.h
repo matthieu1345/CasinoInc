@@ -3,6 +3,8 @@
 #include "Engine/DataAsset.h"
 #include "CI_GOAPStateNodeTypeBase_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EGOAPStateCondition : uint8
 {

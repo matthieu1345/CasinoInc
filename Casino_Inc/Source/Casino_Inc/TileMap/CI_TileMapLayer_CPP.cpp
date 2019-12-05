@@ -6,6 +6,8 @@
 #include "CI_BaseTile_CPP.h"
 #include "CI_TileMap_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 //********************************************************************
 // constructors and unreal default functions
 

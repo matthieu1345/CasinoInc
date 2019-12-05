@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "CI_PathFollowingComponent_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 /*
  * 0 == don't profile anything
  * 1 == only profile    Should probably never use this one!

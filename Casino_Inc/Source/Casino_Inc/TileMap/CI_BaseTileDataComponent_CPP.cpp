@@ -8,6 +8,8 @@
 #include "AI/CI_AIManager_CPP.h"
 #include "DebugMacros.h"
 
+//TODO:DOCUMENT comment/document this file
+
 // Sets default values for this component's properties
 UCI_BaseTileDataComponent_CPP::UCI_BaseTileDataComponent_CPP()
 {

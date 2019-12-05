@@ -7,6 +7,8 @@
 #include "Interface.h"
 #include "CI_RegisterAbleInterface_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UINTERFACE(BlueprintType)
 class CASINO_INC_API UCI_RegisterAbleInterface_CPP : public UInterface
 {

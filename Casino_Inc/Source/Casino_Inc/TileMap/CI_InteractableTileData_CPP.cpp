@@ -10,6 +10,8 @@
 #include "AI/Base/CI_BaseAIPawn_CPP.h"
 #include "AI/Characters/CI_GuestController_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UCI_InteractableTileData_CPP::UCI_InteractableTileData_CPP() : Super()
 {
 	results.RecalculateChance();

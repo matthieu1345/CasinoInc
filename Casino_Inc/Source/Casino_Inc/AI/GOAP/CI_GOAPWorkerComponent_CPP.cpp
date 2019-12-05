@@ -13,6 +13,7 @@
 #include "Engine/World.h"
 #include "AssetRegistryModule.h"
 
+//TODO:DOCUMENT comment/document this file
 
 // Sets default values for this component's properties
 UCI_GOAPWorkerComponent_CPP::UCI_GOAPWorkerComponent_CPP()

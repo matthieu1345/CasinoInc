@@ -8,6 +8,7 @@
 #include "Queue.h"
 #include "CI_Path.generated.h"
 
+//TODO:DOCUMENT comment/document this file
 
 DECLARE_STATS_GROUP(TEXT("PathFinding"), STATGROUP_PathFinding, STATCAT_Advanced);
 

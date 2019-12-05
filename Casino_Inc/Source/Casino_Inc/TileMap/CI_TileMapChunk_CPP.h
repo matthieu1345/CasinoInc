@@ -7,6 +7,7 @@
 #include "CI_TileMapEnums.h"
 #include "CI_TileMapChunk_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
 
 // A class for deviding the tile objects into chunks of CHUNK_SIZE
 UCLASS()

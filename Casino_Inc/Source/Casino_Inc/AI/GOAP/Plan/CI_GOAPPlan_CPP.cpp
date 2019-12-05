@@ -3,6 +3,8 @@
 #include "CI_GOAPPlan_CPP.h"
 #include "RunnableThread.h"
 
+//TODO:DOCUMENT comment/document this file
+
 DECLARE_CYCLE_STAT(TEXT("Calculate Plan"), STAT_CalculatePlan, STATGROUP_GOAPPlanner);
 DECLARE_CYCLE_STAT(TEXT("Calculate Plan Node"), STAT_CalculatePlanNode, STATGROUP_GOAPPlanner);
 DECLARE_CYCLE_STAT(TEXT("Create Plan Node"), STAT_CreatePlanNode, STATGROUP_GOAPPlanner);

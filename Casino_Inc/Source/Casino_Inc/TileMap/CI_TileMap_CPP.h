@@ -8,6 +8,8 @@
 #include "PaperTileLayer.h"
 #include "CI_TileMap_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 struct BoolArray
 {
 public:

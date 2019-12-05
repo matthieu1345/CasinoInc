@@ -3,6 +3,8 @@
 #include "CI_WeigthedInteractionChance.h"
 #include "DebugMacros.h"
 
+//TODO:DOCUMENT comment/document this file
+
 void FWeightedInteractionResult::OnPostDataImport(const UDataTable* InDataTable, const FName InRowName,
 	TArray<FString>& OutCollectedImportProblems)
 {

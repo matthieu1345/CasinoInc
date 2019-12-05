@@ -8,6 +8,8 @@
 #include "Queue.h"
 #include "CI_AIManager_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 struct FTaskLinkedListNode
 {
 public:

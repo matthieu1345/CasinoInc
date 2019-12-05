@@ -10,6 +10,8 @@
 #include "AI/Base/CI_BaseAIPawn_CPP.h"
 #include "UObjectIterator.h"
 
+//TODO:DOCUMENT comment/document this file
+
 ACI_GuestController_CPP::ACI_GuestController_CPP() : ACI_BaseAIController_CPP()
 {
 	type = ECharacterType::CT_Guest;

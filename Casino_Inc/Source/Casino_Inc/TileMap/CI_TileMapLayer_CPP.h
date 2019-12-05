@@ -7,6 +7,8 @@
 #include "CI_TileMapEnums.h"
 #include "CI_TileMapLayer_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 // A class for deviding the tile objects into the different layers
 UCLASS()
 class CASINO_INC_API ACI_TileMapLayer_CPP : public AActor

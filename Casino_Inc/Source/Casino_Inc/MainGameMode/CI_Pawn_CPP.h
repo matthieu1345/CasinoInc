@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "CI_Pawn_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 class UFloatingPawnMovement;
 class UCameraComponent;
 

@@ -7,6 +7,8 @@
 #include "AI/CI_AITypes.h"
 #include "CI_BaseAIController_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 /**
  * 
  */

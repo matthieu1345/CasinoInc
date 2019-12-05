@@ -8,6 +8,8 @@
 #include "PathFinding/CI_PathFollowingComponent_CPP.h"
 #include "Managers/CI_StatsManager_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 void ACI_BaseStaffController_CPP::HourChanged(int hourNumber)
 {
 	Super::HourChanged(hourNumber);

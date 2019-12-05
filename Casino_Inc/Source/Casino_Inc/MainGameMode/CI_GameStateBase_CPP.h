@@ -6,6 +6,8 @@
 #include "GameFramework/GameStateBase.h"
 #include "CI_GameStateBase_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class EBuildInputMode : uint8
 {

@@ -6,6 +6,8 @@
 #include "TileMap/CI_TileMap_CPP.h"
 #include "TileMap/CI_BaseTileDataComponent_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 void UBuildTask::InitTask_Implementation(int x, int y, ACI_GameStateBase_CPP* gamestate)
 {
 	Super::InitTask_Implementation(x, y, gamestate);

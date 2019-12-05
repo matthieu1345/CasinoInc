@@ -7,6 +7,8 @@
 #include "AI/Guests/CI_GuestStats.h"
 #include "CI_WeigthedInteractionChance.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 USTRUCT(BlueprintType)
 struct FWeightedInteractionResult : public FTableRowBase
 {

@@ -13,6 +13,8 @@
 #include "TileMap/CI_TileMapCoordinateMath.h"
 #include "TileMap/CI_BaseTile_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 ACI_DealerController_CPP::ACI_DealerController_CPP()
 {
 	type = ECharacterType::CT_Dealer;

@@ -6,6 +6,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "CI_TileMapCoordinateMath.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 /**
  * 
  */

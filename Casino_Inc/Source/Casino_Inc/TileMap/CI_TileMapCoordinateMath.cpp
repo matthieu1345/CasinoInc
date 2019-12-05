@@ -3,6 +3,8 @@
 #include "CI_TileMapCoordinateMath.h"
 #include "CI_BaseTile_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 FVector2D UCI_TileMapCoordinateMath::WorldVectorToTile(FVector input)
 {
 	return FVector2D(floor(input.X / ACI_BaseTile_CPP::TILE_SIZE), floor(input.Y / ACI_BaseTile_CPP::TILE_SIZE));

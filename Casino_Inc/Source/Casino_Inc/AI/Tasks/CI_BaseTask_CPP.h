@@ -7,6 +7,8 @@
 #include "AI/CI_AITypes.h"
 #include "CI_BaseTask_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UENUM(BlueprintType)
 enum class ETaskType : uint8
 {

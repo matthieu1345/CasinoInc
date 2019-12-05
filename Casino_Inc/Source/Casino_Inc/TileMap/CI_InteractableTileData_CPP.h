@@ -8,6 +8,8 @@
 #include "Data/CI_WeigthedInteractionChance.h"
 #include "CI_InteractableTileData_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 /**
  * 
  */

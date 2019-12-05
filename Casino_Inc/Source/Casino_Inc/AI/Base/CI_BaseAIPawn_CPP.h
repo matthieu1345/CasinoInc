@@ -7,6 +7,8 @@
 #include "AI/GOAP/CI_GOAPStateContainer_CPP.h"
 #include "CI_BaseAIPawn_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UCLASS()
 class CASINO_INC_API ACI_BaseAIPawn_CPP : public APawn
 {

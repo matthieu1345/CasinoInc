@@ -2,6 +2,8 @@
 
 #include "CI_TileMapManager_CPP.h"
 
+//TODO:DOCUMENT comment/document this file
+
 // Sets default values
 ACI_TileMapManager_CPP::ACI_TileMapManager_CPP()
 {

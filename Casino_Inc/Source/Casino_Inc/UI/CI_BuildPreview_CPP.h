@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CI_BuildPreview_CPP.generated.h"
 
+//TODO:DOCUMENT comment/document this file
+
 UCLASS()
 class CASINO_INC_API ACI_BuildPreview_CPP : public AActor
 {
