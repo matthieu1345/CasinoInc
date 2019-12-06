@@ -103,6 +103,7 @@ protected:
 	/**
 	 * \brief A function that get's called every time the ingame hour changes<br>
 	 * implement this to give the ai custom behaviour that needs to be done hourly
+	 * \param hourNumber the current hour
 	 */
 	UFUNCTION()
 	virtual void HourChanged(int hourNumber){}
