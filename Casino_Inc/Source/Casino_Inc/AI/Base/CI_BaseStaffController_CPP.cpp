@@ -8,15 +8,14 @@
 #include "PathFinding/CI_PathFollowingComponent_CPP.h"
 #include "Managers/CI_StatsManager_CPP.h"
 
-//TODO:DOCUMENT comment/document this file
-
 void ACI_BaseStaffController_CPP::HourChanged(int hourNumber)
 {
 	Super::HourChanged(hourNumber);
 
+	// if the staff member does not work past midnight
 	if (startWorkTime + workStintLength <= 24)
 	{
-		if (hourNumber >= startWorkTime && hourNumber < endWorkTime)
+		if (hourNumber >= startWorkTime && hourNumber < endWorkTime) // if the worker is supposed to be at work tell him to come and pay him his salary
 		{
 			if (isAway)
 				EnterMap();
@@ -25,15 +24,15 @@ void ACI_BaseStaffController_CPP::HourChanged(int hourNumber)
 		}
 			
 
-		if ((hourNumber < startWorkTime || hourNumber >= endWorkTime) && !isAway)
+		if ((hourNumber < startWorkTime || hourNumber >= endWorkTime) && !isAway) // if the worker is in the casino, but not supposed to be here, tell him to leave
 			LeaveMap();
 	}
-	else if (startWorkTime + workStintLength > 24)
+	else if (startWorkTime + workStintLength > 24) // if the staff member does work past midnight
 	{
-		if (hourNumber > endWorkTime && !isAway)
+		if (hourNumber > endWorkTime && !isAway) // if the worker is in the casino, but not supposed to be here, tell him to leave
 			LeaveMap();
 
-		if (hourNumber >= startWorkTime)
+		if (hourNumber >= startWorkTime) // if the worker is supposed to be at work tell him to come and pay him his salary
 		{
 			if (isAway)
 				EnterMap();
@@ -46,6 +45,7 @@ void ACI_BaseStaffController_CPP::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	// if the worker is supposed to be away, and doesn't have a active path, turn him invisible
 	if (!pathFollowingComp->IsActiveState() && isAway)
 		possessedCustomBasePawn->SetActorHiddenInGame(true);
 }
