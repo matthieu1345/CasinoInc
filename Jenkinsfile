@@ -32,7 +32,7 @@ pipeline {
 	post {
 		always {
 			archiveArtifacts 'Builds/**/*.*'
-			
+			cleanWs notFailBuild: true
 			sendDiscord()
 		}
 	}
