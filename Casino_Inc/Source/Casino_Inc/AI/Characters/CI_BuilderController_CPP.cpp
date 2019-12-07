@@ -7,10 +7,9 @@
 #include "TileMap/CI_BaseTile_CPP.h"
 #include "AI/CI_RegisterAbleInterface_CPP.h"
 
-//TODO:DOCUMENT comment/document this file
-
 ACI_BuilderController_CPP::ACI_BuilderController_CPP() : ACI_BaseStaffController_CPP()
 {
+	// set's somde defaults for the builder
 	type = ECharacterType::CT_Builder;
 	pathFollowingComp->EnableMovement();
 	name = "Builder";
@@ -26,7 +25,7 @@ void ACI_BuilderController_CPP::Tick(float DeltaSeconds)
 
 	Super::Tick(DeltaSeconds);
 
-
+	// get a new task if we don't have a current task and are at work
 	if (currentTask == nullptr && !isAway)
 	{
 		GetNewTask();
@@ -41,24 +40,27 @@ void ACI_BuilderController_CPP::GetNewTask()
 void ACI_BuilderController_CPP::TaskEnded_Implementation(bool success)
 {
 	Super::TaskEnded_Implementation(success);
-	//GetNewTask();
 }
 
 void ACI_BuilderController_CPP::DoIdle()
 {
 	Super::DoIdle();
 
+	// don't do anything when we have a active path
 	if (pathFollowingComp->IsActiveState())
 		return;
 
+	// get all staff rooms from the ai manager
 	auto rooms = ACI_AIManager_CPP::GetInstance(GetWorld())->GetRegisteredTile("StaffRoom");
 
 	if (rooms.Num() == 0)
 	{
-		return;
+		return; // can't do anything when there's no staff room, so we just keep standing on our spot
 	}
 
+	// get a random room from the list to go towards
 	auto goal = rooms[FMath::RandRange(0, rooms.Num() - 1)];
 
+	// go to the staff room
 	pathFollowingComp->GetNewPath(possessedCustomBasePawn->GetTileCoordinates(), ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(goal));
 }
