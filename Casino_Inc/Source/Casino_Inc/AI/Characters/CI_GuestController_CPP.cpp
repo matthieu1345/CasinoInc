@@ -43,6 +43,7 @@ ACI_GuestController_CPP::~ACI_GuestController_CPP()
 
 }
 
+#if WITH_EDITOR // Editor only function
 void ACI_GuestController_CPP::PostEditChangeProperty(FPropertyChangedEvent& propertyChangedEvent)
 {
 	// FName propertyName = (propertyChangedEvent.Property != nullptr) ? propertyChangedEvent.Property->GetFName() : NAME_None;
@@ -50,6 +51,7 @@ void ACI_GuestController_CPP::PostEditChangeProperty(FPropertyChangedEvent& prop
 	// get the preferences out of the table
 	preferences = *preferenceTableRow.GetRow<FGuestPersonalityPreference>(preferenceTableRow.RowName.ToString());
 }
+#endif
 
 void ACI_GuestController_CPP::Tick(const float deltaSeconds)
 {
