@@ -33,12 +33,14 @@ class CASINO_INC_API ACI_GuestController_CPP : public ACI_BaseAIController_CPP
 public:
 	ACI_GuestController_CPP();
 	~ACI_GuestController_CPP();
-	
+
+#if WITH_EDITOR // Editor only function
 	/**
 	 * \brief called when you change a property in the editor
 	 * \param propertyChangedEvent The property that's changed
 	 */
 	void PostEditChangeProperty(FPropertyChangedEvent& propertyChangedEvent) override;
+#endif
 
 	/**
 	 * \brief custom tick for when the ai is in the <b>GS_Interacting</b> state
