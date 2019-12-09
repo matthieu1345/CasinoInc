@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "AI/GOAP/CI_GOAPStateContainer_CPP.h"
 #include "CI_BaseAIPawn_CPP.generated.h"
 
 /**
