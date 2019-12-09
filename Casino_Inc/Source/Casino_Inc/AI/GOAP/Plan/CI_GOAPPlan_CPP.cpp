@@ -9,7 +9,7 @@ DECLARE_CYCLE_STAT(TEXT("Calculate Plan"), STAT_CalculatePlan, STATGROUP_GOAPPla
 DECLARE_CYCLE_STAT(TEXT("Calculate Plan Node"), STAT_CalculatePlanNode, STATGROUP_GOAPPlanner);
 DECLARE_CYCLE_STAT(TEXT("Create Plan Node"), STAT_CreatePlanNode, STATGROUP_GOAPPlanner);
 
-FPlanNode::FPlanNode(FGOAPStateList startState, FGOAPStateList goalState, class UCI_GOAPActionBase_CPP* action, TArray<int> possibleActions, float g, FPlanNode* parent)
+FPlanNode::FPlanNode(const FGOAPStateList startState, const FGOAPStateList goalState, class UCI_GOAPActionBase_CPP* action, const TArray<int> possibleActions, const float g, FPlanNode* parent)
 {
 	SCOPE_CYCLE_COUNTER(STAT_CreatePlanNode);
 
@@ -30,24 +30,24 @@ FPlanNode::FPlanNode(FGOAPStateList startState, FGOAPStateList goalState, class 
 	f = this->g + this->h;
 }
 
-bool FPlanNode::operator==(FPlanNode other) const
+bool FPlanNode::operator==(const FPlanNode other) const
 {
 	int i = 0;
 	return UGOAPStateUtil::TestEqual(endState, other.endState, i);
 }
 
-bool FPlanNode::operator!=(FPlanNode other) const
+bool FPlanNode::operator!=(const FPlanNode other) const
 {
 	int i = 0;
 	return !UGOAPStateUtil::TestEqual(endState, other.endState, i);
 }
 
-bool FPlanNode::operator<(FPlanNode other) const
+bool FPlanNode::operator<(const FPlanNode other) const
 {
 	return this->f < other.f;
 }
 
-bool FPlanNode::operator>(FPlanNode other) const
+bool FPlanNode::operator>(const FPlanNode other) const
 {
 	return this->f > other.f;
 }
@@ -68,8 +68,8 @@ FPlanNode* FPlanNode::GetLowest(TSet<FPlanNode*> set)
 	return output;
 }
 
-UPlan::UPlan(FGOAPStateList startState, FGOAPStateList goalState,
-	TArray<UCI_GOAPActionBase_CPP*> allAllowedActions)
+UPlan::UPlan(const FGOAPStateList startState, const FGOAPStateList goalState,
+			 const TArray<UCI_GOAPActionBase_CPP*> allAllowedActions)
 {
 	this->startState = startState;
 	this->goalState = goalState;
@@ -84,16 +84,16 @@ UPlan::~UPlan()
 		task->_Shutdown();
 }
 
-void UPlan::Init(FGOAPStateList startState, FGOAPStateList goalState,
-	TArray<UCI_GOAPActionBase_CPP*> allAllowedActions)
+void UPlan::Init(const FGOAPStateList startState, const FGOAPStateList goalState,
+				 const TArray<UCI_GOAPActionBase_CPP*> allAllowedActions)
 {
 	this->startState = startState;
 	this->goalState = goalState;
 	this->allAllowedActions = allAllowedActions;
 }
 
-void UPlan::Init(FGOAPStateList startState, UCI_GOAPActionBase_CPP* goalAction,
-	TArray<UCI_GOAPActionBase_CPP*> actions)
+void UPlan::Init(const FGOAPStateList startState, UCI_GOAPActionBase_CPP* goalAction,
+				 const TArray<UCI_GOAPActionBase_CPP*> actions)
 {
 	this->startState = goalAction->preConditions;
 	this->goalState = startState;
@@ -105,7 +105,7 @@ void UPlan::StartCalculation()
 	task = FCalculatePlanTask::CreatePlanCalculator(startState, goalState, allAllowedActions, this);
 }
 
-void UPlan::LogPlan(bool printTested)
+void UPlan::LogPlan(const bool printTested) const
 {
 	UE_LOG(GOAP, Log, TEXT("----------------------------------"));
 
@@ -184,7 +184,7 @@ bool UPlan::ReadQueue()
 	return false;
 }
 
-bool UPlan::HasValidPlan()
+bool UPlan::HasValidPlan() const
 {
 	if (output == nullptr)
 		return false;
@@ -219,7 +219,7 @@ bool UPlan::StartNextAction()
 	return false;
 }
 
-bool UPlan::DoCurrentAction(float deltaTime, UPARAM(ref)FGOAPStateList& startState, UCI_GOAPWorkerComponent_CPP* workerComponent)
+bool UPlan::DoCurrentAction(const float deltaTime, UPARAM(ref)FGOAPStateList& startState, UCI_GOAPWorkerComponent_CPP* workerComponent)
 {
 	currentActionTimer += deltaTime;
 
@@ -241,8 +241,8 @@ void UPlan::Stop()
 	task = nullptr;
 }
 
-FCalculatePlanTask::FCalculatePlanTask(FGOAPStateList startState, FGOAPStateList goalState,
-	TArray<class UCI_GOAPActionBase_CPP*> actions, UPlan* owner)
+FCalculatePlanTask::FCalculatePlanTask(const FGOAPStateList startState, const FGOAPStateList goalState,
+									   const TArray<class UCI_GOAPActionBase_CPP*> actions, UPlan* owner)
 	: stopTaskCounter(0), startState(startState), goalState(goalState), actions(actions), owner(owner)
 {
 	runnable.Add(this);
@@ -423,8 +423,8 @@ void FCalculatePlanTask::ShutDown()
 	}
 }
 
-FCalculatePlanTask* FCalculatePlanTask::CreatePlanCalculator(FGOAPStateList startState, FGOAPStateList goalState,
-	TArray<UCI_GOAPActionBase_CPP*> actions, UPlan* owner)
+FCalculatePlanTask* FCalculatePlanTask::CreatePlanCalculator(const FGOAPStateList startState, const FGOAPStateList goalState,
+															 const TArray<UCI_GOAPActionBase_CPP*> actions, UPlan* owner)
 {
 	FCalculatePlanTask* output = nullptr;
 	if (FPlatformProcess::SupportsMultithreading())

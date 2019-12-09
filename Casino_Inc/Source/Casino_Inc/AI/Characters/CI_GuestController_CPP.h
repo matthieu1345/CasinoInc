@@ -28,8 +28,6 @@ enum class EGuestState : uint8
 UCLASS(Blueprintable)
 class CASINO_INC_API ACI_GuestController_CPP : public ACI_BaseAIController_CPP
 {
-
-private:
 	GENERATED_BODY()
 
 public:
@@ -38,20 +36,20 @@ public:
 	
 	/**
 	 * \brief called when you change a property in the editor
-	 * \param PropertyChangedEvent The property that's changed
+	 * \param propertyChangedEvent The property that's changed
 	 */
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent);
+	void PostEditChangeProperty(FPropertyChangedEvent& propertyChangedEvent) override;
 
 	/**
 	 * \brief custom tick for when the ai is in the <b>GS_Interacting</b> state
 	 */
-	void TickInteracting(float DeltaSeconds);
+	void TickInteracting(float deltaSeconds);
 	
 	/**
 	 *	\brief Function called every frame on this Actor. Override this function to implement custom logic to be executed every frame.
-	 *	\param DeltaSeconds	Game time elapsed during last frame modified by the time dilation
+	 *	\param deltaSeconds	Game time elapsed during last frame modified by the time dilation
 	 */
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 
 
 	/**
@@ -118,7 +116,7 @@ protected:
 	 * \return the preference of this guest
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-		FGuestPersonalityPreference GetPreferences();
+		FGuestPersonalityPreference GetPreferences() const;
 
 	/**
 	 * \brief select a random interactable type that this guest want's to use next
@@ -133,7 +131,7 @@ protected:
 	 * \return the selected goal
 	 */
 	UFUNCTION(BlueprintCallable)
-		class UCI_InteractableTileData_CPP* GetNextGoal(TSubclassOf<class UCI_InteractableTileData_CPP> type);
+		class UCI_InteractableTileData_CPP* GetNextGoal(TSubclassOf<class UCI_InteractableTileData_CPP> type) const;
 
 	/**
 	 * \brief find a new goal for the guest to go toward
@@ -167,7 +165,7 @@ protected:
 
 	// The starting happiness level of Guests
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Guest|stats|defaults")
-		float StartingHappiness = 50.0f;
+		float startingHappiness = 50.0f;
 
 	// The max money a guest can start with
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Guest|stats|defaults")

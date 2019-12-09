@@ -37,7 +37,7 @@ TWeakObjectPtr<ACI_TimeManager_CPP> ACI_TimeManager_CPP::GetInstance(UWorld* wor
 {
 	if (instance == nullptr)
 	{
-		for (TActorIterator<ACI_TimeManager_CPP> actorItr(world); actorItr;)
+		for ( const TActorIterator<ACI_TimeManager_CPP> actorItr(world); actorItr;)
 		{
 			instance = *actorItr;
 			break;
@@ -60,7 +60,7 @@ void ACI_TimeManager_CPP::BeginPlay()
 	}
 
 	instance = this;
-	_instance = this;
+	local_instance = this;
 
 	gamePawn = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->currentPawn;
 
@@ -98,10 +98,10 @@ void ACI_TimeManager_CPP::PostActorCreated()
 
 	}
 
-	_instance = GetInstance(GetWorld());
+	local_instance = GetInstance(GetWorld());
 }
 
-bool ACI_TimeManager_CPP::SetGameSpeed(ESpeedSetting newSpeed)
+bool ACI_TimeManager_CPP::SetGameSpeed(const ESpeedSetting newSpeed)
 {
 	if (currentSpeed == newSpeed)
 		return false;
@@ -134,7 +134,7 @@ bool ACI_TimeManager_CPP::SetGameSpeed(ESpeedSetting newSpeed)
 	return true;
 }
 
-FVector ACI_TimeManager_CPP::GetCurrentTime()
+FVector ACI_TimeManager_CPP::GetCurrentTime() const
 {
 	FVector output;
 
@@ -147,11 +147,11 @@ FVector ACI_TimeManager_CPP::GetCurrentTime()
 }
 
 // Called every frame
-void ACI_TimeManager_CPP::Tick(float DeltaTime)
+void ACI_TimeManager_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
-	currentTime += DeltaTime;
+	currentTime += deltaTime;
 
 	if (currentTime >= dayLenght)
 	{
@@ -166,9 +166,9 @@ void ACI_TimeManager_CPP::Tick(float DeltaTime)
 		CLEAR_WARN_COLOR()
 	}
 
-	int oldHour = FMath::FloorToInt(currentHour);
+	const int oldHour = FMath::FloorToInt(currentHour);
 	currentHour = currentTime * 24 / dayLenght;
-	int newHour = FMath::FloorToInt(currentHour);
+	const int newHour = FMath::FloorToInt(currentHour);
 	
 	if (newHour != oldHour)
 	{
@@ -186,9 +186,9 @@ void ACI_TimeManager_CPP::Tick(float DeltaTime)
 		gamePawn = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->currentPawn;
 	}
 
-	float curveTime = currentTime / dayLenght;
-	float newGain = cameraGainCurve->GetFloatValue(curveTime);
-	FVector4 newColorGain = FVector4(newGain, newGain, newGain,1);
+	const float curveTime = currentTime / dayLenght;
+	const float newGain = cameraGainCurve->GetFloatValue(curveTime);
+	const FVector4 newColorGain = FVector4(newGain, newGain, newGain,1);
 	gamePawn->GetCamera()->PostProcessSettings.ColorGain = newColorGain;
 }
 

@@ -23,9 +23,9 @@ public:
 	ACI_BaseTile_CPP();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
-	void SetTileCoords(int X, int Y, ETileLayer layerType);
+	void SetTileCoords(int _x, int _y, ETileLayer layerType);
 
 	void SetTileMapReference(class ACI_TileMap_CPP* tileMap, class ACI_TileMapLayer_CPP *mapLayer, class ACI_TileMapChunk_CPP *mapChunk)
 	{
@@ -34,7 +34,7 @@ public:
 		owningChunk = mapChunk;
 	}
 
-	void DestroyTile();
+	void DestroyTile() const;
 
 	UFUNCTION(BlueprintCallable)
 		void UpdateSprite() const;
@@ -45,38 +45,38 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void ChangeTileType(TSubclassOf<class UCI_BaseTileDataComponent_CPP> newData);
 	UFUNCTION(BlueprintCallable)
-		void MarkIsBeingEdited(bool newEditMode);
+		void MarkIsBeingEdited(bool newEditMode) const;
 
 	bool SetDataComponentRef(UCI_BaseTileDataComponent_CPP* newData);
 
-	UCI_BaseTileDataComponent_CPP* GetDataCompRef()
+	UCI_BaseTileDataComponent_CPP* GetDataCompRef() const
 	{
 		return tileDataComponent;
 	}
 
 	UFUNCTION(BlueprintCallable, Category="Tile Type")
-	bool HasDataComponent();
+	bool HasDataComponent() const;
 
 	UFUNCTION(BlueprintCallable)
-		FString GetTileName();
+		FString GetTileName() const;
 
-	ETileLayer GetTileLayer() { return tileLayer; }
+	ETileLayer GetTileLayer() const { return tileLayer; }
 
-	bool GetWalkable();
+	bool GetWalkable() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Coordinates")
-	FVector GetWorldCoordinate(float z = 0)
+	FVector GetWorldCoordinate(const float z = 0) const
 	{
 		return FVector(tileX * TILE_SIZE + TILE_SIZE / 2, tileY * TILE_SIZE + TILE_SIZE / 2, z);
 	}
 	UFUNCTION(BlueprintCallable, Category = "Coordinates")
-	FVector2D GetTileCoordinates()
+	FVector2D GetTileCoordinates() const
 	{
 		return FVector2D(tileX, tileY);
 	}
 
-	int GetX() { return tileX; }
-	int GetY() { return tileY; }
+	int GetX() const { return tileX; }
+	int GetY() const { return tileY; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -111,7 +111,7 @@ protected:
 		ETileLayer tileLayer = ETileLayer::TL_INVALID;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-		UCI_BaseTileDataComponent_CPP *tileDataComponent = NULL;
+		UCI_BaseTileDataComponent_CPP *tileDataComponent = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TSubclassOf<UCI_BaseTileDataComponent_CPP> newTileDataComponent;

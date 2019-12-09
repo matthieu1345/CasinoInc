@@ -6,7 +6,6 @@
 #include "CI_TileMap_CPP.h"
 #include "TimerManager.h"
 #include "AI/CI_AIManager_CPP.h"
-#include "AI/Tasks/CI_BaseTask_CPP.h"
 #include "AI/Base/CI_BaseAIPawn_CPP.h"
 #include "AI/Characters/CI_GuestController_CPP.h"
 
@@ -17,21 +16,21 @@ UCI_InteractableTileData_CPP::UCI_InteractableTileData_CPP() : Super()
 	results.RecalculateChance();
 }
 
-void UCI_InteractableTileData_CPP::DestroyComponent_Implementation(ACI_TileMap_CPP* tileMap, int x, int y)
+void UCI_InteractableTileData_CPP::DestroyComponent_Implementation(ACI_TileMap_CPP* tileMap, const int x, const int y)
 {
 	Super::DestroyComponent_Implementation(tileMap, x, y);
 
-	for (auto &It : interactionOffsets)
+	for (auto &it : interactionOffsets)
 	{
-		if (It.Value != nullptr)
+		if (it.Value != nullptr)
 		{
-			Cast<ACI_GuestController_CPP>(It.Value->GetBaseController())->InteractableDestroyed();
-			It.Value = nullptr;
+			Cast<ACI_GuestController_CPP>(it.Value->GetBaseController())->InteractableDestroyed();
+			it.Value = nullptr;
 		}
 	}
 }
 
-void UCI_InteractableTileData_CPP::SetInfo_Implementation(int32 x, int32 y, ACI_TileMap_CPP* tileMap)
+void UCI_InteractableTileData_CPP::SetInfo_Implementation(const int32 x, const int32 y, ACI_TileMap_CPP* tileMap)
 {
 	Super::SetInfo_Implementation(x, y, tileMap);
 
@@ -51,11 +50,11 @@ void UCI_InteractableTileData_CPP::Interact(FGuestStats& stats, class ACI_BaseAI
 {
 	FWeightedInteractionResult result;
 	
-	for (auto &It : interactionOffsets)
+	for (auto &it : interactionOffsets)
 	{
-		if (It.Value == askingPawn)
+		if (it.Value == askingPawn)
 		{
-			It.Value = nullptr;
+			it.Value = nullptr;
 			break;
 		}
 	}
@@ -98,9 +97,9 @@ bool UCI_InteractableTileData_CPP::IsFree()
 	if (needsDealer && !hasDealer)
 		return false;
 
-	for (auto &It : interactionOffsets)
+	for (auto &it : interactionOffsets)
 	{
-		if (It.Value == nullptr)
+		if (it.Value == nullptr)
 			return true;
 	}
 
@@ -109,12 +108,12 @@ bool UCI_InteractableTileData_CPP::IsFree()
 
 FVector2D UCI_InteractableTileData_CPP::Reserve(class ACI_BaseAIPawn_CPP* askingPawn)
 {
-	for (auto &It : interactionOffsets)
+	for (auto &it : interactionOffsets)
 	{
-		if (It.Value == nullptr)
+		if (it.Value == nullptr)
 		{
-			It.Value = askingPawn;
-			return It.Key + GetRegisterLocation();
+			it.Value = askingPawn;
+			return it.Key + GetRegisterLocation();
 		}
 	}
 
@@ -138,7 +137,7 @@ void UCI_InteractableTileData_CPP::BeginPlay()
 		return;
 
 	static TMap<UDataTable*, FInteractionResult> lookupTable;
-	auto ref = lookupTable.Find(results.values);
+	const auto ref = lookupTable.Find(results.values);
 	if (ref != nullptr)
 	{
 		results = *ref;
@@ -157,23 +156,23 @@ void UCI_InteractableTileData_CPP::UpdateInteractLocations()
 
 	TArray<FVector2D> usedLocations;
 
-	for (auto &It : defaultInteractOffsets)
+	for (auto &it : defaultInteractOffsets)
 	{
-		FVector2D location = GetRegisterLocation() + It;
+		const FVector2D location = GetRegisterLocation() + it;
 		if (!tileMap->CheckWalkable(location.X, location.Y))
 		{
-			if (interactionOffsets.Contains(It))
-				usedLocations.Add(It);
+			if (interactionOffsets.Contains(it))
+				usedLocations.Add(it);
 			continue;
 		}
 
-		if (interactionOffsets.Contains(It))
+		if (interactionOffsets.Contains(it))
 			continue;
 			
-		interactionOffsets.Add(It, nullptr);
+		interactionOffsets.Add(it, nullptr);
 	}
 
-	for (auto location : usedLocations)
+	for ( const auto location : usedLocations)
 		interactionOffsets.Remove(location);
 }
 

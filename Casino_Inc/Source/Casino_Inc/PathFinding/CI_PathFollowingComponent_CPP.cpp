@@ -8,7 +8,6 @@
 #include "MainGameMode/CI_GameModeBase_CPP.h"
 #include "Casino_Inc.h"
 #include "TileMap/CI_TileMapCoordinateMath.h"
-#include "DebugMacros.h"
 #include "TileMap/CI_BaseTile_CPP.h"
 
 //TODO:DOCUMENT comment/document this file
@@ -60,7 +59,7 @@ void UCI_PathFollowingComponent_CPP::CancelPath()
 	}
 }
 
-void UCI_PathFollowingComponent_CPP::PrintPathState()
+void UCI_PathFollowingComponent_CPP::PrintPathState() const
 {
 	UE_LOG(PathFinding, Log, TEXT("- The Pathing state of actor %s is: %i"), *GetOwner()->GetName(), (int)currentState);
 }
@@ -77,10 +76,10 @@ void UCI_PathFollowingComponent_CPP::BeginPlay()
 }
 
 // Called every frame
-void UCI_PathFollowingComponent_CPP::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCI_PathFollowingComponent_CPP::TickComponent(const float deltaTime, const ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	LastTickMovement = FVector::ZeroVector;
+	Super::TickComponent(deltaTime, tickType, thisTickFunction);
+	lastTickMovement = FVector::ZeroVector;
 
 	switch (currentState)
 	{
@@ -92,7 +91,7 @@ void UCI_PathFollowingComponent_CPP::TickComponent(float DeltaTime, ELevelTick T
 		break;
 
 	case EPathFollowingState::PFS_Moving: 
-		DoMovement(DeltaTime);
+		DoMovement(deltaTime);
 
 #if DEBUG_PATH > 0
 		DrawPathDebug();
@@ -161,7 +160,7 @@ void UCI_PathFollowingComponent_CPP::GetNewPath(FVector2D start, FVector2D end)
 
 }
 
-void UCI_PathFollowingComponent_CPP::PathCalculationFinished(bool completePath)
+void UCI_PathFollowingComponent_CPP::PathCalculationFinished(const bool completePath)
 {
 #if PROFILE_PATHFINDING_LEVEL > 0
 	lastCalcEnd = FPlatformTime::ToMilliseconds(FPlatformTime::Cycles());
@@ -236,8 +235,8 @@ void UCI_PathFollowingComponent_CPP::DoMovement(const float deltaTime)
 	if (nextGoalNode->isEnd)
 	{
 		float* temp = new float(9.0f);
-		float xValue = FMath::Modf(end.X, temp);
-		float yValue = FMath::Modf(end.Y, temp);
+		const float xValue = FMath::Modf(end.X, temp);
+		const float yValue = FMath::Modf(end.Y, temp);
 		delete temp;
 
 		goal += FVector(xValue * ACI_BaseTile_CPP::TILE_SIZE, yValue * ACI_BaseTile_CPP::TILE_SIZE, 0);
@@ -256,8 +255,8 @@ void UCI_PathFollowingComponent_CPP::DoMovement(const float deltaTime)
 
 void UCI_PathFollowingComponent_CPP::CheckGoalNodeReached()
 {
-	float distance = FVector::DistSquared2D(UCI_TileMapCoordinateMath::TileVectorToWorldCenter(nextGoalNode->location, ACI_GameModeBase_CPP::CHARACTER_LAYER), GetOwner()->GetActorLocation());
-	if (distance <= LastTickMovement.SizeSquared2D())
+	const float distance = FVector::DistSquared2D(UCI_TileMapCoordinateMath::TileVectorToWorldCenter(nextGoalNode->location, ACI_GameModeBase_CPP::CHARACTER_LAYER), GetOwner()->GetActorLocation());
+	if (distance <= lastTickMovement.SizeSquared2D())
 	{
 		currentState = EPathFollowingState::PFS_ReachedNode;
 
@@ -280,10 +279,10 @@ void UCI_PathFollowingComponent_CPP::CheckGoalNodeReached()
 	}
 }
 
-void UCI_PathFollowingComponent_CPP::MoveActor(FVector input)
+void UCI_PathFollowingComponent_CPP::MoveActor(const FVector input)
 {
 	
-	LastTickMovement = input;
+	lastTickMovement = input;
 
 	if (GetOwner()->GetClass()->IsChildOf(AController::StaticClass()))
 	{

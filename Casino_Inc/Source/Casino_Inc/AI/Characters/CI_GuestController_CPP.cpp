@@ -26,13 +26,13 @@ ACI_GuestController_CPP::ACI_GuestController_CPP() : ACI_BaseAIController_CPP()
 	// find all interactable types
 	if (interactablesList.Num() == 0)
 	{
-		for (TObjectIterator<UClass> It; It; ++It)
+		for (TObjectIterator<UClass> it; it; ++it)
 		{
-			if (It->IsChildOf(UCI_InteractableTileData_CPP::StaticClass()) && Cast<UCI_InteractableTileData_CPP>(It->GetDefaultObject())->GetRegisterName() != "" && !It->HasAnyClassFlags(CLASS_Abstract))
+			if (it->IsChildOf(UCI_InteractableTileData_CPP::StaticClass()) && Cast<UCI_InteractableTileData_CPP>(it->GetDefaultObject())->GetRegisterName() != "" && !it->HasAnyClassFlags(CLASS_Abstract))
 			{
-				auto test = [&](TSubclassOf<UCI_InteractableTileData_CPP> Result) {return Cast<UCI_InteractableTileData_CPP>(It->GetDefaultObject())->GetRegisterName() == Cast<UCI_InteractableTileData_CPP>(Result->GetDefaultObject())->GetRegisterName(); };
+				const auto test = [&](TSubclassOf<UCI_InteractableTileData_CPP> result) {return Cast<UCI_InteractableTileData_CPP>(it->GetDefaultObject())->GetRegisterName() == Cast<UCI_InteractableTileData_CPP>(result->GetDefaultObject())->GetRegisterName(); };
 				if (!interactablesList.ContainsByPredicate(test))
-					interactablesList.Add(*It);
+					interactablesList.Add(*it);
 			}
 		}
 	}
@@ -43,15 +43,15 @@ ACI_GuestController_CPP::~ACI_GuestController_CPP()
 
 }
 
-void ACI_GuestController_CPP::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+void ACI_GuestController_CPP::PostEditChangeProperty(FPropertyChangedEvent& propertyChangedEvent)
 {
-	FName propertyName = (PropertyChangedEvent.Property != NULL) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
+	// FName propertyName = (propertyChangedEvent.Property != nullptr) ? propertyChangedEvent.Property->GetFName() : NAME_None;
 
 	// get the preferences out of the table
 	preferences = *preferenceTableRow.GetRow<FGuestPersonalityPreference>(preferenceTableRow.RowName.ToString());
 }
 
-void ACI_GuestController_CPP::Tick(float DeltaSeconds)
+void ACI_GuestController_CPP::Tick(const float deltaSeconds)
 {
 	switch (state)
 	{
@@ -59,7 +59,7 @@ void ACI_GuestController_CPP::Tick(float DeltaSeconds)
 		break;
 
 	case EGuestState::GS_Interacting: 
-		TickInteracting(DeltaSeconds); // tick the interacting behaviour
+		TickInteracting(deltaSeconds); // tick the interacting behaviour
 		break;
 
 
@@ -86,13 +86,13 @@ void ACI_GuestController_CPP::Tick(float DeltaSeconds)
 
 }
 
-void ACI_GuestController_CPP::TickInteracting(float DeltaSeconds)
+void ACI_GuestController_CPP::TickInteracting(const float deltaSeconds)
 {
 	bool finished = false;
 
 	if (IsValid(currentInteractionTile)) // if the current interaction goal is still valid tick the interaction
 	{
-		interactionTimer += DeltaSeconds;
+		interactionTimer += deltaSeconds;
 
 		if (interactionTimer >= currentInteractionTile->GetInteractTime()) // if we're finished interacting, call the interact logic to update stats
 		{
@@ -129,7 +129,7 @@ void ACI_GuestController_CPP::GetRandomPersonality()
 void ACI_GuestController_CPP::ResetStats()
 {
 	// set all stats to their defaults
-	stats.happiness = StartingHappiness;
+	stats.happiness = startingHappiness;
 	stats.money = FMath::RandRange(minStartingMoney, maxStartingMoney);
 	stats.chips = 0.0f;
 	stats.hunger = 0.0f;
@@ -143,7 +143,7 @@ void ACI_GuestController_CPP::ResetGuest()
 	isAway = false;
 }
 
-void ACI_GuestController_CPP::HappinessLevelChanged(EStatLevel newLevel)
+void ACI_GuestController_CPP::HappinessLevelChanged(const EStatLevel newLevel)
 {
 	switch (newLevel)
 	{
@@ -158,7 +158,9 @@ void ACI_GuestController_CPP::HappinessLevelChanged(EStatLevel newLevel)
 	}
 }
 
-void ACI_GuestController_CPP::ChipsLevelChanged(EStatLevel newLevel)
+// ReSharper disable once CppMemberFunctionMayBeStatic this will never be static, cause it's been called on a specific ai who's state has changed
+// ReSharper disable once CppMemberFunctionMayBeConst this will not be const, ai state changes can and will directly change stuff about them
+void ACI_GuestController_CPP::ChipsLevelChanged(const EStatLevel newLevel)
 {
 	// we don't really do anything with this instantly
 	switch (newLevel)
@@ -172,7 +174,9 @@ void ACI_GuestController_CPP::ChipsLevelChanged(EStatLevel newLevel)
 	}
 }
 
-void ACI_GuestController_CPP::MoneyLevelChanged(EStatLevel newLevel)
+// ReSharper disable once CppMemberFunctionMayBeStatic this will never be static, cause it's been called on a specific ai who's state has changed
+// ReSharper disable once CppMemberFunctionMayBeConst this will not be const, ai state changes can and will directly change stuff about them
+void ACI_GuestController_CPP::MoneyLevelChanged(const EStatLevel newLevel)
 {
 	// we don't really do anything with this instantly
 	switch (newLevel)
@@ -186,7 +190,9 @@ void ACI_GuestController_CPP::MoneyLevelChanged(EStatLevel newLevel)
 	}
 }
 
-void ACI_GuestController_CPP::HungerLevelChanged(EStatLevel newLevel)
+// ReSharper disable once CppMemberFunctionMayBeStatic this will never be static, cause it's been called on a specific ai who's state has changed
+// ReSharper disable once CppMemberFunctionMayBeConst this will not be const, ai state changes can and will directly change stuff about them
+void ACI_GuestController_CPP::HungerLevelChanged(const EStatLevel newLevel)
 {
 	// we don't really do anything with this instantly
 	switch (newLevel)
@@ -200,7 +206,9 @@ void ACI_GuestController_CPP::HungerLevelChanged(EStatLevel newLevel)
 	}
 }
 
-void ACI_GuestController_CPP::ThirstLevelChanged(EStatLevel newLevel)
+// ReSharper disable once CppMemberFunctionMayBeStatic this will never be static, cause it's been called on a specific ai who's state has changed
+// ReSharper disable once CppMemberFunctionMayBeConst this will not be const, ai state changes can and will directly change stuff about them
+void ACI_GuestController_CPP::ThirstLevelChanged(const EStatLevel newLevel)
 {
 	// we don't really do anything with this instantly
 	switch (newLevel)
@@ -214,7 +222,7 @@ void ACI_GuestController_CPP::ThirstLevelChanged(EStatLevel newLevel)
 	}
 }
 
-FGuestPersonalityPreference ACI_GuestController_CPP::GetPreferences()
+FGuestPersonalityPreference ACI_GuestController_CPP::GetPreferences() const
 {
 	return *preferenceTableRow.GetRow<FGuestPersonalityPreference>(preferenceTableRow.RowName.ToString());
 }
@@ -227,7 +235,7 @@ TSubclassOf<UCI_InteractableTileData_CPP> ACI_GuestController_CPP::GetNextIntera
 	// the total score
 	float totalScore = 0.0f;
 
-	for (TSubclassOf<UCI_InteractableTileData_CPP> interactable : interactablesList) // loop over every interactable
+	for ( const TSubclassOf<UCI_InteractableTileData_CPP> interactable : interactablesList) // loop over every interactable
 	{
 		float score = UCI_InteractableTileData_CPP::GetUtilityScoreDefault(interactable, stats, GetPreferences()); // calculate the score for this interactable
 		interactableMap.Add(interactable, score); // add interactable and score to the map
@@ -240,7 +248,7 @@ TSubclassOf<UCI_InteractableTileData_CPP> ACI_GuestController_CPP::GetNextIntera
 
 	float random = FMath::RandRange(0.0f, totalScore); // select a random score
 
-	for (TTuple<TSubclassOf<UCI_InteractableTileData_CPP>, float> element : interactableMap) // loop over every interactable
+	for ( const TTuple<TSubclassOf<UCI_InteractableTileData_CPP>, float> element : interactableMap) // loop over every interactable
 	{
 		random -= element.Value; // remove the element's score from the random score
 
@@ -253,19 +261,19 @@ TSubclassOf<UCI_InteractableTileData_CPP> ACI_GuestController_CPP::GetNextIntera
 	return TSubclassOf<UCI_InteractableTileData_CPP>();
 }
 
-UCI_InteractableTileData_CPP* ACI_GuestController_CPP::GetNextGoal(TSubclassOf<UCI_InteractableTileData_CPP> type)
+UCI_InteractableTileData_CPP* ACI_GuestController_CPP::GetNextGoal(TSubclassOf<UCI_InteractableTileData_CPP> type) const
 {
 	// get the name of the type
-	FString typeName = type->GetDefaultObject<UCI_InteractableTileData_CPP>()->GetRegisterName();
+	const FString typeName = type->GetDefaultObject<UCI_InteractableTileData_CPP>()->GetRegisterName();
 	// get a random interactable with that name
-	auto result = Cast<UCI_InteractableTileData_CPP>(ACI_AIManager_CPP::GetInstance(GetWorld())->GetRandomRegisteredTile(typeName));
+	const auto result = Cast<UCI_InteractableTileData_CPP>(ACI_AIManager_CPP::GetInstance(GetWorld())->GetRandomRegisteredTile(typeName));
 
 	return result;
 }
 
 void ACI_GuestController_CPP::CalcultateNewGoal()
 {
-	TSubclassOf<UCI_InteractableTileData_CPP> type = GetNextInteractableType();
+	const TSubclassOf<UCI_InteractableTileData_CPP> type = GetNextInteractableType();
 
 	// if there's no valid interactable type leave the casino
 	if (type == nullptr)
@@ -279,7 +287,7 @@ void ACI_GuestController_CPP::CalcultateNewGoal()
 	if (currentInteractionTile != nullptr && currentInteractionTile->IsFree()) // when we can use the interactable
 	{
 		// reserve the interactable
-		auto location = currentInteractionTile->Reserve(possessedCustomBasePawn);
+		const auto location = currentInteractionTile->Reserve(possessedCustomBasePawn);
 
 		// if we're not at the location yet, move there
 		if (!UCI_TileMapCoordinateMath::WorldVectorToTile(GetPawn()->GetActorLocation()).Equals(location, 1.0f))

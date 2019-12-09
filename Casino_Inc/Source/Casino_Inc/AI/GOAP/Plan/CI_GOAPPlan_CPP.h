@@ -71,7 +71,7 @@ public:
 
 	struct PlanData
 	{
-		PlanData(TSet<FPlanNode*> openNodes, TSet<FPlanNode*> closedNodes, TArray<FPlanNode*> plan, bool isComplete) :
+		PlanData(const TSet<FPlanNode*> openNodes, const TSet<FPlanNode*> closedNodes, const TArray<FPlanNode*> plan, const bool isComplete) :
 			openNodes(openNodes), closedNodes(closedNodes), plan(plan), isComplete(isComplete) {}
 		PlanData() {}
 
@@ -90,15 +90,15 @@ public:
 	void StartCalculation();
 
 	UFUNCTION(BlueprintCallable)
-		void LogPlan(bool printTested = false);
+		void LogPlan(bool printTested = false) const;
 
 	bool ReadQueue();
 
-	bool HasValidPlan();
+	bool HasValidPlan() const;
 
 	bool StartNextAction();
 
-	UCI_GOAPActionBase_CPP* GetCurrentAction() { return currentAction->action; }
+	UCI_GOAPActionBase_CPP* GetCurrentAction() const { return currentAction->action; }
 	UFUNCTION(BlueprintCallable)
 	bool DoCurrentAction(float deltaTime, UPARAM(ref)FGOAPStateList& startState, UCI_GOAPWorkerComponent_CPP* workerComponent);
 
@@ -141,9 +141,9 @@ public:
 	}
 
 	// Begin FRunnable interface.
-	virtual bool Init();
-	virtual uint32 Run();
-	virtual void Stop();
+	bool Init() override;
+	uint32 Run() override;
+	void Stop() override;
 	// End FRunnable interface
 
 	/** Makes sure this thread has stopped properly */

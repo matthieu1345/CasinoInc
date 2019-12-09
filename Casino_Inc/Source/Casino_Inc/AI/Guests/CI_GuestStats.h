@@ -134,6 +134,6 @@ struct FGuestPersonalityPreference : public FTableRowBase
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta = (DisplayName = "Base Utility Values"))
 	TMap<EInteractables, float> baseUtilityValues;
 
-	virtual void OnPostDataImport(const UDataTable* InDataTable, const FName InRowName,
-	                              TArray<FString>& OutCollectedImportProblems) override;
+	virtual void OnPostDataImport(const UDataTable* inDataTable, FName inRowName,
+								  TArray<FString>& outCollectedImportProblems) override;
 };

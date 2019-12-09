@@ -26,7 +26,7 @@ class CASINO_INC_API ACI_GameStateBase_CPP : public AGameStateBase
 {
 	GENERATED_BODY()
 
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 public:
 
 	class ACI_Pawn_CPP *currentPawn;
@@ -42,14 +42,14 @@ public:
 	class UCI_IngameUserWidget_CPP *mainUI;
 
 	UFUNCTION(BlueprintSetter)
-	void SetSelectedBuildObject(TSubclassOf<class UCI_BaseTileDataComponent_CPP> newObject)
+	void SetSelectedBuildObject(const TSubclassOf<class UCI_BaseTileDataComponent_CPP> newObject)
 	{
 		selectedBuildObject = newObject;
 		changedSelectedBuildObject = true;
 	}
 	UFUNCTION(BlueprintGetter)
-		TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetSelectedBuildObject()
-	{
+		TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetSelectedBuildObject() const
+		{
 		return selectedBuildObject;
 	}
 
@@ -60,15 +60,15 @@ public:
 		changedSelectedBuildObject = true;
 	}
 	UFUNCTION(BlueprintGetter)
-		class UCI_BaseTask_CPP* GetSelectedTask()
-	{
+		class UCI_BaseTask_CPP* GetSelectedTask() const
+		{
 		return selectedTask;
 	}
 
 	UFUNCTION(Exec)
 		void ToggleCheatMode();
 
-	bool GetCheatMode() { return cheatmode; }
+	bool GetCheatMode() const { return cheatmode; }
 		
 
 	bool changedSelectedBuildObject = false;
@@ -80,7 +80,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ChangeMode(EBuildInputMode newMode);
 	UFUNCTION(BlueprintCallable)
-	EBuildInputMode GetCurrentMode() { return currentMode; }
+	EBuildInputMode GetCurrentMode() const { return currentMode; }
 	EBuildInputMode currentMode = EBuildInputMode::BIM_None;
 
 private:

@@ -20,17 +20,17 @@ public:
 	ACI_TileMapLayer_CPP();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
 	void SpawnChunks(int xSize, int ySize, TSubclassOf<class ACI_TileMapChunk_CPP> defaultChunk, TArray<class ACI_TileMapChunk_CPP*>& allChunks, ETileLayer
 	                 layerType);
-	void SpawnTiles(TArray<class ACI_BaseTile_CPP*> &mapTiles, TSubclassOf<class ACI_BaseTile_CPP> DefaultTile, class ACI_TileMap_CPP *tileMap);
+	void SpawnTiles(TArray<class ACI_BaseTile_CPP*> &mapTiles, TSubclassOf<class ACI_BaseTile_CPP> defaultTile, class ACI_TileMap_CPP *tileMap);
 	
-	void SetLayer(ETileLayer newLayer) { layer = newLayer; }
-	ETileLayer GetLayer() { return layer; }
+	void SetLayer(const ETileLayer newLayer) { layer = newLayer; }
+	ETileLayer GetLayer() const { return layer; }
 	class ACI_BaseTile_CPP* GetTile(int x, int y);
 	class ACI_TileMapChunk_CPP* GetChunk(int x, int y, bool isChunkCoord);
-	TArray<ACI_BaseTile_CPP*> GetAllTiles() { return layerTiles; }
+	TArray<ACI_BaseTile_CPP*> GetAllTiles() const { return layerTiles; }
 
 	void DestroyLayer();
 

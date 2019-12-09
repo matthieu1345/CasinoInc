@@ -6,7 +6,6 @@
 #include "Casino_Inc.h"
 #include "Engine/World.h"
 #include "AI/CI_AIManager_CPP.h"
-#include "DebugMacros.h"
 
 //TODO:DOCUMENT comment/document this file
 
@@ -73,7 +72,7 @@ void UCI_BaseTileDataComponent_CPP::DestroyComponent_Implementation(ACI_TileMap_
 	UnregisterComponent();
 }
 
-void UCI_BaseTileDataComponent_CPP::SetInfo_Implementation(int _x, int _y, ACI_TileMap_CPP* tileMap)
+void UCI_BaseTileDataComponent_CPP::SetInfo_Implementation(const int _x, const int _y, ACI_TileMap_CPP* tileMap)
 {
 	tileX = _x;
 	tileY = _y;
@@ -109,12 +108,12 @@ void UCI_BaseTileDataComponent_CPP::SetInfo_Implementation(int _x, int _y, ACI_T
 
 }
 
-bool UCI_BaseTileDataComponent_CPP::CheckIfValidPlacement(int _x, int _y, ETileLayer layer, ACI_TileMap_CPP* map)
+bool UCI_BaseTileDataComponent_CPP::CheckIfValidPlacement(const int _x, const int _y, const ETileLayer layer, ACI_TileMap_CPP* map)
 {
 	if (ALWAYS_EDIT_FLOOR && layer == ETileLayer::TL_Ground)
 		return true;
 
-	bool valid = true;
+	// bool valid = true;
 
 	for (int x = 1; x <= xSize; ++x)
 	{
@@ -126,7 +125,7 @@ bool UCI_BaseTileDataComponent_CPP::CheckIfValidPlacement(int _x, int _y, ETileL
 
 			for (ACI_BaseTile_CPP* usedTile : tiles)
 			{
-				if (usedTile->GetDataCompRef() != NULL)
+				if (usedTile->GetDataCompRef() != nullptr)
 				{
 					for (auto occupiedLayer : occupiesTile)
 					{
@@ -154,7 +153,7 @@ UTexture2D* UCI_BaseTileDataComponent_CPP::GetTileTypePreview(TSubclassOf<UCI_Ba
 	return Cast<UCI_BaseTileDataComponent_CPP>(tileDataClass->GetDefaultObject())->GetTilePreview();
 }
 
-ACI_BaseTile_CPP* UCI_BaseTileDataComponent_CPP::GetTile()
+ACI_BaseTile_CPP* UCI_BaseTileDataComponent_CPP::GetTile() const
 {
 	ACI_BaseTile_CPP* output;
 	tileMap->GetTileFromLayerCoordinate(tileX, tileY, tileLayer, output);
@@ -172,14 +171,14 @@ void UCI_BaseTileDataComponent_CPP::BeginPlay()
 
 
 // Called every frame
-void UCI_BaseTileDataComponent_CPP::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCI_BaseTileDataComponent_CPP::TickComponent(const float deltaTime, const ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::TickComponent(deltaTime, tickType, thisTickFunction);
 
 	// ...
 }
 
-FPaperTileInfo UCI_BaseTileDataComponent_CPP::GetTileInfo_Implementation(int xOffset = 0, int yOffset = 0)
+FPaperTileInfo UCI_BaseTileDataComponent_CPP::GetTileInfo_Implementation(const int xOffset, const int yOffset)
 {
 	int index = FMath::RandRange(0, tileInfo.Num() - 1);
 

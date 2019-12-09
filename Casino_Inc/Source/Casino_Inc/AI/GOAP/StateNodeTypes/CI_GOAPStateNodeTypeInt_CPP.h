@@ -13,7 +13,7 @@ class UGOAPStateNodeType_Int : public UGOAPStateNodeType
 	GENERATED_BODY()
 
 public:
-	virtual bool TestEqual(const UGOAPStateNodeType* other) const override
+	bool TestEqual(const UGOAPStateNodeType* other) const override
 	{
 		if (UGOAPStateNodeType::TestEqual(other))
 			return GetValueClass<const UGOAPStateNodeType_Int>(other)->value == value;
@@ -26,7 +26,7 @@ public:
 		if (!UGOAPStateNodeType::TestValue(other))
 			return false;
 
-		auto otherInt = GetValueClass<const UGOAPStateNodeType_Int>(other);
+		auto const otherInt = GetValueClass<const UGOAPStateNodeType_Int>(other);
 
 		switch (conditionType)
 		{

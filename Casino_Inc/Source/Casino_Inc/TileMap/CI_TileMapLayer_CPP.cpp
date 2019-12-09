@@ -30,29 +30,27 @@ void ACI_TileMapLayer_CPP::BeginPlay()
 }
 
 // Called every frame
-void ACI_TileMapLayer_CPP::Tick(float DeltaTime)
+void ACI_TileMapLayer_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 }
 
 // ***********************************************************************
 // layer creation functions
 
-void ACI_TileMapLayer_CPP::SpawnChunks(int xSize, int ySize, TSubclassOf<class ACI_TileMapChunk_CPP> defaultChunk, TArray<ACI_TileMapChunk_CPP*> &allChunks, ETileLayer layerType)
+void ACI_TileMapLayer_CPP::SpawnChunks(const int xSize, const int ySize, const TSubclassOf<class ACI_TileMapChunk_CPP> defaultChunk, TArray<ACI_TileMapChunk_CPP*> &allChunks, const ETileLayer layerType)
 {
 	xChunks = xSize / ACI_TileMapChunk_CPP::CHUNK_SIZE;
 	yChunks = ySize / ACI_TileMapChunk_CPP::CHUNK_SIZE;
 
 	layer = layerType;
 
-	ACI_TileMapChunk_CPP *newwestChunk;
-
 	for (int y = 0; y < yChunks; y++)
 	{
 		for (int x = 0; x < xChunks; x++)
 		{
-			newwestChunk = GetWorld()->SpawnActor<ACI_TileMapChunk_CPP>(defaultChunk, FVector(y * ACI_TileMapChunk_CPP::CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE * -1, x * ACI_TileMapChunk_CPP::CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE, 0), FRotator::ZeroRotator);
+			ACI_TileMapChunk_CPP *newwestChunk = GetWorld()->SpawnActor<ACI_TileMapChunk_CPP>(defaultChunk, FVector(y * ACI_TileMapChunk_CPP::CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE * -1, x * ACI_TileMapChunk_CPP::CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE, 0), FRotator::ZeroRotator);
 			newwestChunk->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 			newwestChunk->SetChunkCoords(x, y, layer);
 
@@ -65,13 +63,13 @@ void ACI_TileMapLayer_CPP::SpawnChunks(int xSize, int ySize, TSubclassOf<class A
 
 }
 
-void ACI_TileMapLayer_CPP::SpawnTiles(TArray<ACI_BaseTile_CPP*>& mapTiles, TSubclassOf<ACI_BaseTile_CPP> DefaultTile,
+void ACI_TileMapLayer_CPP::SpawnTiles(TArray<ACI_BaseTile_CPP*>& mapTiles, const TSubclassOf<ACI_BaseTile_CPP> defaultTile,
 	ACI_TileMap_CPP* tileMap)
 {
 	for (ACI_TileMapChunk_CPP* chunk : layerChunks)
 	{
 	
-		chunk->SpawnTiles(DefaultTile, tileMap, this, mapTiles, layerTiles);
+		chunk->SpawnTiles(defaultTile, tileMap, this, mapTiles, layerTiles);
 
 	}
 }
@@ -94,16 +92,14 @@ void ACI_TileMapLayer_CPP::DestroyLayer()
 // ***********************************************************************************
 // Layer manipulation functions
 
-ACI_BaseTile_CPP* ACI_TileMapLayer_CPP::GetTile(int x, int y)
+ACI_BaseTile_CPP* ACI_TileMapLayer_CPP::GetTile(const int x, const int y)
 {
-	ACI_BaseTile_CPP* output = NULL;
-
-	output = GetChunk(x, y , false)->GetTile(x, y, false);
+	ACI_BaseTile_CPP *output = GetChunk(x, y , false)->GetTile(x, y, false);
 
 	return output;
 }
 
-ACI_TileMapChunk_CPP* ACI_TileMapLayer_CPP::GetChunk(int x, int y, bool isChunkCoord)
+ACI_TileMapChunk_CPP* ACI_TileMapLayer_CPP::GetChunk(const int x, const int y, const bool isChunkCoord)
 {
 	if (isChunkCoord)
 	{

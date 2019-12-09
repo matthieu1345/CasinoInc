@@ -28,11 +28,11 @@ public:
 	virtual void SetInfo_Implementation(int32 x, int32 y, ACI_TileMap_CPP* tileMap) override;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-		float GetUtilityScore(const FGuestStats stats, const FGuestPersonalityPreference preference);
-	virtual float GetUtilityScore_Implementation(const FGuestStats stats, const FGuestPersonalityPreference preference);
+		float GetUtilityScore(FGuestStats stats, FGuestPersonalityPreference preference);
+	virtual float GetUtilityScore_Implementation(FGuestStats stats, FGuestPersonalityPreference preference);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-		static float GetUtilityScoreDefault(TSubclassOf<UCI_InteractableTileData_CPP> defaultClass, const FGuestStats stats, const FGuestPersonalityPreference preference);
+		static float GetUtilityScoreDefault(TSubclassOf<UCI_InteractableTileData_CPP> defaultClass, FGuestStats stats, FGuestPersonalityPreference preference);
 
 	UFUNCTION(BlueprintCallable)
 		void Interact(UPARAM(Ref) FGuestStats &stats, class ACI_BaseAIPawn_CPP* askingPawn, FGuestPersonalityPreference preference);
@@ -41,7 +41,7 @@ public:
 	// ReSharper disable once CppFunctionIsNotImplemented  this is a blueprint only function
 		FWeightedInteractionResult GetOverridenResult(FGuestStats stats, FGuestPersonalityPreference preference);
 
-	float GetInteractTime() { return interactTime; }
+	float GetInteractTime() const { return interactTime; }
 
 	bool IsFree();
 	FVector2D Reserve(class ACI_BaseAIPawn_CPP* askingPawn);
@@ -61,13 +61,13 @@ protected:
 		FInteractionResult results;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-		EInteractables type;
+		EInteractables type{};
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		float defaultUtilityScore = 5;
 
 	UPROPERTY(EditDefaultsOnly)
-		class UCI_BaseTask_CPP* dealerTask;
+		class UCI_BaseTask_CPP*dealerTask = nullptr;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -80,7 +80,7 @@ protected:
 		FVector2D dealerOffset;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-		float interactTime;
+		float interactTime = 0;
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		bool inUse = false;

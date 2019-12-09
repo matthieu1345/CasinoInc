@@ -4,11 +4,10 @@
 #include "TileMap/CI_TileMapCoordinateMath.h"
 #include "AI/CI_AIManager_CPP.h"
 #include "CI_BaseAIPawn_CPP.h"
-#include "AI/GOAP/CI_GOAPWorkerComponent_CPP.h"
 #include "PathFinding/CI_PathFollowingComponent_CPP.h"
 #include "Managers/CI_StatsManager_CPP.h"
 
-void ACI_BaseStaffController_CPP::HourChanged(int hourNumber)
+void ACI_BaseStaffController_CPP::HourChanged(const int hourNumber)
 {
 	Super::HourChanged(hourNumber);
 
@@ -41,9 +40,9 @@ void ACI_BaseStaffController_CPP::HourChanged(int hourNumber)
 	}
 }
 
-void ACI_BaseStaffController_CPP::Tick(float DeltaSeconds)
+void ACI_BaseStaffController_CPP::Tick(const float deltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+	Super::Tick(deltaSeconds);
 
 	// if the worker is supposed to be away, and doesn't have a active path, turn him invisible
 	if (!pathFollowingComp->IsActiveState() && isAway)

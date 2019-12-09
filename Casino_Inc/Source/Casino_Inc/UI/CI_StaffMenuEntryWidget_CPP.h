@@ -20,7 +20,7 @@ class CASINO_INC_API UCI_StaffMenuEntryWidget_CPP : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 
-	bool CheckSlidersValid();
+	bool CheckSlidersValid() const;
 
 	UFUNCTION(BlueprintCallable)
 		void StartingTimeChanged(float newValue);

@@ -20,7 +20,7 @@ public:
 	ACI_StatsManager_CPP();
 	~ACI_StatsManager_CPP();
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 	virtual void PostActorCreated() override;
 
 	static TWeakObjectPtr<ACI_StatsManager_CPP> GetInstance(UWorld *world);
@@ -32,9 +32,9 @@ public:
 	UFUNCTION()
 		void ChangeHappiness(float change);
 
-	float GetAverageHappiness() { return averageHappiness; }
+	float GetAverageHappiness() const { return averageHappiness; }
 
-	bool HasMoneyToBuild() { return money > minimumMoney; }
+	bool HasMoneyToBuild() const { return money > minimumMoney; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,9 +43,9 @@ protected:
 	UFUNCTION()
 		void ResetDaily(int newDay);
 	UFUNCTION()
-		int GetMoney() { return money; }
+		int GetMoney() const { return money; }
 	UFUNCTION()
-		int GetDailyMoney() { return dailyMoney; }
+		int GetDailyMoney() const { return dailyMoney; }
 
 public:
 	UPROPERTY(BlueprintAssignable)
@@ -56,7 +56,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Editor")
 		class UBillboardComponent *editorObject;
 	UPROPERTY(VisibleAnywhere)
-		TWeakObjectPtr<ACI_StatsManager_CPP> _instance;
+		TWeakObjectPtr<ACI_StatsManager_CPP> local_instance;
 
 	UPROPERTY(EditAnywhere)
 		int money;

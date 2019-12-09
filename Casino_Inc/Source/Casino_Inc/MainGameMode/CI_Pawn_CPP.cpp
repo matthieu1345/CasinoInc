@@ -87,7 +87,7 @@ void ACI_Pawn_CPP::BeginPlay()
 	GetWorld()->SpawnActor<ACI_BuildPreview_CPP>(FVector(0, 0, 0), FRotator(0, 0, 0));
 }
 
-void ACI_Pawn_CPP::MoveHorizontal(float axisValue)
+void ACI_Pawn_CPP::MoveHorizontal(const float axisValue)
 {
 	bMoveRight = false;
 	bMoveLeft = false;
@@ -98,7 +98,7 @@ void ACI_Pawn_CPP::MoveHorizontal(float axisValue)
 		bMoveLeft = true;
 }
 
-void ACI_Pawn_CPP::MoveVertical(float axisValue)
+void ACI_Pawn_CPP::MoveVertical(const float axisValue)
 {
 	bMoveUp = false;
 	bMoveDown = false;
@@ -110,7 +110,7 @@ void ACI_Pawn_CPP::MoveVertical(float axisValue)
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void ACI_Pawn_CPP::Zoom(float axisValue)
+void ACI_Pawn_CPP::Zoom(const float axisValue)
 {
 
 	cameraComp->OrthoWidth -= axisValue * zoomSpeedMultiplier;
@@ -188,7 +188,7 @@ void ACI_Pawn_CPP::BuildObject() const
 	}
 }
 
-void ACI_Pawn_CPP::BuildRoom()
+void ACI_Pawn_CPP::BuildRoom() const
 {
 	if (!gameState->isSelecting2NdCorner)
 	{
@@ -242,12 +242,12 @@ void ACI_Pawn_CPP::BuildRoom()
 	}
 }
 
-void ACI_Pawn_CPP::PrioritizeTask()
+void ACI_Pawn_CPP::PrioritizeTask() const
 {
 	int x, y;
 	gameState->currentController->GetMouseTilePosition(x, y);
 
-	auto task = ACI_AIManager_CPP::GetInstance(GetWorld())->GetTask(x, y);
+	const auto task = ACI_AIManager_CPP::GetInstance(GetWorld())->GetTask(x, y);
 	
 	if (task)
 	{
@@ -286,16 +286,16 @@ void ACI_Pawn_CPP::ToggleBuildRoom()
 }
 
 // Called every frame
-void ACI_Pawn_CPP::Tick(float DeltaTime)
+void ACI_Pawn_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 	CalcInput();
 
 	CheckInput();
 }
 
-void ACI_Pawn_CPP::CheckInput()
+void ACI_Pawn_CPP::CheckInput() const
 {
 	/*
 	 * bBuildPressed;
@@ -323,9 +323,9 @@ void ACI_Pawn_CPP::CheckInput()
 }
 
 // Called to bind functionality to input
-void ACI_Pawn_CPP::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ACI_Pawn_CPP::SetupPlayerInputComponent(UInputComponent* playerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(playerInputComponent);
 
 	// ReSharper disable CppInitializedValueIsAlwaysRewritten
 	FInputAxisBinding moveHorizontalBinding = InputComponent->BindAxis("Move Horizontal", this, &ACI_Pawn_CPP::MoveHorizontal);

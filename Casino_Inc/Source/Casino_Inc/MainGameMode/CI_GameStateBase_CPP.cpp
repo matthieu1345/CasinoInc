@@ -1,11 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CI_GameStateBase_CPP.h"
-#include "ai/CI_AIManager_CPP.h"
 
 //TODO:DOCUMENT comment/document this file
 
-void ACI_GameStateBase_CPP::Tick(float DeltaSeconds)
+void ACI_GameStateBase_CPP::Tick(float deltaSeconds)
 {
 
 	changedSelectedBuildObject = false;
@@ -17,7 +16,7 @@ void ACI_GameStateBase_CPP::ToggleCheatMode()
 	cheatmode = !cheatmode;
 }
 
-void ACI_GameStateBase_CPP::ChangeMode(EBuildInputMode newMode)
+void ACI_GameStateBase_CPP::ChangeMode(const EBuildInputMode newMode)
 {
 	switch (currentMode)
 	{

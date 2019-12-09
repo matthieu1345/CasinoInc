@@ -23,12 +23,12 @@ void UCI_StaffMenuEntryWidget_CPP::NativeConstruct()
 	}
 }
 
-bool UCI_StaffMenuEntryWidget_CPP::CheckSlidersValid()
+bool UCI_StaffMenuEntryWidget_CPP::CheckSlidersValid() const
 {
 	return workEndSlider != nullptr && workStartSlider != nullptr && workHourCountSlider != nullptr;
 }
 
-void UCI_StaffMenuEntryWidget_CPP::StartingTimeChanged(float newValue)
+void UCI_StaffMenuEntryWidget_CPP::StartingTimeChanged(const float newValue)
 {
 	linkedController->startWorkTime = FMath::FloorToInt(newValue * 24);
 	if (linkedController->startWorkTime >= 24)
@@ -38,7 +38,7 @@ void UCI_StaffMenuEntryWidget_CPP::StartingTimeChanged(float newValue)
 	UpdateEndTime();
 }
 
-void UCI_StaffMenuEntryWidget_CPP::WorkAmountChanged(float newValue)
+void UCI_StaffMenuEntryWidget_CPP::WorkAmountChanged(const float newValue)
 {
 	linkedController->workStintLength = FMath::FloorToInt(newValue * 24);
 

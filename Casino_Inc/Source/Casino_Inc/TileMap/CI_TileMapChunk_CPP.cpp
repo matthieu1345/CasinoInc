@@ -3,8 +3,6 @@
 #include "CI_TileMapChunk_CPP.h"
 #include "CI_BaseTile_CPP.h"
 #include "Engine/World.h"
-#include "Casino_Inc.h"
-#include <string>
 
 //TODO:DOCUMENT comment/document this file
 
@@ -27,23 +25,21 @@ void ACI_TileMapChunk_CPP::BeginPlay()
 }
 
 // Called every frame
-void ACI_TileMapChunk_CPP::Tick(float DeltaTime)
+void ACI_TileMapChunk_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 }
 
-bool ACI_TileMapChunk_CPP::SpawnTiles(TSubclassOf<class ACI_BaseTile_CPP> DefaultTile, class ACI_TileMap_CPP *tileMap, class ACI_TileMapLayer_CPP *mapLayer, TArray<class ACI_BaseTile_CPP*> &mapTiles, TArray<ACI_BaseTile_CPP*> &layerTiles)
+bool ACI_TileMapChunk_CPP::SpawnTiles(const TSubclassOf<class ACI_BaseTile_CPP> defaultTile, class ACI_TileMap_CPP *tileMap, class ACI_TileMapLayer_CPP *mapLayer, TArray<class ACI_BaseTile_CPP*> &mapTiles, TArray<ACI_BaseTile_CPP*> &layerTiles)
 {
 	owningTileMap = tileMap;
 	owningMapLayer = mapLayer;
-
-	ACI_BaseTile_CPP *newwestTile;
 
 	for (int y = 0; y < CHUNK_SIZE; y++)
 	{
 		for (int x = 0; x < CHUNK_SIZE; x++)
 		{
-			newwestTile = GetWorld()->SpawnActor<ACI_BaseTile_CPP>(DefaultTile, FVector(y * ACI_BaseTile_CPP::TILE_SIZE * -1, x * ACI_BaseTile_CPP::TILE_SIZE, 0), FRotator(0, 0, 0));
+			ACI_BaseTile_CPP *newwestTile = GetWorld()->SpawnActor<ACI_BaseTile_CPP>(defaultTile, FVector(y * ACI_BaseTile_CPP::TILE_SIZE * -1, x * ACI_BaseTile_CPP::TILE_SIZE, 0), FRotator(0, 0, 0));
 			newwestTile->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 			newwestTile->SetTileCoords(chunkX * CHUNK_SIZE + x, chunkY * CHUNK_SIZE + y, layer);
 			newwestTile->SetTileMapReference(tileMap, mapLayer, this);
@@ -58,10 +54,10 @@ bool ACI_TileMapChunk_CPP::SpawnTiles(TSubclassOf<class ACI_BaseTile_CPP> Defaul
 	return true;
 }
 
-void ACI_TileMapChunk_CPP::SetChunkCoords(int X, int Y, ETileLayer layerType)
+void ACI_TileMapChunk_CPP::SetChunkCoords(const int _x, const int _y, const ETileLayer layerType)
 {
-	chunkX = X;
-	chunkY = Y;
+	chunkX = _x;
+	chunkY = _y;
 
 	layer = layerType;
 
@@ -69,10 +65,10 @@ void ACI_TileMapChunk_CPP::SetChunkCoords(int X, int Y, ETileLayer layerType)
 	SetActorLabel(FString::FromInt(chunkX) + TEXT("X") + FString::FromInt(chunkY) + TEXT(" chunk"));
 #endif
 
-	ChunkBounds.X = chunkX * CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE;
-	ChunkBounds.Z = ((chunkX + 1) * CHUNK_SIZE - 1) * ACI_BaseTile_CPP::TILE_SIZE;
-	ChunkBounds.Y = chunkY * CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE;
-	ChunkBounds.W = ((chunkY + 1) * CHUNK_SIZE - 1) * ACI_BaseTile_CPP::TILE_SIZE;
+	chunkBounds.X = chunkX * CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE;
+	chunkBounds.Z = ((chunkX + 1) * CHUNK_SIZE - 1) * ACI_BaseTile_CPP::TILE_SIZE;
+	chunkBounds.Y = chunkY * CHUNK_SIZE * ACI_BaseTile_CPP::TILE_SIZE;
+	chunkBounds.W = ((chunkY + 1) * CHUNK_SIZE - 1) * ACI_BaseTile_CPP::TILE_SIZE;
 }
 
 void ACI_TileMapChunk_CPP::DestroyChunk()
@@ -87,7 +83,7 @@ void ACI_TileMapChunk_CPP::DestroyChunk()
 
 }
 
-ACI_BaseTile_CPP* ACI_TileMapChunk_CPP::GetTile(int x, int y, bool isChunkCoords)
+ACI_BaseTile_CPP* ACI_TileMapChunk_CPP::GetTile(const int x, const int y, const bool isChunkCoords)
 {
 	if (isChunkCoords)
 	{

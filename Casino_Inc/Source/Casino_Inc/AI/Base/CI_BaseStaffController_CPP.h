@@ -18,9 +18,9 @@ class CASINO_INC_API ACI_BaseStaffController_CPP : public ACI_BaseAIController_C
 public:
 	/**
 	 *	\brief Function called every frame on this Actor. Override this function to implement custom logic to be executed every frame.
-	 *	\param DeltaSeconds	Game time elapsed during last frame modified by the time dilation
+	 *	\param deltaSeconds	Game time elapsed during last frame modified by the time dilation
 	 */
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 	
 protected:
 	/**

@@ -37,7 +37,7 @@ public:
 	UCI_GOAPWorkerComponent_CPP();
 	void BeginDestroy() override;
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction) override;
 
 	void StartNewPlan(struct FTask* newTask);
 
@@ -48,7 +48,7 @@ public:
 		void PathFinished(bool successfull);
 
 	UFUNCTION(BlueprintCallable)
-		bool IsActiveState()
+		bool IsActiveState() const
 	{
 		return	currentState == EGOAPWorkerState::GWS_Planning ||
 				currentState == EGOAPWorkerState::GWS_NextAction ||
@@ -62,16 +62,16 @@ public:
 		void CancelPlan();
 
 	UFUNCTION(BlueprintCallable)
-		void PrintState();
+		void PrintState() const;
 
 	UFUNCTION(BlueprintCallable)
-		void PrintPlan(bool printTested = false);
+		void PrintPlan(bool printTested = false) const;
 
 	UFUNCTION(BlueprintCallable)
-		void PrintPlanState();
+		void PrintPlanState() const;
 
 	UFUNCTION(BlueprintCallable)
-		bool HasState(FGOAPStateList inState);
+		bool HasState(FGOAPStateList inState) const;
 
 protected:
 	// Called when the game starts
@@ -79,13 +79,13 @@ protected:
 	void StartNextAction();
 
 	void CheckPlanningProgress();
-	void DoAction(float DeltaTime);
+	void DoAction(float deltaTime);
 	UFUNCTION()
 	void FinishedTask(bool successfull);
 
-	FVector2D GetActionLocation();
+	FVector2D GetActionLocation() const;
 
-	void BroadcastFinished(bool success);
+	void BroadcastFinished(bool success) const;
 
 public:	
 
@@ -104,7 +104,7 @@ public:
 		TArray<class UCI_GOAPActionBase_CPP*> actions;
 
 	bool isPathing = false;
-	struct FTask* currentTask;
+	struct FTask*currentTask = nullptr;
 
 	UPROPERTY()
 		class UPlan* plan = nullptr;

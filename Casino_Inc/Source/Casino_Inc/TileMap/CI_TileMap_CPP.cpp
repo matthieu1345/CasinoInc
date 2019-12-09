@@ -28,15 +28,15 @@ ACI_TileMap_CPP::ACI_TileMap_CPP()
 	tilemapComponent->SetupAttachment(RootComponent);
 }
 
-void ACI_TileMap_CPP::SetupTilemapComponent()
+void ACI_TileMap_CPP::SetupTilemapComponent() const
 {
 	tilemapComponent->SetRelativeRotation(FRotator(0, 90, -90));
 	tilemapComponent->SetRelativeLocation(FVector(-(ACI_BaseTile_CPP::TILE_SIZE / 2), ACI_BaseTile_CPP::TILE_SIZE / 2, 0));
 }
 
-void ACI_TileMap_CPP::OnConstruction(const FTransform& Transform)
+void ACI_TileMap_CPP::OnConstruction(const FTransform& transform)
 {
-	Super::OnConstruction(Transform);
+	Super::OnConstruction(transform);
 
 	SetupTilemapComponent();
 }
@@ -68,9 +68,9 @@ void ACI_TileMap_CPP::BeginPlay()
 }
 
 // Called every frame
-void ACI_TileMap_CPP::Tick(float DeltaTime)
+void ACI_TileMap_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 
 	if (tilesToUpdateNext.Num() > 0)
@@ -84,7 +84,7 @@ void ACI_TileMap_CPP::Tick(float DeltaTime)
 
 void ACI_TileMap_CPP::CreateMap()
 {
-	if (defaultTile == NULL || defaultChunk == NULL || defaultLayer == NULL)
+	if (defaultTile == nullptr || defaultChunk == nullptr || defaultLayer == nullptr)
 	{
 		UE_LOG(TileMap, Error, TEXT("Tilemap %s has no default tile, chunk, or layer set!"), *GetNameSafe(this));
 		return;
@@ -109,11 +109,9 @@ void ACI_TileMap_CPP::CreateMap()
 
 void ACI_TileMap_CPP::MakeLayers()
 {
-	ACI_TileMapLayer_CPP *newwestLayer;
-
 	for (uint8 i = 0; i < (uint8)ETileLayer::TL_INVALID; i++)
 	{
-		newwestLayer = GetWorld()->SpawnActor<ACI_TileMapLayer_CPP>(defaultLayer, FVector(0, 0, i * LAYER_OFFSET), FRotator::ZeroRotator);
+		ACI_TileMapLayer_CPP *newwestLayer = GetWorld()->SpawnActor<ACI_TileMapLayer_CPP>(defaultLayer, FVector(0, 0, i * LAYER_OFFSET), FRotator::ZeroRotator);
 		newwestLayer->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 		
 		// give the layer a nice name in the world outline
@@ -170,7 +168,7 @@ void ACI_TileMap_CPP::UpdateAllTiles()
 	}
 }
 
-bool ACI_TileMap_CPP::CheckWalkableUncached(int x, int y)
+bool ACI_TileMap_CPP::CheckWalkableUncached(const int x, const int y)
 {
 	if (x < 0 || x >= iXTiles || y < 0 || y >= iYTiles)
 		return false;
@@ -192,7 +190,7 @@ bool ACI_TileMap_CPP::CheckWalkableUncached(int x, int y)
 
 }
 
-bool ACI_TileMap_CPP::CheckWalkable(int x, int y)
+bool ACI_TileMap_CPP::CheckWalkable(const int x, const int y)
 {
 	if (x < 0 || x >= iXTiles || y < 0 || y >= iYTiles)
 		return false;
@@ -204,7 +202,7 @@ bool ACI_TileMap_CPP::CheckWalkable(int x, int y)
 	return false;
 }
 
-void ACI_TileMap_CPP::UpdateWalkable(int x, int y)
+void ACI_TileMap_CPP::UpdateWalkable(const int x, const int y)
 {
 	if (x < walkableMap.Num())
 		if (y < walkableMap[x].values.Num())
@@ -248,7 +246,7 @@ bool ACI_TileMap_CPP::CheckDestroy()
 // ***********************************************************************************
 // Map manipulation functions
 
-void ACI_TileMap_CPP::SetTileSprite(int x, int y, ETileLayer layer, FPaperTileInfo newTile)
+void ACI_TileMap_CPP::SetTileSprite(const int x, const int y, ETileLayer layer, const FPaperTileInfo newTile) const
 {
 	if (layer == ETileLayer::TL_INVALID)
 	{
@@ -283,7 +281,7 @@ void ACI_TileMap_CPP::UpdateTiles()
 
 }
 
-void ACI_TileMap_CPP::SetTileWithLayer(int x, int y, ETileLayer layer, TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
+void ACI_TileMap_CPP::SetTileWithLayer(const int x, const int y, const ETileLayer layer, const TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
 {
 	ACI_BaseTile_CPP* tile;
 	GetTileFromLayerCoordinate(x, y, layer, tile);
@@ -292,23 +290,23 @@ void ACI_TileMap_CPP::SetTileWithLayer(int x, int y, ETileLayer layer, TSubclass
 
 }
 
-void ACI_TileMap_CPP::SetTile(int x, int y, TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
+void ACI_TileMap_CPP::SetTile(const int x, const int y, TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
 {
 	SetTileWithLayer(x, y, Cast<UCI_BaseTileDataComponent_CPP>(tileData->GetDefaultObject())->tileLayer, tileData);
 }
 
-void ACI_TileMap_CPP::DestroyUpperTile(int x, int y)
+void ACI_TileMap_CPP::DestroyUpperTile(const int x, const int y)
 {
 	ACI_BaseTile_CPP* tile = GetUpperTileFromCoordinate(x, y);
 
 	if (tile->GetTileLayer() != ETileLayer::TL_Ground)
 	{
 		tile->GetDataCompRef()->DestroyComponent(this, x, y);
-		tile->ChangeTileType(NULL);
+		tile->ChangeTileType(nullptr);
 	}
 }
 
-void ACI_TileMap_CPP::CreateDestroyUpperTask(int x, int y)
+void ACI_TileMap_CPP::CreateDestroyUpperTask(const int x, const int y)
 {
 
 	if (!ACI_AIManager_CPP::GetInstance(GetWorld()).IsValid())
@@ -344,7 +342,7 @@ void ACI_TileMap_CPP::CreateDestroyUpperTask(int x, int y)
 // ***********************************************************************************
 // Map selection functions
 
-void ACI_TileMap_CPP::GetAllTilesFromCoordinate(int x, int y, TArray<ACI_BaseTile_CPP*>& tiles)
+void ACI_TileMap_CPP::GetAllTilesFromCoordinate(const int x, const int y, TArray<ACI_BaseTile_CPP*>& tiles)
 {
 	tiles.Empty();
 
@@ -360,27 +358,27 @@ void ACI_TileMap_CPP::GetAllTilesFromCoordinate(int x, int y, TArray<ACI_BaseTil
 	}
 }
 
-ACI_BaseTile_CPP* ACI_TileMap_CPP::GetUpperTileFromCoordinate(int x, int y)
+ACI_BaseTile_CPP* ACI_TileMap_CPP::GetUpperTileFromCoordinate(const int x, const int y) const
 {
 	TArray<ACI_BaseTile_CPP*> tiles;
 	Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->tileMap->GetAllTilesFromCoordinate(x, y, tiles);
 
 	if (tiles.Num() == 0)
-		return NULL;
+		return nullptr;
 
 	for (int i = (int)ETileLayer::TL_INVALID - 1; i >= 0; --i)
 	{
-		if (tiles[i]->GetDataCompRef() != NULL)
+		if (tiles[i]->GetDataCompRef() != nullptr)
 		{
 			return tiles[i];
 		}
 	}
 
-	return NULL;
+	return nullptr;
 
 }
 
-bool ACI_TileMap_CPP::GetTileFromLayerCoordinate(int x, int y, ETileLayer layer, ACI_BaseTile_CPP* &tile)
+bool ACI_TileMap_CPP::GetTileFromLayerCoordinate(const int x, const int y, ETileLayer layer, ACI_BaseTile_CPP* &tile)
 {
 	TArray<ACI_BaseTile_CPP*> _allTiles;
 	GetAllTilesFromCoordinate(x, y, _allTiles);
@@ -394,15 +392,15 @@ void ACI_TileMap_CPP::GetAllTilesOnLayer(ETileLayer layer, TArray<ACI_BaseTile_C
 {
 	if (layer == ETileLayer::TL_INVALID)
 		return;
-	allLayers[(int)layer]->GetAllTiles();
+	tiles = allLayers[(int)layer]->GetAllTiles();
 }
 
-void ACI_TileMap_CPP::GetChunkOnLayer(int minX, int maxX, int minY, int maxY, ETileLayer layer, TArray<ACI_BaseTile_CPP*> &tiles)
+void ACI_TileMap_CPP::GetChunkOnLayer(const int minX, const int maxX, const int minY, const int maxY, const ETileLayer layer, TArray<ACI_BaseTile_CPP*> &tiles)
 {
 	GetRoomOnLayer(minX, maxX, minY, maxY, layer, tiles, tiles);
 }
 
-void ACI_TileMap_CPP::GetRoom(int minX, int maxX, int minY, int maxY, TArray<ACI_BaseTile_CPP*>& walls,
+void ACI_TileMap_CPP::GetRoom(const int minX, const int maxX, const int minY, const int maxY, TArray<ACI_BaseTile_CPP*>& walls,
 	TArray<ACI_BaseTile_CPP*>& floors)
 {
 	for (int i = 0; i < (int)ETileLayer::TL_INVALID; i++)
@@ -413,7 +411,7 @@ void ACI_TileMap_CPP::GetRoom(int minX, int maxX, int minY, int maxY, TArray<ACI
 	}
 }
 
-void ACI_TileMap_CPP::GetRoomOnLayer(int minX, int maxX, int minY, int maxY, ETileLayer layer, TArray<ACI_BaseTile_CPP*> &walls, TArray<ACI_BaseTile_CPP*> &floors)
+void ACI_TileMap_CPP::GetRoomOnLayer(const int minX, const int maxX, const int minY, const int maxY, const ETileLayer layer, TArray<ACI_BaseTile_CPP*> &walls, TArray<ACI_BaseTile_CPP*> &floors)
 {
 	ACI_BaseTile_CPP* tempTile;
 	for (int y = minY; y < maxY; y++)
@@ -430,7 +428,7 @@ void ACI_TileMap_CPP::GetRoomOnLayer(int minX, int maxX, int minY, int maxY, ETi
 	}
 }
 
-void ACI_TileMap_CPP::GetChunk(int minX, int maxX, int minY, int maxY, TArray<ACI_BaseTile_CPP*> &tiles)
+void ACI_TileMap_CPP::GetChunk(const int minX, const int maxX, const int minY, const int maxY, TArray<ACI_BaseTile_CPP*> &tiles)
 {
 	for (int i = 0; i < (int)ETileLayer::TL_INVALID; i++)
 	{
@@ -441,7 +439,7 @@ void ACI_TileMap_CPP::GetChunk(int minX, int maxX, int minY, int maxY, TArray<AC
 // ***********************************************************************************
 // Preview functions
 
-void ACI_TileMap_CPP::AddBuildPreview(int x, int y, bool isBuild)
+void ACI_TileMap_CPP::AddBuildPreview(const int x, const int y, const bool isBuild) const
 {
 	if (isBuild)
 		tilemapComponent->SetTile(x, y, 3, buildPreview);
@@ -451,12 +449,12 @@ void ACI_TileMap_CPP::AddBuildPreview(int x, int y, bool isBuild)
 	}
 }
 
-void ACI_TileMap_CPP::RemoveBuildPreview(int x, int y)
+void ACI_TileMap_CPP::RemoveBuildPreview(const int x, const int y) const
 {
 	tilemapComponent->SetTile(x, y, 3, FPaperTileInfo());
 }
 
-void ACI_TileMap_CPP::AddPriorityPreview(int x, int y)
+void ACI_TileMap_CPP::AddPriorityPreview(const int x, const int y) const
 {
 	tilemapComponent->SetTile(x, y, 3, priorityPreview);
 }

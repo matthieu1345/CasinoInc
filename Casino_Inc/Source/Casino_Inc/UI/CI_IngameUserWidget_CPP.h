@@ -22,53 +22,52 @@ class CASINO_INC_API UCI_IngameUserWidget_CPP : public UUserWidget
 		virtual void NativeConstruct() override;
 public:
 	UFUNCTION(BlueprintCallable)
-		void ClosePopupMenu();
+		void ClosePopupMenu() const;
 	UFUNCTION(BlueprintCallable)
-		TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetSelectBuildObject();
+		TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetSelectBuildObject() const;
 
 	UFUNCTION()
 		void AICountChanged(int staff, int guests);
 
 protected:
 	UFUNCTION(BlueprintCallable)
-		void OpenPopupMenu();
+		void OpenPopupMenu() const;
 
 	UFUNCTION(BlueprintCallable)
-		FText GetXCoordinateText();
+		FText GetXCoordinateText() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetYCoordinateText();
+		FText GetYCoordinateText() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetHoverName();
+		FText GetHoverName() const;
 	UFUNCTION(BlueprintCallable)
-		UTexture2D* GetHoverTilePreview();
+		UTexture2D* GetHoverTilePreview() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetSelectedBuildObjectName();
+		FText GetSelectedBuildObjectName() const;
 	UFUNCTION(BlueprintCallable)
-		UTexture2D* GetSelectedBuildObjectPreview();
+		UTexture2D* GetSelectedBuildObjectPreview() const;
 
 	UFUNCTION(BlueprintCallable)
-		bool GetCornerInfoVisible();
+		bool GetCornerInfoVisible() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetCornerXText();
+		FText GetCornerXText() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetCornerYText();
+		FText GetCornerYText() const;
 	UFUNCTION(BlueprintCallable)
-		FText GetCornerSelectText();
+		FText GetCornerSelectText() const;
 
 	UFUNCTION(BlueprintCallable)
-		FText GetCurrentTimeText();
+		FText GetCurrentTimeText() const;
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-		void ChangeSpeed(ESpeedSetting newSpeed);
-	void ChangeSpeed_Implementation(ESpeedSetting newSpeed);
+		void ChangeSpeed(ESpeedSetting newSpeed) const;
 
 	UFUNCTION()
 		void MoneyChanged(int newBalance, int newDaily, int change);
 
 	UFUNCTION(BlueprintCallable)
-		FText GetHappinessText();
+		FText GetHappinessText() const;
 
 	UFUNCTION(BlueprintCallable)
-		void CasinoOpenToggled(bool isChecked);
+		void CasinoOpenToggled(bool isChecked) const;
 
 
 public:

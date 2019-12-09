@@ -20,9 +20,9 @@ ACI_BaseTile_CPP::ACI_BaseTile_CPP()
 	RootComponent->SetMobility(EComponentMobility::Static);
 }
 
-bool ACI_BaseTile_CPP::HasDataComponent()
+bool ACI_BaseTile_CPP::HasDataComponent() const
 {
-	if (tileDataComponent == NULL)
+	if (tileDataComponent == nullptr)
 		return false;
 	if (tileDataComponent->IsBeingDestroyed())
 		return false;
@@ -30,14 +30,14 @@ bool ACI_BaseTile_CPP::HasDataComponent()
 	return true;
 }
 
-FString ACI_BaseTile_CPP::GetTileName()
+FString ACI_BaseTile_CPP::GetTileName() const
 {
 	return tileDataComponent->GetTileTypeName();
 }
 
-bool ACI_BaseTile_CPP::GetWalkable()
+bool ACI_BaseTile_CPP::GetWalkable() const
 {
-	if (tileLayer == ETileLayer::TL_Ground || tileDataComponent == NULL)
+	if (tileLayer == ETileLayer::TL_Ground || tileDataComponent == nullptr)
 		return true;
 
 	return tileDataComponent->GetWalkable();
@@ -65,16 +65,16 @@ void ACI_BaseTile_CPP::UpdateSprite() const
 
 void ACI_BaseTile_CPP::UpdateTileData()
 {
-	FString oldDataType;
-	if (tileDataComponent != nullptr)
-		oldDataType = ICI_RegisterAbleInterface_CPP::Execute_GetRegisterName(tileDataComponent);
+	// FString oldDataType;
+	// if (tileDataComponent != nullptr)
+	//	oldDataType = ICI_RegisterAbleInterface_CPP::Execute_GetRegisterName(tileDataComponent);
 
-	if (newTileDataComponent == NULL)
+	if (newTileDataComponent == nullptr)
 	{
-		if (tileDataComponent != NULL)
+		if (tileDataComponent != nullptr)
 		{
 			tileDataComponent->DestroyComponent(owningTileMap, tileX, tileY);
-			tileDataComponent = NULL;
+			tileDataComponent = nullptr;
 		}
 		//UpdateRegister(oldDataType);
 		owningTileMap->UpdateWalkable(tileX, tileY);
@@ -97,10 +97,10 @@ void ACI_BaseTile_CPP::UpdateTileData()
 		return;
 	}
 
-	if (tileDataComponent != NULL)
+	if (tileDataComponent != nullptr)
 	{
 		tileDataComponent->DestroyComponent(owningTileMap, tileX, tileY);
-		tileDataComponent = NULL;
+		tileDataComponent = nullptr;
 	}
 
 	tileDataComponent = NewObject<UCI_BaseTileDataComponent_CPP>(this, newTileDataComponent);
@@ -117,7 +117,7 @@ void ACI_BaseTile_CPP::UpdateTileData()
 	//UpdateRegister(oldDataType);
 }
 
-void ACI_BaseTile_CPP::UpdateRegister(FString oldDataType)
+void ACI_BaseTile_CPP::UpdateRegister(const FString oldDataType)
 {
 	if (isRegistered)
 	{
@@ -136,16 +136,16 @@ void ACI_BaseTile_CPP::UpdateRegister(FString oldDataType)
 }
 
 // Called every frame
-void ACI_BaseTile_CPP::Tick(float DeltaTime)
+void ACI_BaseTile_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 }
 
-void ACI_BaseTile_CPP::SetTileCoords(int X, int Y, ETileLayer layerType)
+void ACI_BaseTile_CPP::SetTileCoords(const int _x, const int _y, const ETileLayer layerType)
 {
-	tileX = X;
-	tileY = Y;
+	tileX = _x;
+	tileY = _y;
 
 	tileLayer = layerType;
 #if WITH_EDITOR
@@ -154,10 +154,10 @@ void ACI_BaseTile_CPP::SetTileCoords(int X, int Y, ETileLayer layerType)
 }
 
 
-void ACI_BaseTile_CPP::DestroyTile()
+void ACI_BaseTile_CPP::DestroyTile() const
 {
 
-	if (tileDataComponent != NULL)
+	if (tileDataComponent != nullptr)
 	{
 		tileDataComponent->DestroyComponent(owningTileMap, tileX, tileY);
 	}
@@ -167,7 +167,7 @@ void ACI_BaseTile_CPP::DestroyTile()
 void ACI_BaseTile_CPP::AddSprite()
 {
 
-	if (spriteComponent != NULL)
+	if (spriteComponent != nullptr)
 		return;
 
 	spriteComponent = NewObject<UPaperSpriteComponent>(this, UPaperSpriteComponent::StaticClass());
@@ -185,20 +185,20 @@ void ACI_BaseTile_CPP::AddSprite()
 void ACI_BaseTile_CPP::RemoveSprite()
 {
 
-	if (spriteComponent == NULL)
+	if (spriteComponent == nullptr)
 		return;
 
 	spriteComponent->DestroyComponent();
-	spriteComponent = NULL;
+	spriteComponent = nullptr;
 }
 
-void ACI_BaseTile_CPP::ChangeTileType(TSubclassOf<UCI_BaseTileDataComponent_CPP> newData)
+void ACI_BaseTile_CPP::ChangeTileType(const TSubclassOf<UCI_BaseTileDataComponent_CPP> newData)
 {
 	newTileDataComponent = newData;
 	UpdateTileData();
 }
 
-void ACI_BaseTile_CPP::MarkIsBeingEdited(bool newEditMode)
+void ACI_BaseTile_CPP::MarkIsBeingEdited(const bool newEditMode) const
 {
 
 	tileDataComponent->isBeingEdited = newEditMode;

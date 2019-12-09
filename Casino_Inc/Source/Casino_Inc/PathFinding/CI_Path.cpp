@@ -13,7 +13,7 @@ DECLARE_CYCLE_STAT(TEXT("Create Node"), STAT_CreateNode, STATGROUP_PathFinding);
 DECLARE_CYCLE_STAT(TEXT("Get Lowest"), STAT_GetLowest, STATGROUP_PathFinding);
 DECLARE_CYCLE_STAT(TEXT("Set Contains"), STAT_SetContains, STATGROUP_PathFinding);
 
-FPathNode::FPathNode(FVector2D location, FVector2D goal, float g, FPathNode* parent)
+FPathNode::FPathNode(FVector2D location, const FVector2D goal, const float g, FPathNode* parent)
 {
 	SCOPE_CYCLE_COUNTER(STAT_CreateNode);
 
@@ -67,12 +67,12 @@ bool FPathNode::SetContains(TSet<FPathNode*> set, FPathNode* test)
 	return false;
 }
 
-UPath::UPath(FVector2D start, FVector2D end, ACI_TileMap_CPP* tileMap)
+UPath::UPath(const FVector2D start, const FVector2D end, ACI_TileMap_CPP* tileMap)
 {
 	this->start = start;
 	this->end = end;
 	this->tileMap = tileMap;
-	
+
 	outputData = nullptr;
 }
 
@@ -92,7 +92,7 @@ UPath::~UPath()
 		task->_Shutdown();
 }
 
-void UPath::Init(FVector2D start, FVector2D end, int maxReach, ACI_TileMap_CPP* tileMap)
+void UPath::Init(const FVector2D start, const FVector2D end, const int maxReach, ACI_TileMap_CPP* tileMap)
 {
 	this->start = start;
 	this->end = end;
@@ -266,7 +266,7 @@ void FCalculatePathTask::DoWorkInternal()
 	ReturnCalculationFinished();
 }
 
-bool FCalculatePathTask::CheckNext(int x, int y)
+bool FCalculatePathTask::CheckNext(const int x, const int y) const
 {
 	if (IsValid(tileMap))
 		return tileMap->CheckWalkable(x, y) || (x == round(end.X) && y == round(end.Y));
@@ -274,7 +274,7 @@ bool FCalculatePathTask::CheckNext(int x, int y)
 	return false;
 }
 
-FCalculatePathTask::FCalculatePathTask(FVector2D start, FVector2D end, int maxReach, ACI_TileMap_CPP* tileMap, UPath* owner) : stopTaskCounter(0), start(start), end(end), maxReach(maxReach), tileMap(tileMap), owner(owner)
+FCalculatePathTask::FCalculatePathTask(const FVector2D start, const FVector2D end, const int maxReach, ACI_TileMap_CPP* tileMap, UPath* owner) : stopTaskCounter(0), start(start), end(end), maxReach(maxReach), tileMap(tileMap), owner(owner)
 {
 	thread = FRunnableThread::Create(this, TEXT("CalculatePath"), 0, TPri_BelowNormal);
 
@@ -314,7 +314,7 @@ FCalculatePathTask::~FCalculatePathTask()
 	runnable.Remove(this);
 }
 
-FCalculatePathTask* FCalculatePathTask::CreatePathCalculator(FVector2D start, FVector2D end, int maxReach, ACI_TileMap_CPP* tileMap, UPath* owner)
+FCalculatePathTask* FCalculatePathTask::CreatePathCalculator(const FVector2D start, const FVector2D end, const int maxReach, ACI_TileMap_CPP* tileMap, UPath* owner)
 {
 	FCalculatePathTask* output = nullptr;
 	if (FPlatformProcess::SupportsMultithreading())
@@ -407,7 +407,7 @@ bool FCalculatePathTask::IsThreadFinished()
 	return true;
 }
 
-bool FCalculatePathTask::_IsThreadFinished()
+bool FCalculatePathTask::_IsThreadFinished() const
 {
 	return isFinished;
 }

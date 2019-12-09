@@ -22,7 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 public:
 	// called every tick to update the controller
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 
 	// call when a new task is needed
 	virtual void GetNewTask() override;

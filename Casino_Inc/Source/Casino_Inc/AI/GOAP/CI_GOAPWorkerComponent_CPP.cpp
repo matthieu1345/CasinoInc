@@ -7,7 +7,6 @@
 #include "TileMap/CI_TileMapCoordinateMath.h"
 #include "Plan/CI_GOAPPlan_CPP.h"
 #include "AI/Tasks/CI_BaseTask_CPP.h"
-#include "DebugMacros.h"
 #include "AI/CI_AIManager_CPP.h"
 #include "MainGameMode/CI_GameStateBase_CPP.h"
 #include "Engine/World.h"
@@ -21,7 +20,6 @@ UCI_GOAPWorkerComponent_CPP::UCI_GOAPWorkerComponent_CPP()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
 }
 
 void UCI_GOAPWorkerComponent_CPP::BeginDestroy()
@@ -65,7 +63,7 @@ void UCI_GOAPWorkerComponent_CPP::CancelPlan()
 	}
 }
 
-void UCI_GOAPWorkerComponent_CPP::PrintState()
+void UCI_GOAPWorkerComponent_CPP::PrintState() const
 {
 	UE_LOG(GOAP, Log, TEXT("----------------------------------"))
 	UE_LOG(GOAP, Log, TEXT("- The state of actor %s is:"), *GetOwner()->GetName())
@@ -73,7 +71,7 @@ void UCI_GOAPWorkerComponent_CPP::PrintState()
 	UE_LOG(GOAP, Log, TEXT("----------------------------------"))
 }
 
-void UCI_GOAPWorkerComponent_CPP::PrintPlan(bool printTested)
+void UCI_GOAPWorkerComponent_CPP::PrintPlan(const bool printTested) const
 {
 	if (plan->HasValidPlan())
 		plan->LogPlan(printTested);
@@ -81,12 +79,12 @@ void UCI_GOAPWorkerComponent_CPP::PrintPlan(bool printTested)
 	plan->ReadQueue();
 }
 
-void UCI_GOAPWorkerComponent_CPP::PrintPlanState()
+void UCI_GOAPWorkerComponent_CPP::PrintPlanState() const
 {
 	UE_LOG(GOAP, Log, TEXT("- The goap state of actor %s is: %i"), *GetOwner()->GetName(), (int)currentState);
 }
 
-bool UCI_GOAPWorkerComponent_CPP::HasState(FGOAPStateList inState)
+bool UCI_GOAPWorkerComponent_CPP::HasState(const FGOAPStateList inState) const
 {
 	int i;
 	return UGOAPStateUtil::TestConditions(inState, state, i);
@@ -119,7 +117,7 @@ void UCI_GOAPWorkerComponent_CPP::StartPlanning()
 	currentState = EGOAPWorkerState::GWS_Planning;
 }
 
-void UCI_GOAPWorkerComponent_CPP::PathFinished(bool successfull)
+void UCI_GOAPWorkerComponent_CPP::PathFinished(const bool successfull)
 {
 	if (!IsActiveState())
 		return;
@@ -138,9 +136,9 @@ void UCI_GOAPWorkerComponent_CPP::PathFinished(bool successfull)
 }
 
 // Called every frame
-void UCI_GOAPWorkerComponent_CPP::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCI_GOAPWorkerComponent_CPP::TickComponent(const float deltaTime, const ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::TickComponent(deltaTime, tickType, thisTickFunction);
 
 	switch (currentState)
 	{
@@ -155,14 +153,14 @@ void UCI_GOAPWorkerComponent_CPP::TickComponent(float DeltaTime, ELevelTick Tick
 	case EGOAPWorkerState::GWS_Pathing: break;
 
 	case EGOAPWorkerState::GWS_DoingAction: 
-		DoAction(DeltaTime);
+		DoAction(deltaTime);
 		break;
 
 	case EGOAPWorkerState::GWS_PathingTask: break;
 
 	case EGOAPWorkerState::GWS_DoingTask:
 		if (currentTask != nullptr)
-			currentTask->DoTask(DeltaTime, Cast<ACI_GameStateBase_CPP>(GetOwner()->GetWorld()->GetGameState()));
+			currentTask->DoTask(deltaTime, Cast<ACI_GameStateBase_CPP>(GetOwner()->GetWorld()->GetGameState()));
 		break;
 
 	case EGOAPWorkerState::GWS_FinishedPlan: 
@@ -229,12 +227,12 @@ void UCI_GOAPWorkerComponent_CPP::CheckPlanningProgress()
 	}
 }
 
-void UCI_GOAPWorkerComponent_CPP::DoAction(float DeltaTime)
+void UCI_GOAPWorkerComponent_CPP::DoAction(const float deltaTime)
 {
 	if (plan == nullptr)
 		return;
 
-	if (plan->DoCurrentAction(DeltaTime, state, this))
+	if (plan->DoCurrentAction(deltaTime, state, this))
 	{
 		if (stateChangedCallback.IsBound())
 			stateChangedCallback.Broadcast();
@@ -253,15 +251,15 @@ void UCI_GOAPWorkerComponent_CPP::FinishedTask(bool successfull)
 	currentState = EGOAPWorkerState::GWS_FinishedPlan;
 }
 
-FVector2D UCI_GOAPWorkerComponent_CPP::GetActionLocation()
+FVector2D UCI_GOAPWorkerComponent_CPP::GetActionLocation() const
 {
-	FVector2D actorLocation = UCI_TileMapCoordinateMath::WorldVectorToTile(GetOwner()->GetActorLocation());
-	FString dataType = plan->GetCurrentAction()->registeryItem;
+	const FVector2D actorLocation = UCI_TileMapCoordinateMath::WorldVectorToTile(GetOwner()->GetActorLocation());
+	const FString dataType = plan->GetCurrentAction()->registeryItem;
 
 	return ACI_AIManager_CPP::GetInstance(GetWorld())->GetClosestItem(actorLocation, dataType);
 }
 
-void UCI_GOAPWorkerComponent_CPP::BroadcastFinished(bool success)
+void UCI_GOAPWorkerComponent_CPP::BroadcastFinished(const bool success) const
 {
 	currentTask->taskFinished.Clear();
 	if (finishedCallback.IsBound())

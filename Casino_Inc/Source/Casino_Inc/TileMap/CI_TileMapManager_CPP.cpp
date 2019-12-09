@@ -20,9 +20,9 @@ void ACI_TileMapManager_CPP::BeginPlay()
 }
 
 // Called every frame
-void ACI_TileMapManager_CPP::Tick(float DeltaTime)
+void ACI_TileMapManager_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 }
 

@@ -21,7 +21,7 @@ void ACI_PlayerController_CPP::BeginPlay()
 	
 }
 
-void ACI_PlayerController_CPP::GetMouseTilePosition(int32& x, int32& y)
+void ACI_PlayerController_CPP::GetMouseTilePosition(int32& x, int32& y) const
 {
 	FVector location;
 	FVector direction;
@@ -32,7 +32,7 @@ void ACI_PlayerController_CPP::GetMouseTilePosition(int32& x, int32& y)
 		location = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->currentPawn->GetActorLocation();
 	}
 
-	FVector2D tileLocation = UCI_TileMapCoordinateMath::WorldVectorToTile(location);
+	const FVector2D tileLocation = UCI_TileMapCoordinateMath::WorldVectorToTile(location);
 
 	x = tileLocation.X;
 	y = tileLocation.Y;
@@ -49,7 +49,7 @@ void ACI_PlayerController_CPP::GetMouseTilePosition(int32& x, int32& y)
 		y = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->tileMap->iYTiles - 1;
 }
 
-void ACI_PlayerController_CPP::GetMouseWorldPosition(int32& x, int32& y)
+void ACI_PlayerController_CPP::GetMouseWorldPosition(int32& x, int32& y) const
 {
 	FVector location;
 	FVector direction;

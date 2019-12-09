@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "CI_PlayerController_CPP.generated.h"
 
+
 //TODO:DOCUMENT comment/document this file
 
 /**
@@ -19,6 +20,6 @@ class CASINO_INC_API ACI_PlayerController_CPP : public APlayerController
 	virtual void BeginPlay() override;
 
 public:
-	void GetMouseTilePosition(int32& x, int32& y);
-	void GetMouseWorldPosition(int32& x, int32& y);
+	void GetMouseTilePosition(int32& x, int32& y) const;
+	void GetMouseWorldPosition(int32& x, int32& y) const;
 };

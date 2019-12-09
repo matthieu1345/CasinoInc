@@ -5,12 +5,13 @@
 
 //TODO:DOCUMENT comment/document this file
 
-void FWeightedInteractionResult::OnPostDataImport(const UDataTable* InDataTable, const FName InRowName,
-	TArray<FString>& OutCollectedImportProblems)
+void FWeightedInteractionResult::OnPostDataImport(const UDataTable* inDataTable, const FName inRowName,
+												  TArray<FString>& outCollectedImportProblems)
 {
+	Super::OnPostDataImport(inDataTable, inRowName, outCollectedImportProblems);
 	int totalChance = 0;
 
-	for (auto node : InDataTable->GetRowMap())
+	for ( const auto &node : inDataTable->GetRowMap())
 	{
 		totalChance += ((FWeightedInteractionResult*)node.Value)->chance;
 	}
@@ -25,18 +26,18 @@ void FInteractionResult::RecalculateChance()
 
 	totalChance = 0;
 
-	for (auto node : values->GetRowMap())
+	for (auto const &node : values->GetRowMap())
 	{
 		totalChance += ((FWeightedInteractionResult*)node.Value)->chance;
 	}
 }
 
-FWeightedInteractionResult FInteractionResult::GetRandom()
+FWeightedInteractionResult FInteractionResult::GetRandom() const
 {
-	int element = FMath::RandRange(0, totalChance);
+	const int element = FMath::RandRange(0, totalChance);
 	int counter = 0;
 
-	for (auto node : values->GetRowMap())
+	for (auto const &node : values->GetRowMap())
 	{
 		counter += ((FWeightedInteractionResult*)node.Value)->chance;
 

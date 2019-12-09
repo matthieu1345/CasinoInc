@@ -19,7 +19,7 @@ class CASINO_INC_API UBuildTask : public UCI_BaseTask_CPP
 
 	UBuildTask() { allowedAITypes.Add(ECharacterType::CT_Builder); }
 public:
-	TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetTileData() { return tileData; }
+	TSubclassOf<class UCI_BaseTileDataComponent_CPP> GetTileData() const { return tileData; }
 
 	virtual void InitTask_Implementation(int x, int y, ACI_GameStateBase_CPP* gamestate) override;
 	virtual void CreatePreview(int x, int y, class ACI_GameStateBase_CPP* gamestate) override;

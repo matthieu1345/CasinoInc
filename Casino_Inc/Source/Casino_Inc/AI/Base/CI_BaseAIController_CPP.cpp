@@ -51,7 +51,7 @@ void ACI_BaseAIController_CPP::GetNewTask()
 	}
 }
 
-void ACI_BaseAIController_CPP::TaskEnded_Implementation(bool success)
+void ACI_BaseAIController_CPP::TaskEnded_Implementation(const bool success)
 {
 	if (success)
 		ACI_AIManager_CPP::GetInstance(GetWorld())->FinishTask(currentTask); //send to the AIManager that the task has ended succesfully and needs to be finished
@@ -79,19 +79,19 @@ void ACI_BaseAIController_CPP::BeginPlay()
 	ACI_TimeManager_CPP::GetInstance(GetWorld())->nextHourDelegate.AddDynamic(this, &ACI_BaseAIController_CPP::HourChanged);
 }
 
-void ACI_BaseAIController_CPP::Tick(float DeltaSeconds)
+void ACI_BaseAIController_CPP::Tick(const float deltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+	Super::Tick(deltaSeconds);
 }
 
-void ACI_BaseAIController_CPP::Possess(APawn* InPawn)
+void ACI_BaseAIController_CPP::Possess(APawn* inPawn)
 {
-	Super::Possess(InPawn);
+	Super::Possess(inPawn);
 	
-	if (InPawn->GetClass()->IsChildOf(ACI_BaseAIPawn_CPP::StaticClass())) // if the possessed pawn is a ACI_BaseAIPawn_CPP
+	if (inPawn->GetClass()->IsChildOf(ACI_BaseAIPawn_CPP::StaticClass())) // if the possessed pawn is a ACI_BaseAIPawn_CPP
 	{
 		// keep a casted reference (casting is heavy so this is to keep that to a single time)
-		possessedCustomBasePawn = Cast<ACI_BaseAIPawn_CPP>(InPawn);
+		possessedCustomBasePawn = Cast<ACI_BaseAIPawn_CPP>(inPawn);
 
 		// Register the goapWorker component's callback functions to the pawn
 		goapWorkerComponent->stateChangedCallback.AddDynamic(possessedCustomBasePawn, &ACI_BaseAIPawn_CPP::StateChanged);

@@ -35,7 +35,7 @@ public:
 	virtual void DestroyComponent_Implementation(ACI_TileMap_CPP* tileMap, int x, int y);
 
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 		FPaperTileInfo GetTileInfo(int xOffset = 0, int yOffset = 0);
@@ -45,25 +45,25 @@ public:
 	virtual void SetInfo_Implementation(int32 x, int32 y, ACI_TileMap_CPP* tileMap);
 
 	UFUNCTION(BlueprintGetter)
-		TSet<ETileLayer> GetOccupatesTile() { return occupiesTile; }
+		TSet<ETileLayer> GetOccupatesTile() const { return occupiesTile; }
 
 	bool CheckIfValidPlacement(int x, int y, ETileLayer layer, ACI_TileMap_CPP* map);
 
-	FString GetTileTypeName() { return tileTypeName; }
-	class UTexture2D* GetTilePreview() { return tilePreview; }
+	FString GetTileTypeName() const { return tileTypeName; }
+	class UTexture2D* GetTilePreview() const { return tilePreview; }
 	UFUNCTION(BlueprintImplementableEvent)
 		class UPaperSprite* GetSprite();
 
 	static FString GetTileTypeName(TSubclassOf<UCI_BaseTileDataComponent_CPP> tileDataClass);
 	static UTexture2D* GetTileTypePreview(TSubclassOf<UCI_BaseTileDataComponent_CPP> tileDataClass);
 
-	bool GetWalkable() { return walkable; }
+	bool GetWalkable() const { return walkable; }
 
-	bool GetNeedsRegister() { return needsRegistered; }
+	bool GetNeedsRegister() const { return needsRegistered; }
 
-	int GetTileX() { return tileX; }
-	int GetTileY() { return tileY; }
-	class ACI_BaseTile_CPP* GetTile();
+	int GetTileX() const { return tileX; }
+	int GetTileY() const { return tileY; }
+	class ACI_BaseTile_CPP* GetTile() const;
 
 protected:
 	// Called when the game starts
@@ -95,19 +95,19 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-		int tileX;
+		int tileX = 0;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-		int tileY;
+		int tileY = 0;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-		ACI_TileMap_CPP* tileMap;
+		ACI_TileMap_CPP*tileMap = nullptr;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 		TSet<ETileLayer> occupiesTile;
 	UPROPERTY(BlueprintReadOnly,EditDefaultsOnly)
 	FString tileTypeName;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-		UTexture2D* tilePreview;
+		UTexture2D*tilePreview = nullptr;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-		bool walkable;
+		bool walkable = true;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 		bool needsRegistered = false;
 

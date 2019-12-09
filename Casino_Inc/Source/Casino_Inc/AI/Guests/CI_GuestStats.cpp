@@ -5,7 +5,7 @@
 
 //TODO:DOCUMENT comment/document this file
 
-void FGuestStats::AddHappiness(float change)
+void FGuestStats::AddHappiness(const float change)
 {
 	happiness += change;
 	ACI_StatsManager_CPP::GetInstance()->ChangeHappiness(change);
@@ -56,7 +56,7 @@ void FGuestStats::AddHappiness(float change)
 	}
 }
 
-void FGuestStats::AddChips(float change)
+void FGuestStats::AddChips(const float change)
 {
 	chips += change;
 	if (chips <= chipsLow)
@@ -102,7 +102,7 @@ void FGuestStats::AddChips(float change)
 	}
 }
 
-void FGuestStats::AddMoney(float change)
+void FGuestStats::AddMoney(const float change)
 {
 	money += change;
 	if (money <= moneyLow)
@@ -148,7 +148,7 @@ void FGuestStats::AddMoney(float change)
 	}
 }
 
-void FGuestStats::AddHunger(float change)
+void FGuestStats::AddHunger(const float change)
 {
 	hunger += change;
 	if (hunger >= hungerMax)
@@ -197,7 +197,7 @@ void FGuestStats::AddHunger(float change)
 	}
 }
 
-void FGuestStats::AddThirst(float change)
+void FGuestStats::AddThirst(const float change)
 {
 	thirst += change;
 	if (thirst >= thirstMax)
@@ -246,8 +246,8 @@ void FGuestStats::AddThirst(float change)
 	}
 }
 
-void FGuestPersonalityPreference::OnPostDataImport(const UDataTable* InDataTable, const FName InRowName,
-	TArray<FString>& OutCollectedImportProblems)
+void FGuestPersonalityPreference::OnPostDataImport(const UDataTable* inDataTable, const FName inRowName,
+												   TArray<FString>& outCollectedImportProblems)
 {
 	happinessMultiplierValues.Add(EInteractables::INT_Slotmachine, happinessMultiplierSlotMachine);
 	happinessMultiplierValues.Add(EInteractables::INT_Poker, happinessMultiplierBlackJack);

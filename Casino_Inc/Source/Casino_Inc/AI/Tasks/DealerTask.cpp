@@ -8,7 +8,7 @@
 
 //TODO:DOCUMENT comment/document this file
 
-void UDealerTask::FinishTask_Implementation(bool success, int x, int y, ACI_GameStateBase_CPP* gamestate)
+void UDealerTask::FinishTask_Implementation(const bool success, const int x, const int y, ACI_GameStateBase_CPP* gamestate)
 {
 	if (!success || !gamestate)
 		return;

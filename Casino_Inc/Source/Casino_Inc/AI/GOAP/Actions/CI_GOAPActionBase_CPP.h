@@ -30,9 +30,9 @@ public:
 		float excecuteTime = 1.0f;
 
 	UFUNCTION(BlueprintCallable)
-		bool CheckPreConditions(FGOAPStateList startState, int &difference);
+		bool CheckPreConditions(FGOAPStateList startState, int &difference) const;
 	UFUNCTION(BlueprintCallable)
-		bool CheckGoalConditions(FGOAPStateList goalState, int &difference);
+		bool CheckGoalConditions(FGOAPStateList goalState, int &difference) const;
 
 	UFUNCTION(BlueprintCallable)
 		bool AddEffects(FGOAPStateList startState, FGOAPStateList &resultState, UObject* outer);

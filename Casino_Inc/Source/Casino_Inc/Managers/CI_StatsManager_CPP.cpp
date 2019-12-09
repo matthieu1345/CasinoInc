@@ -59,14 +59,14 @@ void ACI_StatsManager_CPP::PostActorCreated()
 
 	}
 
-	_instance = GetInstance(GetWorld());
+	local_instance = GetInstance(GetWorld());
 }
 
 TWeakObjectPtr<ACI_StatsManager_CPP> ACI_StatsManager_CPP::GetInstance(UWorld* world)
 {
 	if (instance == nullptr)
 	{
-		for (TActorIterator<ACI_StatsManager_CPP> actorItr(world); actorItr;)
+		for ( const TActorIterator<ACI_StatsManager_CPP> actorItr(world); actorItr;)
 		{
 			instance = *actorItr;
 			break;
@@ -89,7 +89,7 @@ void ACI_StatsManager_CPP::BeginPlay()
 	}
 
 	instance = this;
-	_instance = this;
+	local_instance = this;
 
 	ACI_TimeManager_CPP::GetInstance(GetWorld())->nextDayDelegate.AddDynamic(this, &ACI_StatsManager_CPP::ResetDaily);
 }
@@ -100,7 +100,7 @@ void ACI_StatsManager_CPP::ResetDaily(int newDay)
 	moneyChangedDelegate.Broadcast(money, dailyMoney, 0);
 }
 
-void ACI_StatsManager_CPP::AddMoney(int change)
+void ACI_StatsManager_CPP::AddMoney(const int change)
 {
 	bool underflow = false;
 	bool overflow = false;
@@ -130,7 +130,7 @@ void ACI_StatsManager_CPP::AddMoney(int change)
 	}
 }
 
-void ACI_StatsManager_CPP::ChangeHappiness(float change)
+void ACI_StatsManager_CPP::ChangeHappiness(const float change)
 {
 	averageHappiness += change * happinessChangeMultipler;
 
@@ -141,9 +141,9 @@ void ACI_StatsManager_CPP::ChangeHappiness(float change)
 }
 
 // Called every frame
-void ACI_StatsManager_CPP::Tick(float DeltaTime)
+void ACI_StatsManager_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 }
 

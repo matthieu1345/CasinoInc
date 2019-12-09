@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "DestroyTask.h"
-#include "DebugMacros.h"
 #include "TileMap/CI_TileMap_CPP.h"
 #include "MainGameMode/CI_GameStateBase_CPP.h"
 #include "TileMap/CI_BaseTile_CPP.h"
@@ -9,7 +8,7 @@
 
 //TODO:DOCUMENT comment/document this file
 
-void UDestroyTask::InitTask_Implementation(int x, int y, ACI_GameStateBase_CPP* gamestate)
+void UDestroyTask::InitTask_Implementation(const int x, const int y, ACI_GameStateBase_CPP* gamestate)
 {
 	Super::InitTask_Implementation(x, y, gamestate);
 
@@ -17,7 +16,7 @@ void UDestroyTask::InitTask_Implementation(int x, int y, ACI_GameStateBase_CPP* 
 
 }
 
-void UDestroyTask::CreatePreview(int x, int y, class ACI_GameStateBase_CPP* gamestate)
+void UDestroyTask::CreatePreview(const int x, const int y, class ACI_GameStateBase_CPP* gamestate)
 {
 	if (!gamestate)
 		return;
@@ -34,12 +33,12 @@ void UDestroyTask::CreatePreview(int x, int y, class ACI_GameStateBase_CPP* game
 		
 }
 
-void UDestroyTask::DestroyTask_Implementation(int x, int y, class ACI_GameStateBase_CPP* gamestate)
+void UDestroyTask::DestroyTask_Implementation(const int x, const int y, class ACI_GameStateBase_CPP* gamestate)
 {
 	Super::DestroyTask_Implementation(x, y, gamestate);
 }
 
-bool UDestroyTask::CheckValidLocation_Implementation(int x, int y, ACI_GameStateBase_CPP* gamestate)
+bool UDestroyTask::CheckValidLocation_Implementation(const int x, const int y, ACI_GameStateBase_CPP* gamestate)
 {
 	ACI_BaseTile_CPP* tile = nullptr;
 	gamestate->tileMap->GetTileFromLayerCoordinate(x, y, tileLayer, tile);
@@ -49,7 +48,7 @@ bool UDestroyTask::CheckValidLocation_Implementation(int x, int y, ACI_GameState
 	return false;
 }
 
-void UDestroyTask::FinishTask_Implementation(bool success, int x, int y, class ACI_GameStateBase_CPP* gamestate)
+void UDestroyTask::FinishTask_Implementation(const bool success, const int x, const int y, class ACI_GameStateBase_CPP* gamestate)
 {
 	Super::FinishTask_Implementation(success, x, y, gamestate);
 

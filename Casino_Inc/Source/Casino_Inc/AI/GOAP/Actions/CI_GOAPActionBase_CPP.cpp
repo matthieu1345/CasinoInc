@@ -8,17 +8,17 @@
 
 //TODO:DOCUMENT comment/document this file
 
-bool UCI_GOAPActionBase_CPP::CheckPreConditions(FGOAPStateList startState, int &difference)
+bool UCI_GOAPActionBase_CPP::CheckPreConditions(const FGOAPStateList startState, int &difference) const
 {
 	return UGOAPStateUtil::TestConditions(preConditions, startState, difference);
 }
 
-bool UCI_GOAPActionBase_CPP::CheckGoalConditions(FGOAPStateList goalState, int &difference)
+bool UCI_GOAPActionBase_CPP::CheckGoalConditions(const FGOAPStateList goalState, int &difference) const
 {
 	return UGOAPStateUtil::TestConditions(effects, goalState, difference);
 }
 
-bool UCI_GOAPActionBase_CPP::AddEffects(FGOAPStateList startState, FGOAPStateList& resultState, UObject* outer)
+bool UCI_GOAPActionBase_CPP::AddEffects(const FGOAPStateList startState, FGOAPStateList& resultState, UObject* outer)
 {
 	if (resultState != startState)
 	{
@@ -30,7 +30,7 @@ bool UCI_GOAPActionBase_CPP::AddEffects(FGOAPStateList startState, FGOAPStateLis
 		resultState = startState;
 	}
 
-	for (auto effect : effects.stateNodes)
+	for (auto const &effect : effects.stateNodes)
 	{
 		if (resultState.stateNodes.Contains(effect.Key))
 		{
@@ -38,7 +38,7 @@ bool UCI_GOAPActionBase_CPP::AddEffects(FGOAPStateList startState, FGOAPStateLis
 		}
 		else
 		{
-			auto newNode = NewObject<UGOAPStateNodeType>(outer, effect.Value->GetClass(),NAME_None,RF_NoFlags,effect.Value);
+			const auto newNode = NewObject<UGOAPStateNodeType>(outer, effect.Value->GetClass(),NAME_None,RF_NoFlags,effect.Value);
 			resultState.stateNodes.Add(effect.Key) = newNode;
 		}
 	}
@@ -46,7 +46,7 @@ bool UCI_GOAPActionBase_CPP::AddEffects(FGOAPStateList startState, FGOAPStateLis
 	return false;
 }
 
-bool UCI_GOAPActionBase_CPP::RevertEffects(FGOAPStateList goalState, FGOAPStateList& resultState, UObject* outer)
+bool UCI_GOAPActionBase_CPP::RevertEffects(const FGOAPStateList goalState, FGOAPStateList& resultState, UObject* outer)
 {
 	if (resultState != goalState)
 	{
@@ -58,7 +58,7 @@ bool UCI_GOAPActionBase_CPP::RevertEffects(FGOAPStateList goalState, FGOAPStateL
 		resultState = goalState;
 	}
 
-	for (auto effect : effects.stateNodes)
+	for ( const auto &effect : effects.stateNodes)
 	{
 		if (resultState.stateNodes.Contains(effect.Key))
 		{
@@ -73,7 +73,7 @@ bool UCI_GOAPActionBase_CPP::RevertEffects(FGOAPStateList goalState, FGOAPStateL
 		}
 	}
 
-	for (auto condition : preConditions.stateNodes)
+	for ( const auto condition : preConditions.stateNodes)
 	{
 		if (resultState.stateNodes.Contains(condition.Key))
 		{
@@ -81,7 +81,7 @@ bool UCI_GOAPActionBase_CPP::RevertEffects(FGOAPStateList goalState, FGOAPStateL
 		}
 		else
 		{
-			auto newNode = NewObject<UGOAPStateNodeType>(outer, condition.Value->GetClass(), NAME_None, RF_NoFlags, condition.Value);
+			const auto newNode = NewObject<UGOAPStateNodeType>(outer, condition.Value->GetClass(), NAME_None, RF_NoFlags, condition.Value);
 			resultState.stateNodes.Add(condition.Key) = newNode;
 		}
 	}
@@ -89,13 +89,13 @@ bool UCI_GOAPActionBase_CPP::RevertEffects(FGOAPStateList goalState, FGOAPStateL
 	return false;
 }
 
-void UCI_GOAPActionBase_CPP::InitAction(FVector2D goalLocation, bool needsMove)
+void UCI_GOAPActionBase_CPP::InitAction(const FVector2D goalLocation, const bool needsMove)
 {
 	location = goalLocation;
 	this->needsMove = needsMove;
 }
 
-bool UCI_GOAPActionBase_CPP::DoAction(float currentTime, FGOAPStateList& startState, UCI_GOAPWorkerComponent_CPP* workerComponent)
+bool UCI_GOAPActionBase_CPP::DoAction(const float currentTime, FGOAPStateList& startState, UCI_GOAPWorkerComponent_CPP* workerComponent)
 {
 	if (currentTime >= excecuteTime)
 	{

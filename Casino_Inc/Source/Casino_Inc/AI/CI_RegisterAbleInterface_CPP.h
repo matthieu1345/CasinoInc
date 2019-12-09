@@ -23,9 +23,11 @@ class CASINO_INC_API ICI_RegisterAbleInterface_CPP
 	GENERATED_BODY()
 
 public:
+	// ReSharper disable CppHiddenFunction interface functions can never be virtual in UE4
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Registerable")
 		FString GetRegisterName();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Registerable")
 		FVector2D GetRegisterLocation();
+	// ReSharper restore CppHiddenFunction
 };

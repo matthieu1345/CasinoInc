@@ -11,7 +11,6 @@
 #include "Casino_Inc.h"
 #include "PathFinding/CI_Path.h"
 #include "AI/GOAP/Plan/CI_GOAPPlan_CPP.h"
-#include "UI/CI_IngameUserWidget_CPP.h"
 #include "Managers/CI_StatsManager_CPP.h"
 #include "GameFramework/WorldSettings.h"
 
@@ -57,11 +56,12 @@ void ACI_GameModeBase_CPP::ChangeMenuWidget(const TSubclassOf<UUserWidget> newWi
 	}
 }
 
-void ACI_GameModeBase_CPP::Logout(AController* Exiting)
+void ACI_GameModeBase_CPP::Logout(AController* exiting)
 {
 	FCalculatePathTask::Shutdown();
 	FCalculatePlanTask::ShutDown();
 
+	// ReSharper disable CppUnreachableCode Logging code for pathfinding, can be enabled with defines
 	if (LOG_PATHFINDING_TIMES)
 	{
 		PRINT(*FString::Printf(TEXT("amount of paths found quickly: %d"), pathFindingQuick));
@@ -72,24 +72,25 @@ void ACI_GameModeBase_CPP::Logout(AController* Exiting)
 		UE_LOG(PathFinding, Log, TEXT("amount of paths found medium time: %d"), pathFindingMedium);
 		UE_LOG(PathFinding, Log, TEXT("amount of paths found long time: %d"), pathFindingLong);
 	}
+	// ReSharper restore CppUnreachableCode
 }
 
-void ACI_GameModeBase_CPP::SpeedUp()
+void ACI_GameModeBase_CPP::SpeedUp() const
 {
 	GetWorldSettings()->SetTimeDilation(GetWorldSettings()->GetEffectiveTimeDilation() * 2);
 }
 
-void ACI_GameModeBase_CPP::SlowDown()
+void ACI_GameModeBase_CPP::SlowDown() const
 {
 	GetWorldSettings()->SetTimeDilation(GetWorldSettings()->GetEffectiveTimeDilation() * 0.5);
 }
 
-void ACI_GameModeBase_CPP::ResetSpeed()
+void ACI_GameModeBase_CPP::ResetSpeed() const
 {
 	GetWorldSettings()->SetTimeDilation(1.0f);
 }
 
-void ACI_GameModeBase_CPP::AddMoney()
+void ACI_GameModeBase_CPP::AddMoney() const
 {
 	ACI_StatsManager_CPP::GetInstance(GetWorld())->AddMoney(100);
 }

@@ -28,9 +28,9 @@ void UCI_IngameUserWidget_CPP::NativeConstruct()
 	ACI_StatsManager_CPP::GetInstance(GetWorld())->AddMoney(0);
 }
 
-void UCI_IngameUserWidget_CPP::OpenPopupMenu()
+void UCI_IngameUserWidget_CPP::OpenPopupMenu() const
 {
-	if (popupAnchor == NULL)
+	if (popupAnchor == nullptr)
 	{
 		PRINT_EDITOR(TEXT("anchor to add popup to is not set!"));
 		UE_LOG(GUI, Error, TEXT("anchor to add popup to is not set!"));
@@ -50,9 +50,9 @@ void UCI_IngameUserWidget_CPP::OpenPopupMenu()
 	}
 }
 
-void UCI_IngameUserWidget_CPP::ClosePopupMenu()
+void UCI_IngameUserWidget_CPP::ClosePopupMenu() const
 {
-	if (popupAnchor != NULL)
+	if (popupAnchor != nullptr)
 	{
 		if (popupAnchor->IsOpen())
 			popupAnchor->Close();
@@ -60,12 +60,12 @@ void UCI_IngameUserWidget_CPP::ClosePopupMenu()
 
 }
 
-TSubclassOf<UCI_BaseTileDataComponent_CPP> UCI_IngameUserWidget_CPP::GetSelectBuildObject()
+TSubclassOf<UCI_BaseTileDataComponent_CPP> UCI_IngameUserWidget_CPP::GetSelectBuildObject() const
 {
 	return gameState->GetSelectedBuildObject();
 }
 
-FText UCI_IngameUserWidget_CPP::GetXCoordinateText()
+FText UCI_IngameUserWidget_CPP::GetXCoordinateText() const
 {
 	int32 x;
 	int32 y;
@@ -74,7 +74,7 @@ FText UCI_IngameUserWidget_CPP::GetXCoordinateText()
 	return FText::FromString("X: " + FString::FromInt(x));
 }
 
-FText UCI_IngameUserWidget_CPP::GetYCoordinateText()
+FText UCI_IngameUserWidget_CPP::GetYCoordinateText() const
 {
 	int32 x;
 	int32 y;
@@ -83,7 +83,7 @@ FText UCI_IngameUserWidget_CPP::GetYCoordinateText()
 	return FText::FromString("Y: " + FString::FromInt(y));
 }
 
-FText UCI_IngameUserWidget_CPP::GetHoverName()
+FText UCI_IngameUserWidget_CPP::GetHoverName() const
 {
 	int32 x;
 	int32 y;
@@ -92,15 +92,15 @@ FText UCI_IngameUserWidget_CPP::GetHoverName()
 	
 	ACI_BaseTile_CPP* tile = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState())->tileMap->GetUpperTileFromCoordinate(x,y);
 
-	if (tile != NULL)
+	if (tile != nullptr)
 		return FText::FromString(tile->GetTileName());
 
 	return FText::FromString("No Tile");
 }
 
-UTexture2D* UCI_IngameUserWidget_CPP::GetHoverTilePreview()
+UTexture2D* UCI_IngameUserWidget_CPP::GetHoverTilePreview() const
 {
-	UTexture2D* output = NULL;
+	UTexture2D* output = nullptr;
 
 	int32 x;
 	int32 y;
@@ -108,25 +108,25 @@ UTexture2D* UCI_IngameUserWidget_CPP::GetHoverTilePreview()
 
 	ACI_BaseTile_CPP* tile = gameState->tileMap->GetUpperTileFromCoordinate(x, y);
 	
-	if (tile != NULL)
-		if (tile->GetDataCompRef() != NULL)
+	if (tile != nullptr)
+		if (tile->GetDataCompRef() != nullptr)
 			output = tile->GetDataCompRef()->GetTilePreview();
 
 	return output;
 
 }
 
-FText UCI_IngameUserWidget_CPP::GetSelectedBuildObjectName()
+FText UCI_IngameUserWidget_CPP::GetSelectedBuildObjectName() const
 {
-	if (GetSelectBuildObject() == NULL)
+	if (GetSelectBuildObject() == nullptr)
 		return FText::FromString("No Selection");
 
 	return FText::FromString(UCI_BaseTileDataComponent_CPP::GetTileTypeName(GetSelectBuildObject()));
 }
 
-FText UCI_IngameUserWidget_CPP::GetCurrentTimeText()
+FText UCI_IngameUserWidget_CPP::GetCurrentTimeText() const
 {
-	FVector time = ACI_TimeManager_CPP::GetInstance(GetWorld())->GetCurrentTime();
+	const FVector time = ACI_TimeManager_CPP::GetInstance(GetWorld())->GetCurrentTime();
 	FString hours = FString::FromInt((int)time.Y);
 	FString minutes = FString::FromInt((int)time.Z);
 
@@ -144,7 +144,7 @@ FText UCI_IngameUserWidget_CPP::GetCurrentTimeText()
 	
 }
 
-void UCI_IngameUserWidget_CPP::ChangeSpeed_Implementation(ESpeedSetting newSpeed)
+void UCI_IngameUserWidget_CPP::ChangeSpeed_Implementation(const ESpeedSetting newSpeed) const
 {
 	ACI_TimeManager_CPP::GetInstance(GetWorld())->SetGameSpeed(newSpeed);
 }
@@ -162,12 +162,12 @@ void UCI_IngameUserWidget_CPP::MoneyChanged(int newBalance, int newDaily, int ch
 	dailyMoneyText = FText::AsNumber(newDaily);
 }
 
-FText UCI_IngameUserWidget_CPP::GetHappinessText()
+FText UCI_IngameUserWidget_CPP::GetHappinessText() const
 {
 	return FText::FromString(FString::Printf(TEXT("%f%"), ACI_StatsManager_CPP::GetInstance(GetWorld())->GetAverageHappiness()));
 }
 
-void UCI_IngameUserWidget_CPP::CasinoOpenToggled(bool isChecked)
+void UCI_IngameUserWidget_CPP::CasinoOpenToggled(const bool isChecked) const
 {
 	if (isChecked)
 		ACI_AIManager_CPP::GetInstance(GetWorld())->EnableGuestSpawning();
@@ -175,36 +175,36 @@ void UCI_IngameUserWidget_CPP::CasinoOpenToggled(bool isChecked)
 		ACI_AIManager_CPP::GetInstance(GetWorld())->DisableGuestSpawning();
 }
 
-void UCI_IngameUserWidget_CPP::AICountChanged(int staff, int guests)
+void UCI_IngameUserWidget_CPP::AICountChanged(const int staff, const int guests)
 {
 	staffCountText = FText::AsNumber(staff);
 	guestCountText = FText::AsNumber(guests);
 }
 
-UTexture2D* UCI_IngameUserWidget_CPP::GetSelectedBuildObjectPreview()
+UTexture2D* UCI_IngameUserWidget_CPP::GetSelectedBuildObjectPreview() const
 {
-	if (GetSelectBuildObject() == NULL)
-		return NULL;
+	if (GetSelectBuildObject() == nullptr)
+		return nullptr;
 
 	return UCI_BaseTileDataComponent_CPP::GetTileTypePreview(GetSelectBuildObject());
 }
 
-bool UCI_IngameUserWidget_CPP::GetCornerInfoVisible()
+bool UCI_IngameUserWidget_CPP::GetCornerInfoVisible() const
 {
 	return gameState->GetCurrentMode() == EBuildInputMode::BIM_BuildRoom && gameState->isSelecting2NdCorner;
 }
 
-FText UCI_IngameUserWidget_CPP::GetCornerXText()
+FText UCI_IngameUserWidget_CPP::GetCornerXText() const
 {
 	return FText::FromString("X: " + FString::FromInt(gameState->selectedBuildCorner.X));
 }
 
-FText UCI_IngameUserWidget_CPP::GetCornerYText()
+FText UCI_IngameUserWidget_CPP::GetCornerYText() const
 {
 	return FText::FromString("Y: " + FString::FromInt(gameState->selectedBuildCorner.Y));
 }
 
-FText UCI_IngameUserWidget_CPP::GetCornerSelectText()
+FText UCI_IngameUserWidget_CPP::GetCornerSelectText() const
 {
 	if (gameState->GetCurrentMode() == EBuildInputMode::BIM_BuildRoom && !gameState->isSelecting2NdCorner)
 		return FText::FromString("Corner 1:");

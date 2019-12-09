@@ -14,7 +14,7 @@ struct FTaskLinkedListNode
 {
 public:
 
-	FTaskLinkedListNode(FTask* task) : task(task) { ; }
+	explicit FTaskLinkedListNode(FTask* task) : task(task) { ; }
 	~FTaskLinkedListNode() {}
 
 	FTaskLinkedListNode* previous = nullptr;
@@ -22,7 +22,7 @@ public:
 
 	FTask* task = nullptr;
 
-	FTask* GetValue() { return task; }
+	FTask* GetValue() const { return task; }
 };
 
 struct FTaskLinkedList
@@ -46,9 +46,9 @@ struct FTaskLinkedList
 
 		FTaskLinkedListNode* tail = nullptr;
 
-	bool IsValid() { return head != nullptr && tail != nullptr; }
+	bool IsValid() const { return head != nullptr && tail != nullptr; }
 
-	bool Contains(FTask* task)
+	bool Contains(FTask* task) const
 	{
 		if (!IsValid())
 			return false;
@@ -71,14 +71,14 @@ struct FTaskLinkedList
 		return false;
 	}
 
-	bool Contains(FTaskLinkedListNode* node)
+	bool Contains(FTaskLinkedListNode* node) const
 	{
 		return Contains(node->task);
 	}
 
 
-	FTaskLinkedListNode* GetHead() { return head; }
-	FTaskLinkedListNode* GetTail() { return tail; }
+	FTaskLinkedListNode* GetHead() const { return head; }
+	FTaskLinkedListNode* GetTail() const { return tail; }
 
 	void RemoveNode(FTaskLinkedListNode* task)
 	{
@@ -168,7 +168,7 @@ struct FTaskLinkedList
 		head = node;
 	}
 
-	FTaskLinkedListNode* FindNode(FTask* task)
+	FTaskLinkedListNode* FindNode(FTask* task) const
 	{
 		if (!IsValid())
 			return nullptr;
@@ -219,7 +219,7 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
 	virtual void PostActorCreated() override;
 
@@ -232,7 +232,7 @@ public:
 	bool DePrioritiseTask(FTask* task);
 
 	bool SwitchPriority(FTask* task);
-	FTask* GetTask(int x, int y);
+	FTask* GetTask(int x, int y) const;
 
 	void FinishTask(FTask* task);
 	void CancelTask(FTask*& task);
@@ -242,7 +242,7 @@ public:
 	bool DeRegisterObject(FString dataType, UObject* tile);
 	bool DeRegisterObject(UObject* object);
 
-	FVector2D GetClosestItem(FVector2D startLocation, FString dataType);
+	FVector2D GetClosestItem(FVector2D startLocation, FString dataType) const;
 
 	void SpawnAI(TSubclassOf<APawn> pawnToSpawn);
 	void SpawnAIInternal(TSubclassOf<APawn> pawnToSpawn);
@@ -255,7 +255,7 @@ public:
 	FVector2D GetRandomSpawnTile();
 
 	UFUNCTION(BlueprintCallable)
-		TArray<class APawn*> GetStaffList() { return staffActors; }
+		TArray<class APawn*> GetStaffList() const { return staffActors; }
 
 	UFUNCTION()
 		void SpawnGuest();
@@ -263,18 +263,18 @@ public:
 	void SetGuestSpawnTimer();
 
 	UFUNCTION(BlueprintCallable)
-		void ToggleGuestSpawning();
+		void ToggleGuestSpawning() const;
 
-	void EnableGuestSpawning();
-	void DisableGuestSpawning();
+	void EnableGuestSpawning() const;
+	void DisableGuestSpawning() const;
 
 	UFUNCTION(BlueprintCallable)
-		bool IsGuestSpawningEnabled();
+		bool IsGuestSpawningEnabled() const;
 
 protected:
 
 	UPROPERTY(VisibleAnywhere)
-	TWeakObjectPtr<ACI_AIManager_CPP> _instance;
+	TWeakObjectPtr<ACI_AIManager_CPP> local_instance;
 
 	UPROPERTY(EditAnywhere, Category="Editor")
 		class UBillboardComponent* editorObject;

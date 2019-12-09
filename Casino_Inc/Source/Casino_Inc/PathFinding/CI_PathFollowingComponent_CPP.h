@@ -50,7 +50,7 @@ public:
 	void BeginDestroy() override;
 
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction) override;
 
 	double LastCalcTime() const;
 	UFUNCTION(BlueprintCallable)
@@ -58,16 +58,16 @@ public:
 	UFUNCTION()
 		void PathCalculationFinished(bool completePath);
 	UFUNCTION(BlueprintCallable)
-		FVector GetLastMovement() const { return LastTickMovement; }
+		FVector GetLastMovement() const { return lastTickMovement; }
 
 	void EnableMovement() { doPathMovement = true; }
 	void DisableMovement() { doPathMovement = false; }
 
 	UFUNCTION(BlueprintCallable)
-		bool HasFinishedPath() { return currentState == EPathFollowingState::PFS_ReachedGoal; }
+		bool HasFinishedPath() const { return currentState == EPathFollowingState::PFS_ReachedGoal; }
 	UFUNCTION(BlueprintCallable)
-		bool IsActiveState()
-	{
+		bool IsActiveState() const
+		{
 		return	currentState == EPathFollowingState::PFS_Calculating ||
 				currentState == EPathFollowingState::PFS_Moving ||
 				currentState == EPathFollowingState::PFS_ReachedNode;
@@ -79,7 +79,7 @@ public:
 	FPathFinished pathFinishedDelegate;
 
 	UFUNCTION(BlueprintCallable)
-		void PrintPathState();
+		void PrintPathState() const;
 
 protected:
 	// Called when the game starts
@@ -132,7 +132,7 @@ private:
 	FVector2D end;
 	struct FPathNode* nextGoalNode = nullptr;
 
-	FVector LastTickMovement;
+	FVector lastTickMovement;
 
 	void MoveActor(FVector input);
 

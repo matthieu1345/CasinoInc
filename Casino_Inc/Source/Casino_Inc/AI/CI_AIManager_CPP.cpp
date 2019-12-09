@@ -49,7 +49,7 @@ TWeakObjectPtr<ACI_AIManager_CPP> ACI_AIManager_CPP::GetInstance(UWorld* world)
 {
 	if (instance == nullptr)
 	{
-		for (TActorIterator<ACI_AIManager_CPP> actorItr(world); actorItr;)
+		for ( const TActorIterator<ACI_AIManager_CPP> actorItr(world); actorItr;)
 		{
 			instance = *actorItr;
 			break;
@@ -72,7 +72,7 @@ void ACI_AIManager_CPP::BeginPlay()
 	}
 
 	instance = this;
-	_instance = this;
+	local_instance = this;
 
 	gamestate = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState());
 	//gamestate->mainUI->AICountChanged(staffActors.Num(), guestActors.Num());
@@ -82,10 +82,10 @@ void ACI_AIManager_CPP::BeginPlay()
 }
 
 // Called every frame
-void ACI_AIManager_CPP::Tick(float DeltaTime)
+void ACI_AIManager_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
-	spawnCounter += DeltaTime;
+	Super::Tick(deltaTime);
+	spawnCounter += deltaTime;
 	if (spawnCounter >= spawnTimer)
 	{
 		spawnCounter -= spawnTimer;
@@ -149,11 +149,11 @@ void ACI_AIManager_CPP::PostActorCreated()
 
 	}
 
-	_instance = instance;
+	local_instance = instance;
 	
 }
 
-bool ACI_AIManager_CPP::GetNextTask(ECharacterType characterType, FTask*& outTask)
+bool ACI_AIManager_CPP::GetNextTask(const ECharacterType characterType, FTask*& outTask)
 {
 
 	for (FTaskLinkedListNode* task = priorityTaskQueue.GetHead(); task != nullptr; task = task->next)
@@ -183,14 +183,14 @@ bool ACI_AIManager_CPP::GetNextTask(ECharacterType characterType, FTask*& outTas
 	return false;
 }
 
-bool ACI_AIManager_CPP::CreateNewTask(UCI_BaseTask_CPP* taskType, int x, int y, class ACI_BaseTile_CPP* tile)
+bool ACI_AIManager_CPP::CreateNewTask(UCI_BaseTask_CPP* taskType, const int x, const int y, class ACI_BaseTile_CPP* tile)
 {
 	if (!ACI_StatsManager_CPP::GetInstance(GetWorld())->HasMoneyToBuild())
 		return false;
 
 	FTask* newTask = new FTask(taskType, x, y, tile);
 
-	if (!newTask->isValid(gamestate))
+	if (!newTask->IsValid(gamestate))
 	{
 		return false;
 	}
@@ -227,7 +227,7 @@ bool ACI_AIManager_CPP::CreateNewTask(UCI_BaseTask_CPP* taskType, int x, int y, 
 
 bool ACI_AIManager_CPP::PrioritiseTask(FTask* task)
 {
-	auto taskNode = taskQueue.FindNode(task);
+	const auto taskNode = taskQueue.FindNode(task);
 
 	if (taskNode == nullptr)
 		return false;
@@ -243,7 +243,7 @@ bool ACI_AIManager_CPP::PrioritiseTask(FTask* task)
 
 bool ACI_AIManager_CPP::DePrioritiseTask(FTask* task)
 {
-	auto taskNode = priorityTaskQueue.FindNode(task);
+	const auto taskNode = priorityTaskQueue.FindNode(task);
 
 	if (taskNode == nullptr)
 		return false;
@@ -271,7 +271,7 @@ bool ACI_AIManager_CPP::SwitchPriority(FTask* task)
 	}
 }
 
-FTask* ACI_AIManager_CPP::GetTask(int x, int y)
+FTask* ACI_AIManager_CPP::GetTask(const int x, const int y) const
 {
 	FTaskLinkedListNode* task;
 	if (taskQueue.IsValid())
@@ -335,16 +335,16 @@ void ACI_AIManager_CPP::CancelTask(FTask*& task)
 
 bool ACI_AIManager_CPP::RegisterObject(UObject* object)
 {
-	ICI_RegisterAbleInterface_CPP* TheInterface = Cast<ICI_RegisterAbleInterface_CPP>(object);
+	ICI_RegisterAbleInterface_CPP* theInterface = Cast<ICI_RegisterAbleInterface_CPP>(object);
 
-	if (TheInterface)
+	if (theInterface)
 	{
-		return RegisterObject(TheInterface->Execute_GetRegisterName(object), object);
+		return RegisterObject(theInterface->Execute_GetRegisterName(object), object);
 	}
 	else return false;
 }
 
-bool ACI_AIManager_CPP::RegisterObject(FString dataType, UObject* object)
+bool ACI_AIManager_CPP::RegisterObject(const FString dataType, UObject* object)
 {
 	if (dataType == "")
 	{
@@ -359,7 +359,7 @@ bool ACI_AIManager_CPP::RegisterObject(FString dataType, UObject* object)
 	return true;
 }
 
-bool ACI_AIManager_CPP::DeRegisterObject(FString dataType, UObject* object)
+bool ACI_AIManager_CPP::DeRegisterObject(const FString dataType, UObject* object)
 {
 	FTileRegister *array = &registeredTiles.FindOrAdd(dataType);
 
@@ -372,26 +372,25 @@ bool ACI_AIManager_CPP::DeRegisterObject(FString dataType, UObject* object)
 
 bool ACI_AIManager_CPP::DeRegisterObject(UObject* object)
 {
-	ICI_RegisterAbleInterface_CPP* TheInterface = Cast<ICI_RegisterAbleInterface_CPP>(object);
+	ICI_RegisterAbleInterface_CPP* theInterface = Cast<ICI_RegisterAbleInterface_CPP>(object);
 
-	if (TheInterface)
+	if (theInterface)
 	{
-		return DeRegisterObject(TheInterface->Execute_GetRegisterName(object), object);
+		return DeRegisterObject(theInterface->Execute_GetRegisterName(object), object);
 	}
 	else return false;
 }
 
-FVector2D ACI_AIManager_CPP::GetClosestItem(FVector2D startLocation, FString dataType)
+FVector2D ACI_AIManager_CPP::GetClosestItem(const FVector2D startLocation, const FString dataType) const
 {
 	float distance = std::numeric_limits<float>::max();
-	float tempDist;
 	TArray<UObject*> endTile;
 
 	auto array = registeredTiles.FindRef(dataType);
 
 	for (auto element : array.values)
 	{
-		tempDist = FVector2D::DistSquared(ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(element), startLocation);
+		const float tempDist = FVector2D::DistSquared(ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(element), startLocation);
 		if (FMath::IsNearlyEqual(tempDist, distance, 200))
 		{
 			endTile.Add(element);
@@ -407,7 +406,7 @@ FVector2D ACI_AIManager_CPP::GetClosestItem(FVector2D startLocation, FString dat
 
 	if (endTile.Num() > 0)
 	{
-		int random = FMath::RandRange(0, endTile.Num() - 1);
+		const int random = FMath::RandRange(0, endTile.Num() - 1);
 
 		return ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(endTile[random]);
 	}
@@ -417,7 +416,7 @@ FVector2D ACI_AIManager_CPP::GetClosestItem(FVector2D startLocation, FString dat
 	}
 }
 
-void ACI_AIManager_CPP::SpawnAI(TSubclassOf<APawn> pawnToSpawn)
+void ACI_AIManager_CPP::SpawnAI(const TSubclassOf<APawn> pawnToSpawn)
 {
 	spawnQueue.Enqueue(pawnToSpawn);
 }
@@ -445,11 +444,11 @@ void ACI_AIManager_CPP::SpawnAIInternal(TSubclassOf<APawn> pawnToSpawn)
 	default: ;
 	}
 
-	FVector spawnLocation = UCI_TileMapCoordinateMath::TileVectorToWorldCenter(GetRandomSpawnTile(), ACI_GameModeBase_CPP::CHARACTER_LAYER);
+	const FVector spawnLocation = UCI_TileMapCoordinateMath::TileVectorToWorldCenter(GetRandomSpawnTile(), ACI_GameModeBase_CPP::CHARACTER_LAYER);
 
-	APawn* spawnedPawn = (APawn*)GetWorld()->SpawnActor<APawn>(pawnToSpawn, spawnLocation, FRotator::ZeroRotator);
+	/*APawn* spawnedPawn = */(APawn*)GetWorld()->SpawnActor<APawn>(pawnToSpawn, spawnLocation, FRotator::ZeroRotator);
 
-	ACI_BaseAIController_CPP* spawnedController = Cast<ACI_BaseAIController_CPP>(spawnedPawn->GetController());
+	// ACI_BaseAIController_CPP* spawnedController = Cast<ACI_BaseAIController_CPP>(spawnedPawn->GetController());
 
 	
 }
@@ -483,7 +482,7 @@ void ACI_AIManager_CPP::RegisterAI(APawn* spawnedPawn, ACI_BaseAIController_CPP*
 		gamestate->mainUI->AICountChanged(staffActors.Num(), guestActors.Num());
 }
 
-void ACI_AIManager_CPP::RemoveAI(APawn* pawn, ECharacterType type)
+void ACI_AIManager_CPP::RemoveAI(APawn* pawn, const ECharacterType type)
 {
 	switch (type)
 	{
@@ -517,7 +516,7 @@ void ACI_AIManager_CPP::RemoveAI(APawn* pawn, ECharacterType type)
 		gamestate->mainUI->AICountChanged(staffActors.Num(), guestActors.Num());
 }
 
-TArray<UObject*> ACI_AIManager_CPP::GetRegisteredTile(FString dataType)
+TArray<UObject*> ACI_AIManager_CPP::GetRegisteredTile(const FString dataType)
 {
 	if (registeredTiles.Contains(dataType))
 		return registeredTiles.Find(dataType)->values;
@@ -525,13 +524,13 @@ TArray<UObject*> ACI_AIManager_CPP::GetRegisteredTile(FString dataType)
 	return TArray<UObject*>();
 }
 
-UObject* ACI_AIManager_CPP::GetRandomRegisteredTile(FString dataType)
+UObject* ACI_AIManager_CPP::GetRandomRegisteredTile(const FString dataType)
 {
 	TArray<UObject*> tiles = GetRegisteredTile(dataType);
 	if (tiles.Num() == 0)
 		return nullptr;
 
-	int random = FMath::RandRange(0, tiles.Num() - 1);
+	const int random = FMath::RandRange(0, tiles.Num() - 1);
 
 	return tiles[random];
 }
@@ -539,10 +538,9 @@ UObject* ACI_AIManager_CPP::GetRandomRegisteredTile(FString dataType)
 FVector2D ACI_AIManager_CPP::GetRandomSpawnTile()
 {
 	TArray<UCI_BaseTileDataComponent_CPP*> spawnLocations;
-	FString typeName;
 	for (TSubclassOf<UCI_BaseTileDataComponent_CPP> tileType : tilesToSpawnFrom)
 	{
-		typeName = ICI_RegisterAbleInterface_CPP::Execute_GetRegisterName(tileType->GetDefaultObject());
+		const FString typeName = ICI_RegisterAbleInterface_CPP::Execute_GetRegisterName(tileType->GetDefaultObject());
 		if (registeredTiles.Contains(typeName))
 		{
 			for (auto tile : registeredTiles.Find(typeName)->values)
@@ -565,11 +563,10 @@ void ACI_AIManager_CPP::SpawnGuest()
 
 void ACI_AIManager_CPP::SetGuestSpawnTimer()
 {
-	float delay = 600.0f;
 	if (IsValid(guestSpawnRate))
 	{
-		float happiness = ACI_StatsManager_CPP::GetInstance(GetWorld())->GetAverageHappiness();
-		delay = guestSpawnRate->GetFloatValue(happiness);
+		const float happiness = ACI_StatsManager_CPP::GetInstance(GetWorld())->GetAverageHappiness();
+		float delay = guestSpawnRate->GetFloatValue(happiness);
 		UE_LOG(AIManagement, Verbose, TEXT("New delay set to: %f"), delay);
 		if (delay == 0)
 			delay = 10;
@@ -582,7 +579,7 @@ void ACI_AIManager_CPP::SetGuestSpawnTimer()
 	}
 }
 
-void ACI_AIManager_CPP::ToggleGuestSpawning()
+void ACI_AIManager_CPP::ToggleGuestSpawning() const
 {
 	if (IsGuestSpawningEnabled())
 		GetWorldTimerManager().PauseTimer(guestSpawnTimerHandle);
@@ -590,17 +587,17 @@ void ACI_AIManager_CPP::ToggleGuestSpawning()
 		GetWorldTimerManager().UnPauseTimer(guestSpawnTimerHandle);
 }
 
-void ACI_AIManager_CPP::EnableGuestSpawning()
+void ACI_AIManager_CPP::EnableGuestSpawning() const
 {
 	GetWorldTimerManager().UnPauseTimer(guestSpawnTimerHandle);
 }
 
-void ACI_AIManager_CPP::DisableGuestSpawning()
+void ACI_AIManager_CPP::DisableGuestSpawning() const
 {
 	GetWorldTimerManager().PauseTimer(guestSpawnTimerHandle);
 }
 
-bool ACI_AIManager_CPP::IsGuestSpawningEnabled()
+bool ACI_AIManager_CPP::IsGuestSpawningEnabled() const
 {
 	return GetWorldTimerManager().IsTimerActive(guestSpawnTimerHandle);
 }

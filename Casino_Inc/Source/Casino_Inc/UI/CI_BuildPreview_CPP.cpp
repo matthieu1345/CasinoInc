@@ -44,7 +44,7 @@ void ACI_BuildPreview_CPP::BeginPlay()
 	gameState = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState());
 }
 
-bool ACI_BuildPreview_CPP::CheckValidPlacement(int newX, int newY)
+bool ACI_BuildPreview_CPP::CheckValidPlacement(const int newX, const int newY) const
 {
 	if (ACI_StatsManager_CPP::GetInstance(GetWorld())->HasMoneyToBuild())
 		return Cast<UCI_BaseTileDataComponent_CPP>(gameState->GetSelectedBuildObject()->GetDefaultObject())->CheckIfValidPlacement(newX, newY, Cast<UCI_BaseTileDataComponent_CPP>(gameState->GetSelectedBuildObject()->GetDefaultObject())->tileLayer, gameState->tileMap);
@@ -53,10 +53,10 @@ bool ACI_BuildPreview_CPP::CheckValidPlacement(int newX, int newY)
 }
 
 // Called every frame
-void ACI_BuildPreview_CPP::Tick(float DeltaTime)
+void ACI_BuildPreview_CPP::Tick(const float deltaTime)
 {
 
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 	if (gameState->GetCurrentMode() != EBuildInputMode::BIM_Build && gameState->GetCurrentMode() != EBuildInputMode::BIM_BuildRoom)
 	{
@@ -70,7 +70,7 @@ void ACI_BuildPreview_CPP::Tick(float DeltaTime)
 		return;
 	}
 
-	if (gameState->GetSelectedBuildObject() == NULL)
+	if (gameState->GetSelectedBuildObject() == nullptr)
 	{
 		if (previousSprite || previousMap)
 		{
@@ -91,7 +91,7 @@ void ACI_BuildPreview_CPP::Tick(float DeltaTime)
 void ACI_BuildPreview_CPP::UpdateLocation()
 {
 		
-	if (gameState->GetSelectedBuildObject() == NULL && gameState->changedSelectedBuildObject)
+	if (gameState->GetSelectedBuildObject() == nullptr && gameState->changedSelectedBuildObject)
 	{
 		SetActorLocation(homelocation);
 		return;
@@ -187,14 +187,14 @@ void ACI_BuildPreview_CPP::UpdatePreview()
 
 }
 
-void ACI_BuildPreview_CPP::UpdateSprite()
+void ACI_BuildPreview_CPP::UpdateSprite() const
 {
 
 	spriteComponent->SetSprite(Cast<UCI_BaseTileDataComponent_CPP>(gameState->GetSelectedBuildObject()->GetDefaultObject())->GetSprite());
 
 }
 
-void ACI_BuildPreview_CPP::UpdateMap()
+void ACI_BuildPreview_CPP::UpdateMap() const
 {
 	if (gameState->GetCurrentMode() != EBuildInputMode::BIM_BuildRoom)
 	{
@@ -231,9 +231,8 @@ void ACI_BuildPreview_CPP::UpdateRoomMap()
 
 	if (gameState->isSelecting2NdCorner)
 	{
-		int xSize, ySize;
-		xSize = FMath::Abs(gameState->selectedBuildCorner.X - newX);
-		ySize = FMath::Abs(gameState->selectedBuildCorner.Y - newY);
+		const int xSize = FMath::Abs(gameState->selectedBuildCorner.X - newX);
+		const int ySize = FMath::Abs(gameState->selectedBuildCorner.Y - newY);
 		tilemapComponent->ResizeMap(xSize + 1, ySize + 1);
 
 
@@ -252,9 +251,8 @@ void ACI_BuildPreview_CPP::UpdateRoomMap()
 			}
 		}
 
-		int lowX, lowY;
-		lowX = FMath::Min(newX, (int)gameState->selectedBuildCorner.X);
-		lowY = FMath::Min(newY, (int)gameState->selectedBuildCorner.Y);
+		const int lowX = FMath::Min(newX, (int)gameState->selectedBuildCorner.X);
+		const int lowY = FMath::Min(newY, (int)gameState->selectedBuildCorner.Y);
 
 		SetActorLocation(UCI_TileMapCoordinateMath::TileFloatsToWorldCorner(lowX, lowY, 990));
 	}

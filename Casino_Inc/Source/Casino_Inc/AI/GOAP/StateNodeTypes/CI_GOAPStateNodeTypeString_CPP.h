@@ -99,8 +99,6 @@ public:
 			isCondition = other->isCondition;
 			return true;
 		}
-
-		return false;
 	}
 
 	virtual FString GetFString() override

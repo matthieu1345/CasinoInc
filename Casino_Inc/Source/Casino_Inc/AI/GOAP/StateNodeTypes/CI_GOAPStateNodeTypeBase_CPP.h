@@ -52,10 +52,10 @@ public:
 		return true;
 	}
 
-	template<class T>
-	T* GetValueClass(const UGOAPStateNodeType* other) const
+	template<class t>
+	t* GetValueClass(const UGOAPStateNodeType* other) const
 	{
-		return Cast<T>(other);
+		return Cast<t>(other);
 	}
 
 	virtual FString GetFString()

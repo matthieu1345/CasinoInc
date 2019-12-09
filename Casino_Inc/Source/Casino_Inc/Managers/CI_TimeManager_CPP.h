@@ -34,7 +34,7 @@ public:
 	static TWeakObjectPtr<ACI_TimeManager_CPP> GetInstance(UWorld *world);
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
 	virtual void PostActorCreated() override;
 
@@ -46,7 +46,7 @@ public:
 	// Y = hour
 	// Z = minute
 	UFUNCTION(BlueprintCallable)
-		FVector GetCurrentTime();
+		FVector GetCurrentTime() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -75,7 +75,7 @@ protected:
 		UCurveFloat* cameraGainCurve;
 
 	UPROPERTY(VisibleAnywhere)
-		TWeakObjectPtr<ACI_TimeManager_CPP> _instance;
+		TWeakObjectPtr<ACI_TimeManager_CPP> local_instance;
 
 private:
 	static TWeakObjectPtr<ACI_TimeManager_CPP> instance;

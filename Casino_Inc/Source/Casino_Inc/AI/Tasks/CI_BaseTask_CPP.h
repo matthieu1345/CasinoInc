@@ -42,13 +42,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 		void DestroyTask(int x, int y, class ACI_GameStateBase_CPP* gamestate);
-	virtual void DestroyTask_Implementation(int x, int y, class ACI_GameStateBase_CPP* gamestate)
+	virtual void DestroyTask_Implementation(const int x, const int y, class ACI_GameStateBase_CPP* gamestate)
 	{
 		FinishTask(false, x, y, gamestate);
 		this->MarkPendingKill();
 	}
 
-	bool CheckAllowed(ECharacterType _type) { return allowedAITypes.Contains(_type); }
+	bool CheckAllowed(const ECharacterType _type) const { return allowedAITypes.Contains(_type); }
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 		bool CheckValidLocation(int _x, int _y, ACI_GameStateBase_CPP* _gamestate);
@@ -58,10 +58,10 @@ public:
 		void FinishTask(bool success, int x, int y, class ACI_GameStateBase_CPP* gamestate);
 	virtual void FinishTask_Implementation(bool success, int x, int y, class ACI_GameStateBase_CPP* gamestate);
 
-	class UCI_GOAPActionBase_CPP* GetAIStateAction() { return AIStateAction; }
+	class UCI_GOAPActionBase_CPP *GetAIStateAction() const;
 
-	int GetMoneyCost() { return moneyCost; }
-	float GetTaskLenght() { return taskLenght; }
+	int GetMoneyCost() const { return moneyCost; }
+	float GetTaskLenght() const { return taskLenght; }
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
@@ -74,7 +74,7 @@ protected:
 		int moneyCost = 0;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-		class UCI_GOAPActionBase_CPP* AIStateAction;
+		class UCI_GOAPActionBase_CPP* aiStateAction;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 		float taskLenght = 5.0f;
@@ -87,21 +87,22 @@ struct FTask
 
 
 		FTask() {}
-	FTask(UCI_BaseTask_CPP* taskType, int x, int y, class ACI_BaseTile_CPP* tile = nullptr) : x(x), y(y), tile(tile) { this->taskType = taskType; }
+
+	FTask(UCI_BaseTask_CPP* taskType, const int x, const int y, class ACI_BaseTile_CPP* tile = nullptr) : x(x), y(y), tile(tile) { this->taskType = taskType; }
 	~FTask() {}
 
-	void Init(ACI_GameStateBase_CPP* gamestate) { this->taskType->InitTask_Implementation(x, y, gamestate); }
-	void Finished(ACI_GameStateBase_CPP* gamestate);
+	void Init(ACI_GameStateBase_CPP* gamestate) const { this->taskType->InitTask_Implementation(x, y, gamestate); }
+	void Finished(ACI_GameStateBase_CPP* gamestate) const;
 
-	void DoTask(float DeltaTime, ACI_GameStateBase_CPP* gamestate);
+	void DoTask(float deltaTime, ACI_GameStateBase_CPP* gamestate);
 
-	void CreatePreview(class ACI_GameStateBase_CPP* gamestate) { taskType->CreatePreview(x, y, gamestate); }
+	void CreatePreview(class ACI_GameStateBase_CPP* gamestate) const { taskType->CreatePreview(x, y, gamestate); }
 
-	FVector2D GetLocation() { return FVector2D(x, y); }
-	class ACI_BaseTile_CPP* GetTileLocation() { return tile; }
+	FVector2D GetLocation() const { return FVector2D(x, y); }
+	class ACI_BaseTile_CPP* GetTileLocation() const { return tile; }
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UCI_BaseTask_CPP* taskType;
+		UCI_BaseTask_CPP*taskType = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int x = -9999;
@@ -109,7 +110,7 @@ struct FTask
 		int y = -9999;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class ACI_BaseTile_CPP* tile;
+		class ACI_BaseTile_CPP*tile = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool hasPriority = false;
@@ -122,15 +123,15 @@ struct FTask
 	}
 
 	bool operator ==(FTask other) const { return this->x == other.x && this->y == other.y && this->taskType->StaticClass() == other.taskType->StaticClass(); }
-	bool isValid(ACI_GameStateBase_CPP* gameState)
+	bool IsValid(ACI_GameStateBase_CPP* gameState) const
 	{
 		if (x != -9999 && y != -9999)
-			return isValidLocation(gameState);
+			return IsValidLocation(gameState);
 
 		return false;
 	}
 
-	bool isValidLocation(ACI_GameStateBase_CPP* gamestate);
+	bool IsValidLocation(ACI_GameStateBase_CPP* gamestate) const;
 
 	float taskTimer = 0.0f;
 	FTaskFinished taskFinished;

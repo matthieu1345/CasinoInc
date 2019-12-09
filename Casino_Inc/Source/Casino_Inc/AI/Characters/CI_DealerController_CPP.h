@@ -20,9 +20,9 @@ class CASINO_INC_API ACI_DealerController_CPP : public ACI_BaseStaffController_C
 public:
 	/**
 	 *	\brief Function called every frame on this Actor. Override this function to implement custom logic to be executed every frame.
-	 *	\param DeltaSeconds	Game time elapsed during last frame modified by the time dilation
+	 *	\param deltaSeconds	Game time elapsed during last frame modified by the time dilation
 	 */
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 
 	/**
 	 * \brief called when we need to get a new task
@@ -68,5 +68,5 @@ protected:
 	// reference to the task location
 	FVector2D taskLocation;
 	// reference to the task interactable
-	class ACI_BaseTile_CPP* taskInteractable;
+	class ACI_BaseTile_CPP*taskInteractable = nullptr;
 };

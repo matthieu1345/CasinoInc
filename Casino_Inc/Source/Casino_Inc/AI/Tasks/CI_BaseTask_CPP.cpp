@@ -2,7 +2,6 @@
 
 #include "CI_BaseTask_CPP.h"
 #include "AI/Base/CI_BaseAIController_CPP.h"
-#include "DebugMacros.h"
 #include "TileMap/CI_BaseTile_CPP.h"
 
 //TODO:DOCUMENT comment/document this file
@@ -12,14 +11,19 @@ void UCI_BaseTask_CPP::FinishTask_Implementation(bool success, int x, int y, cla
 	
 }
 
-void FTask::Finished(ACI_GameStateBase_CPP* gamestate)
+UCI_GOAPActionBase_CPP *UCI_BaseTask_CPP::GetAIStateAction() const
+{
+	return aiStateAction;
+}
+
+void FTask::Finished(ACI_GameStateBase_CPP* gamestate) const
 {
 	taskType->DestroyTask(x, y ,gamestate);
 }
 
-void FTask::DoTask(float DeltaTime, ACI_GameStateBase_CPP* gamestate)
+void FTask::DoTask(const float deltaTime, ACI_GameStateBase_CPP* gamestate)
 {
-	taskTimer += DeltaTime;
+	taskTimer += deltaTime;
 
 	if (taskTimer >= taskType->GetTaskLenght())
 	{
@@ -44,7 +48,7 @@ void FTask::DoTask(float DeltaTime, ACI_GameStateBase_CPP* gamestate)
 	}
 }
 
-bool FTask::isValidLocation(ACI_GameStateBase_CPP* gamestate)
+bool FTask::IsValidLocation(ACI_GameStateBase_CPP* gamestate) const
 {
 	return taskType->CheckValidLocation(x, y, gamestate);
 }

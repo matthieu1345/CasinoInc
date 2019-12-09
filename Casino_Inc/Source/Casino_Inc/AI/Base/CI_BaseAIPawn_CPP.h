@@ -21,32 +21,32 @@ public:
 	ACI_BaseAIPawn_CPP();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* playerInputComponent) override;
 
 	/**
 	 * \return The base controller as ACI_BaseAIController_CPP
 	 */
 	UFUNCTION(BlueprintGetter)
-		class ACI_BaseAIController_CPP* GetBaseController() { return possessingCustomBaseController; }
+		class ACI_BaseAIController_CPP* GetBaseController() const { return possessingCustomBaseController; }
 	/**
 	 * \return the pathfollowing component on the controller
 	 */
 	UFUNCTION(BlueprintPure)
-		class UCI_PathFollowingComponent_CPP* GetPathFollowingComponent();
+		class UCI_PathFollowingComponent_CPP* GetPathFollowingComponent() const;
 
 	/**
 	 * \return the tile coordinates that this pawn is currently located at
 	 */
-	FVector2D GetTileCoordinates();
+	FVector2D GetTileCoordinates() const;
 
 	/**
 	 * \return the name of the ai
 	 */
 	UFUNCTION(BlueprintCallable)
-	FText GetAIName()
+	FText GetAIName() const
 	{
 		return FText::FromString(aiName);
 	}
@@ -56,6 +56,7 @@ public:
 	 */
 	UFUNCTION(BlueprintNativeEvent)
 		void StateChanged();
+
 	void StateChanged_Implementation();
 
 protected:
@@ -77,9 +78,9 @@ public:
 	virtual void UnPossessed() override;
 	/**
 	 * \brief called when the pawn is possessed by a controller
-	 * \param NewController the controller that possesses us now
+	 * \param newController the controller that possesses us now
 	 */
-	virtual void PossessedBy(AController* NewController) override;
+	virtual void PossessedBy(AController* newController) override;
 
 	/**
 	 * \brief set's the level for how much needs to be debugged<br>

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CI_GOAPStateNodeTypeBase_CPP.h"
-#include "Casino_Inc.h"
 #include "CI_GOAPStateNodeTypeObject_CPP.generated.h"
 
 //TODO:DOCUMENT comment/document this file
@@ -35,7 +34,7 @@ public:
 	{
 		if (UGOAPStateNodeType::TestValue(other))
 		{
-			TSubclassOf<UObject> otherValueClass = GetValueClass<const UGOAPStateNodeType_Object>(other)->valueClass;
+			// TSubclassOf<UObject> otherValueClass = GetValueClass<const UGOAPStateNodeType_Object>(other)->valueClass;
 
 			switch (testOn)
 			{
@@ -152,9 +151,9 @@ public:
 	}
 
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& propertyChangedEvent) override
 	{
-		FName propertyName = PropertyChangedEvent.GetPropertyName();
+		const FName propertyName = propertyChangedEvent.GetPropertyName();
 
 		if (testOn != EGOAPTestObjectCondition::GTC_Class)
 		{
@@ -167,7 +166,7 @@ public:
 			}
 		}
 
-		Super::PostEditChangeProperty(PropertyChangedEvent);
+		Super::PostEditChangeProperty(propertyChangedEvent);
 	}
 #endif
 
@@ -180,7 +179,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	void SetValueClass(TSubclassOf<UObject> newValueClass)
+	void SetValueClass(const TSubclassOf<UObject> newValueClass)
 	{
 		valueClass = newValueClass;
 	}

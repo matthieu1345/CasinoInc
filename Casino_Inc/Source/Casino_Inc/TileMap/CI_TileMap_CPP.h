@@ -26,15 +26,15 @@ public:
 	ACI_TileMap_CPP();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float deltaTime) override;
 
-	void SetTileSprite(int x, int y, ETileLayer layer, struct FPaperTileInfo newTile);
+	void SetTileSprite(int x, int y, ETileLayer layer, struct FPaperTileInfo newTile) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Get Tiles")
 	void GetAllTilesFromCoordinate(int x, int y, UPARAM(ref) TArray<class ACI_BaseTile_CPP*> &tiles);
 
 	UFUNCTION(BlueprintCallable, Category = "Get Tiles")
-	ACI_BaseTile_CPP* GetUpperTileFromCoordinate(int x, int y);
+	ACI_BaseTile_CPP* GetUpperTileFromCoordinate(int x, int y) const;
 
 	// get's a tile at a specific layer
 	// returns true/false depending on if it already has a object on that location
@@ -67,20 +67,20 @@ public:
 	bool CheckWalkable(int x, int y);
 	void UpdateWalkable(int x, int y);
 
-	void AddBuildPreview(int x, int y, bool isBuild);
-	void RemoveBuildPreview(int x, int y);
-	void AddPriorityPreview(int x, int y);
+	void AddBuildPreview(int x, int y, bool isBuild) const;
+	void RemoveBuildPreview(int x, int y) const;
+	void AddPriorityPreview(int x, int y) const;
 
-	TArray<BoolArray> GetWalkableArray() { return walkableMap; }
+	TArray<BoolArray> GetWalkableArray() const { return walkableMap; }
 
 protected:
-	virtual void OnConstruction(const FTransform& Transform) override;
+	virtual void OnConstruction(const FTransform& transform) override;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	//functions for creating the map
-	void SetupTilemapComponent();
+	void SetupTilemapComponent() const;
 	UFUNCTION(BlueprintCallable)
 	void CreateMap();
 	void MakeLayers();

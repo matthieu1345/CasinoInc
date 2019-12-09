@@ -24,15 +24,15 @@ public:
 
 	/**
 	 *	\brief Function called every frame on this Actor. Override this function to implement custom logic to be executed every frame.
-	 *	\param DeltaSeconds	Game time elapsed during last frame modified by the time dilation
+	 *	\param deltaSeconds	Game time elapsed during last frame modified by the time dilation
 	 */
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float deltaSeconds) override;
 
 	/**
 	 * \brief Handles attaching this controller to the specified pawn.
-	 * \param InPawn The Pawn to be possessed.
+	 * \param inPawn The Pawn to be possessed.
 	 */
-	virtual void Possess(APawn* InPawn) override;
+	virtual void Possess(APawn* inPawn) override;
 
 	/** 
 	 * \brief Called to unpossess our pawn for any reason that is not the pawn being destroyed (destruction handled by PawnDestroyed()). 
@@ -72,7 +72,7 @@ public:
 	 * \param success input if the task was a success or a fail
 	 */
 	UFUNCTION()
-		void TaskEndCall(bool success) { TaskEnded(success); }
+		void TaskEndCall(const bool success) { TaskEnded(success); }
 
 	/**
 	 * \brief return here if the task has ended

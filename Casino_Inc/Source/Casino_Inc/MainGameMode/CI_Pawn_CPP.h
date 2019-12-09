@@ -21,11 +21,11 @@ public:
 	ACI_Pawn_CPP();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	void CheckInput();
+	virtual void Tick(float deltaTime) override;
+	void CheckInput() const;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* playerInputComponent) override;
 
 	UCameraComponent* GetCamera() const { return cameraComp; }
 
@@ -56,18 +56,18 @@ protected:
 	void BuildObjectPressed();
 	void BuildObjectReleased() { bBuildPressed = false; }
 	void BuildObject() const;
-	void BuildRoom();
+	void BuildRoom() const;
 	void DestroyObjectPressed() { bDestroyPressed = true; }
 	void DestroyObjectReleased() { bDestroyPressed = false; }
 	void DestroyObject() const;
 
-	void CheckBuildDestroy() const;
+	// void CheckBuildDestroy() const;
 
 	void ToggleBuildRoom();
 
 	void PrioritizePressed() { bPrioritizePressed = true; }
 	void PrioritizeReleased() { bPrioritizePressed = false; }
-	void PrioritizeTask();
+	void PrioritizeTask() const;
 
 private:
 	void SetupCamera();

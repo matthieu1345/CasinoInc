@@ -23,17 +23,17 @@ class CASINO_INC_API ACI_GameModeBase_CPP : public AGameModeBase
 	UFUNCTION(BlueprintCallable, Category = "GUI")
 		void ChangeMenuWidget(TSubclassOf<UUserWidget> newWidgetClass);
 
-	void Logout(AController* Exiting) override;
+	void Logout(AController* exiting) override;
 
 	//TODO:XML write xml preview for SpeedUp, SlowDown, ResetSpeed, and AddMoney
 	UFUNCTION(Exec)
-		void SpeedUp();
+		void SpeedUp() const;
 	UFUNCTION(Exec)
-		void SlowDown();
+		void SlowDown() const;
 	UFUNCTION(Exec)
-		void ResetSpeed();
+		void ResetSpeed() const;
 	UFUNCTION(Exec)
-		void AddMoney();
+		void AddMoney() const;
 
 	static const bool LOG_PATHFINDING_TIMES = false;
 

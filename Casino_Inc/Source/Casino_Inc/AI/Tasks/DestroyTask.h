@@ -28,5 +28,5 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-		ETileLayer tileLayer;
+		ETileLayer tileLayer = ETileLayer::Default;
 };

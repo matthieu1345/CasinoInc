@@ -17,18 +17,18 @@ class CASINO_INC_API ACI_BuildPreview_CPP : public AActor
 		// Sets default values for this actor's properties
 		ACI_BuildPreview_CPP();
 		// Called every frame
-		virtual void Tick(float DeltaTime) override;
+		virtual void Tick(float deltaTime) override;
 
 	protected:
 		// Called when the game starts or when spawned
 		virtual void BeginPlay() override;
 
-	bool CheckValidPlacement(int newX, int newY);
+	bool CheckValidPlacement(int newX, int newY) const;
 		void UpdateLocation();
 		void UpdatePreview();
 
-		void UpdateSprite();
-		void UpdateMap();
+		void UpdateSprite() const;
+		void UpdateMap() const;
 		void UpdateRoomMap();
 
 	public:	
@@ -41,8 +41,8 @@ class CASINO_INC_API ACI_BuildPreview_CPP : public AActor
 
 		class ACI_GameStateBase_CPP* gameState;
 
-	private:
 
+	private:
 		bool previousSprite = false;
 		bool previousMap = false;
 		int oldX;

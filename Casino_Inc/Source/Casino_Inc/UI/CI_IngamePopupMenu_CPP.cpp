@@ -10,7 +10,7 @@
 
 void UCI_IngamePopupMenu_CPP::ExitButtonClicked()
 {
-	if (gameState == NULL)
+	if (gameState == nullptr)
 		gameState = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState());
 
 	if (gameState)
@@ -19,7 +19,7 @@ void UCI_IngamePopupMenu_CPP::ExitButtonClicked()
 
 void UCI_IngamePopupMenu_CPP::SelectBuildObjectClicked(UBuildTask* taskData)
 {
-	if (gameState == NULL)
+	if (gameState == nullptr)
 		gameState = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState());
 
 	if (gameState)
@@ -31,9 +31,9 @@ void UCI_IngamePopupMenu_CPP::SelectBuildObjectClicked(UBuildTask* taskData)
 
 }
 
-void UCI_IngamePopupMenu_CPP::SelectBuildRoomClicked(TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
+void UCI_IngamePopupMenu_CPP::SelectBuildRoomClicked(const TSubclassOf<UCI_BaseTileDataComponent_CPP> tileData)
 {
-	if (gameState == NULL)
+	if (gameState == nullptr)
 		gameState = Cast<ACI_GameStateBase_CPP>(GetWorld()->GetGameState());
 
 	if (gameState)
@@ -45,7 +45,7 @@ void UCI_IngamePopupMenu_CPP::SelectBuildRoomClicked(TSubclassOf<UCI_BaseTileDat
 
 }
 
-void UCI_IngamePopupMenu_CPP::SpawnPawnClicked(TSubclassOf<APawn> pawnToSpawn)
+void UCI_IngamePopupMenu_CPP::SpawnPawnClicked(const TSubclassOf<APawn> pawnToSpawn) const
 {
 
 	ACI_AIManager_CPP::GetInstance(GetWorld())->SpawnAI(pawnToSpawn);

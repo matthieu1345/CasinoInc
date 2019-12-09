@@ -26,7 +26,7 @@ public:
 		if (!UGOAPStateNodeType::TestValue(other))
 			return false;
 
-		auto otherFloat = GetValueClass<const UGOAPStateNodeType_Float>(other);
+		auto const otherFloat = GetValueClass<const UGOAPStateNodeType_Float>(other);
 
 		switch (conditionType)
 		{
@@ -106,7 +106,9 @@ public:
 
 		case EGOAPStateCondition::GSC_LessEqual:
 			return 0 <= value;
-
+		
+		default: 
+			break;
 		}
 
 		return false;

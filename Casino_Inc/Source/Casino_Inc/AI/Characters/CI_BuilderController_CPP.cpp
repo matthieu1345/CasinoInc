@@ -20,10 +20,10 @@ void ACI_BuilderController_CPP::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ACI_BuilderController_CPP::Tick(float DeltaSeconds)
+void ACI_BuilderController_CPP::Tick(const float deltaSeconds)
 {
 
-	Super::Tick(DeltaSeconds);
+	Super::Tick(deltaSeconds);
 
 	// get a new task if we don't have a current task and are at work
 	if (currentTask == nullptr && !isAway)
@@ -37,7 +37,7 @@ void ACI_BuilderController_CPP::GetNewTask()
 	Super::GetNewTask();
 }
 
-void ACI_BuilderController_CPP::TaskEnded_Implementation(bool success)
+void ACI_BuilderController_CPP::TaskEnded_Implementation(const bool success)
 {
 	Super::TaskEnded_Implementation(success);
 }
@@ -59,7 +59,7 @@ void ACI_BuilderController_CPP::DoIdle()
 	}
 
 	// get a random room from the list to go towards
-	auto goal = rooms[FMath::RandRange(0, rooms.Num() - 1)];
+	const auto goal = rooms[FMath::RandRange(0, rooms.Num() - 1)];
 
 	// go to the staff room
 	pathFollowingComp->GetNewPath(possessedCustomBasePawn->GetTileCoordinates(), ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(goal));

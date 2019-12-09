@@ -20,7 +20,8 @@ struct FPathNode
 
 		FPathNode() = default;
 		FPathNode(FVector2D location, FVector2D goal, float g, FPathNode* parent);
-		FPathNode(FPathNode* node) : location(node->location), g(node->g), h(node->h), f(node->f), isEnd(node->isEnd) {}
+
+	explicit FPathNode(FPathNode* node) : location(node->location), g(node->g), h(node->h), f(node->f), isEnd(node->isEnd) {}
 
 	//UPROPERTY()
 		FVector2D location;
@@ -46,14 +47,14 @@ struct FPathNode
 	//next node in the path
 		FPathNode* child = nullptr;
 
-	bool operator ==(FPathNode other) const { return this->location.Equals(other.location, 0.1); }
-	bool operator !=(FPathNode other) const { return !this->location.Equals(other.location, 0.1); }
+	bool operator ==(const FPathNode other) const { return this->location.Equals(other.location, 0.1); }
+	bool operator !=(const FPathNode other) const { return !this->location.Equals(other.location, 0.1); }
 
-	bool operator ==(FVector2D location) const { return location == this->location; }
-	bool operator !=(FVector2D location) const { return location == this->location; }
+	bool operator ==(const FVector2D location) const { return location == this->location; }
+	bool operator !=(const FVector2D location) const { return location == this->location; }
 
-	bool operator <(FPathNode other) const { return this->f < other.f; }
-	bool operator >(FPathNode other) const { return this->f > other.f; }
+	bool operator <(const FPathNode other) const { return this->f < other.f; }
+	bool operator >(const FPathNode other) const { return this->f > other.f; }
 
 	friend FORCEINLINE uint32 GetTypeHash(const FPathNode& s)
 	{
@@ -75,7 +76,7 @@ public:
 
 	struct PathData
 	{
-		PathData(TSet<struct FPathNode*> openNodes, TSet<FPathNode*> closedNodes, TArray<FPathNode*> path, bool isComplete) :
+		PathData(const TSet<struct FPathNode*> openNodes, const TSet<FPathNode*> closedNodes, const TArray<FPathNode*> path, const bool isComplete) :
 		openNodes(openNodes), closedNodes(closedNodes), path(path), isComplete(isComplete) {}
 		PathData() {}
 		
@@ -97,7 +98,7 @@ public:
 
 	FVector2D start;
 	FVector2D end;
-	int maxReach;
+	int maxReach = 0;
 
 	ACI_TileMap_CPP* tileMap = nullptr;
 
@@ -146,7 +147,7 @@ public:
 	static void Shutdown();
 	void _Shutdown();
 	static bool IsThreadFinished();
-	bool _IsThreadFinished();
+	bool _IsThreadFinished() const;
 
 	bool isFinished = false;
 	
@@ -162,7 +163,7 @@ public:
 
 	bool doRun = false;
 
-	bool CheckNext(int x, int y);
+	bool CheckNext(int x, int y) const;
 	void DoWorkInternal();
 	
 	void ReturnCalculationFinished();

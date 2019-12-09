@@ -6,12 +6,9 @@
 #include "AI/CI_RegisterAbleInterface_CPP.h"
 #include "AI/Base/CI_BaseAIPawn_CPP.h"
 #include "Engine/World.h"
-#include "MainGameMode/CI_GameStateBase_CPP.h"
-#include "TileMap/CI_TileMap_CPP.h"
 #include "TileMap/CI_InteractableTileData_CPP.h"
 #include "TileMap/CI_BaseTile_CPP.h"
 #include "TileMap/CI_TileMapCoordinateMath.h"
-#include "TileMap/CI_BaseTile_CPP.h"
 
 ACI_DealerController_CPP::ACI_DealerController_CPP()
 {
@@ -22,9 +19,9 @@ ACI_DealerController_CPP::ACI_DealerController_CPP()
 }
 
 
-void ACI_DealerController_CPP::Tick(float DeltaSeconds)
+void ACI_DealerController_CPP::Tick(const float deltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
+	Super::Tick(deltaSeconds);
 
 	//if we don't have a task, are idle, and are at the casino, ask for a new task
 	if (currentTask == nullptr && isIdle && !isAway)
@@ -56,7 +53,7 @@ void ACI_DealerController_CPP::DoIdle()
 	}
 
 	// select a random staff room to go to
-	auto goal = rooms[FMath::RandRange(0, rooms.Num() - 1)];
+	const auto goal = rooms[FMath::RandRange(0, rooms.Num() - 1)];
 
 	// get a path to the selected staff room
 	pathFollowingComp->GetNewPath(possessedCustomBasePawn->GetTileCoordinates(), ICI_RegisterAbleInterface_CPP::Execute_GetRegisterLocation(goal));
@@ -82,7 +79,7 @@ void ACI_DealerController_CPP::LeaveMap()
 	Super::LeaveMap();
 }
 
-void ACI_DealerController_CPP::TaskEnded_Implementation(bool success)
+void ACI_DealerController_CPP::TaskEnded_Implementation(const bool success)
 {
 	Super::TaskEnded_Implementation(success);
 	if (!IsValid(taskInteractable))

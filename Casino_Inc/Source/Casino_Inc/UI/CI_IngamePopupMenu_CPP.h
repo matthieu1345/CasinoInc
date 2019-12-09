@@ -23,7 +23,7 @@ class CASINO_INC_API UCI_IngamePopupMenu_CPP : public UUserWidget
 	UFUNCTION(BlueprintCallable)
 		void SelectBuildRoomClicked(TSubclassOf<class UCI_BaseTileDataComponent_CPP> tileData);
 	UFUNCTION(BlueprintCallable)
-		void SpawnPawnClicked(TSubclassOf<APawn> pawnToSpawn);
+		void SpawnPawnClicked(TSubclassOf<APawn> pawnToSpawn) const;
 
 protected:
 	class ACI_GameStateBase_CPP* gameState;

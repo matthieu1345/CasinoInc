@@ -27,7 +27,7 @@ public:
 	void Copy(FGOAPStateList other)
 	{
 		stateNodes.Empty();
-		for (auto state : other.stateNodes)
+		for (auto const &state : other.stateNodes)
 		{
 			stateNodes.Add(state.Key) = DuplicateObject(state.Value, state.Value->GetOuter());
 		}

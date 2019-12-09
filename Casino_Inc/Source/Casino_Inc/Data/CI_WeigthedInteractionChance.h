@@ -14,8 +14,8 @@ struct FWeightedInteractionResult : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	virtual void OnPostDataImport(const UDataTable* InDataTable, const FName InRowName,
-		TArray<FString>& OutCollectedImportProblems) override;
+	virtual void OnPostDataImport(const UDataTable* inDataTable, FName inRowName,
+								  TArray<FString>& outCollectedImportProblems) override;
 
 	UPROPERTY(EditAnywhere)
 		int chance = 1;
@@ -67,5 +67,5 @@ public:
 
 	void RecalculateChance();
 
-	FWeightedInteractionResult GetRandom();
+	FWeightedInteractionResult GetRandom() const;
 };

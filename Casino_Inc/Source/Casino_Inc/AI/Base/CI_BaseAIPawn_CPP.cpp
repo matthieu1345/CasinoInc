@@ -75,6 +75,8 @@ void ACI_BaseAIPawn_CPP::UpdateBody()
 	}
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic this will never be static, cause it's been called on a specific ai who's state has changed
+// ReSharper disable once CppMemberFunctionMayBeConst this will not be const, ai state changes can and will directly change stuff about them
 void ACI_BaseAIPawn_CPP::StateChanged_Implementation()
 {
 	
@@ -86,20 +88,20 @@ void ACI_BaseAIPawn_CPP::UnPossessed()
 	possessingCustomBaseController = nullptr;
 }
 
-void ACI_BaseAIPawn_CPP::PossessedBy(AController* NewController)
+void ACI_BaseAIPawn_CPP::PossessedBy(AController* newController)
 {
-	Super::PossessedBy(NewController);
+	Super::PossessedBy(newController);
 
 	// keep a reference to a casted custom base for quicker access
-	if (NewController->GetClass()->IsChildOf(ACI_BaseAIController_CPP::StaticClass()))
+	if (newController->GetClass()->IsChildOf(ACI_BaseAIController_CPP::StaticClass()))
 	{
-		possessingCustomBaseController = Cast<ACI_BaseAIController_CPP>(NewController);
+		possessingCustomBaseController = Cast<ACI_BaseAIController_CPP>(newController);
 	}
 }
 
-void ACI_BaseAIPawn_CPP::Tick(float DeltaTime)
+void ACI_BaseAIPawn_CPP::Tick(const float deltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(deltaTime);
 
 	// update the body if we have one
 	if (body != nullptr)
@@ -107,17 +109,17 @@ void ACI_BaseAIPawn_CPP::Tick(float DeltaTime)
 
 }
 
-void ACI_BaseAIPawn_CPP::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ACI_BaseAIPawn_CPP::SetupPlayerInputComponent(UInputComponent* playerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(playerInputComponent);
 }
 
-UCI_PathFollowingComponent_CPP* ACI_BaseAIPawn_CPP::GetPathFollowingComponent()
+UCI_PathFollowingComponent_CPP* ACI_BaseAIPawn_CPP::GetPathFollowingComponent() const
 {
 	return possessingCustomBaseController->GetPathFollowingComponent();
 }
 
-FVector2D ACI_BaseAIPawn_CPP::GetTileCoordinates()
+FVector2D ACI_BaseAIPawn_CPP::GetTileCoordinates() const
 {
 	return UCI_TileMapCoordinateMath::WorldVectorToTile(GetActorLocation());
 }
